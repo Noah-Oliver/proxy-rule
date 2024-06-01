@@ -13,11 +13,7 @@
       },
       {
         "tag": "dns_proxy",
-        "address": "https://8.8.8.8/dns-query"
-      },
-      {
-        "tag": "dns_fakeip",
-        "address": "fakeip"
+        "address": "https://1.1.1.1/dns-query"
       },
       {
         "tag": "block",
@@ -42,30 +38,10 @@
       {
         "rule_set": "geosite-geolocation-!cn",
         "server": "dns_proxy"
-      },
-      {
-        "query_type": [
-          "A",
-          "AAAA"
-        ],
-        "server": "dns_fakeip"
       }
     ],
     "final": "dns_direct",
-    "strategy": "prefer_ipv4",
-    "independent_cache": true,
-    "fakeip": {
-      "enabled": true,
-      "inet4_range": "198.18.0.0/15",
-      "inet6_range": "fc00::/18"
-    }
-  },
-  "ntp": {
-    "enabled": true,
-    "server": "time.apple.com",
-    "server_port": 123,
-    "interval": "30m",
-    "detour": "DIRECT"
+    "strategy": "prefer_ipv4"
   },
   "inbounds": [
     {
@@ -107,8 +83,7 @@
   },
   "experimental": {
     "cache_file": {
-      "enabled": true,
-      "store_fakeip": true
+      "enabled": true
     },
     "clash_api": {
       "external_controller": "127.0.0.1:9090",
