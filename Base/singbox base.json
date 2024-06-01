@@ -13,7 +13,10 @@
       },
       {
         "tag": "dns_proxy",
-        "address": "https://1.1.1.1/dns-query"
+        "address": [
+          "https://1.1.1.1/dns-query",
+          "https://8.8.8.8/dns-query"
+          ]
       },
       {
         "tag": "dns_fakeip",
@@ -51,10 +54,11 @@
     ],
     "final": "dns_direct",
     "strategy": "prefer_ipv4",
+    "reverse_mapping": true,
     "fakeip": {
       "enabled": true,
-      "inet6_range": "fc00::/18",
-      "inet4_range": "198.18.0.0/15"
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
     }
   },
   "ntp": {
@@ -73,7 +77,7 @@
       "inet6_address": "fdfe:dcba:9876::1/126",
       "auto_route": true,
       "strict_route": true,
-      "stack": "gVisor",
+      "stack": "mixed",
       "sniff": true
     }
   ],
