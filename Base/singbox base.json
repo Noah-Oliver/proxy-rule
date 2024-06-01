@@ -9,14 +9,13 @@
       {
         "tag": "dns_direct",
         "address": "https://223.5.5.5/dns-query",
+        "address_resolver": "dns_resolver",
         "detour": "DIRECT"
       },
       {
         "tag": "dns_proxy",
-        "address": [
-          "https://1.1.1.1/dns-query",
-          "https://8.8.8.8/dns-query"
-          ]
+        "address": "https://1.1.1.1/dns-query",
+        "address_resolver": "dns_resolver"
       },
       {
         "tag": "dns_fakeip",
@@ -92,7 +91,6 @@
       }
     ],
     "rules": [],
-    "final": "",
     "auto_detect_interface": true
   },
   "experimental": {
