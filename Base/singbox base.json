@@ -16,6 +16,15 @@
         "address": "https://1.1.1.1/dns-query"
       },
       {
+        "tag": "dns_fakeip",
+        "address": "fakeip"
+      },
+      {
+        "tag": "dns_resolver",
+        "address": "114.114.114.114",
+        "detour": "DIRECT"
+      },
+      {
         "tag": "block",
         "address": "rcode://success"
       }
@@ -25,15 +34,15 @@
         "outbound": [
           "any"
         ],
-        "server": "dns_direct"
+        "server": "dns_resolver"
       },
       {
-        "rule_set": "geosite-gfw",
-        "server": "dns_proxy"
-      },
-      {
-        "rule_set": "geosite-cn",
-        "server": "dns_direct"
+        "rule_set": "geosite-geolocation-!cn",
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "server": "dns_fakeip"
       },
       {
         "rule_set": "geosite-geolocation-!cn",
@@ -41,7 +50,19 @@
       }
     ],
     "final": "dns_direct",
-    "strategy": "prefer_ipv4"
+    "strategy": "prefer_ipv4",
+    "fakeip": {
+      "enabled": true,
+      "inet6_range": "fc00::/18",
+      "inet4_range": "198.18.0.0/15"
+    }
+  },
+  "ntp": {
+    "enabled": true,
+    "server": "time.apple.com",
+    "server_port": 123,
+    "interval": "30m",
+    "detour": "DIRECT"
   },
   "inbounds": [
     {
@@ -52,7 +73,7 @@
       "inet6_address": "fdfe:dcba:9876::1/126",
       "auto_route": true,
       "strict_route": true,
-      "stack": "mixed",
+      "stack": "gVisor",
       "sniff": true
     }
   ],
@@ -61,29 +82,19 @@
     "rule_set": [
       {
         "type": "remote",
-        "tag": "geosite-gfw",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-gfw.srs"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-cn",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-geolocation-cn.srs"
-      },
-      {
-        "type": "remote",
         "tag": "geosite-geolocation-!cn",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-geolocation-!cn.srs"
       }
     ],
     "rules": [],
+    "final": "",
     "auto_detect_interface": true
   },
   "experimental": {
     "cache_file": {
-      "enabled": true
+      "enabled": true,
+      "store_fakeip": true
     },
     "clash_api": {
       "external_controller": "127.0.0.1:9090",
