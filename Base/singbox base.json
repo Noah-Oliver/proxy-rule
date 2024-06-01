@@ -8,12 +8,12 @@
     "servers": [
       {
         "tag": "dns_direct",
-        "address": "114.114.114.114",
+        "address": "https://223.5.5.5/dns-query",
         "detour": "DIRECT"
       },
       {
         "tag": "dns_proxy",
-        "address": "8.8.8.8"
+        "address": "https://8.8.8.8/dns-query"
       },
       {
         "tag": "dns_fakeip",
