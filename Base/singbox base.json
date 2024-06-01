@@ -69,6 +69,12 @@
   },
   "inbounds": [
     {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "0.0.0.0",
+      "listen_port": 2080
+    },
+    {
       "type": "tun",
       "tag": "tun-in",
       "interface_name": "sing-box",
