@@ -45,12 +45,6 @@ tun:
 	dns-hijack:
 		- any:53
 		- tcp://any:53
-#其余配置
-Proxy: ~
-proxies:~
-proxy-providers:~
-Proxy Group: ~
-Rule: ~
 ntp:
   enable: true
   write-to-system: false
