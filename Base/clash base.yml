@@ -46,8 +46,8 @@ tun:
 		- any:53
 		- tcp://any:53
 #其余配置
-proxies:
-proxy-providers:
+proxies: ~
+proxy-groups: ~
 proxy-groups:
 	-name:"✈️ 节点选择"
 		type:select
