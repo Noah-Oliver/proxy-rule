@@ -46,7 +46,7 @@ tun:
 		- any:53
 		- tcp://any:53
 #其余配置
-Proxy:
+proxies:
   - name: Shadowsocks
     type: socks5
     server: 127.0.0.1
