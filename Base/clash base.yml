@@ -46,14 +46,30 @@ tun:
 		- any:53
 		- tcp://any:53
 #其余配置
-proxies: ~
-proxy-providers: ~
+proxy-providers: 
+	provider1:
+		type:http
+		url:"http://test.com"
+		interval:86400
+		proxy: DIRECT
+		health-check:
+			enable: true
+			url: https://www.gstatic.com/generate_204
+			interval: 300
+			timeout: 5000
+			lazy: true
+			expected-status: 204
+		override:
+			udp: true
+			interface-name: eternal
+			ip-version: ipv4-prefer
 proxy-groups:
 	-name:"✈️ 节点选择"
 		type:select
 		include-all-providers: true
 		lazy:false
 		disable-udp: false
+		expected-status: 204
 		hidden: false
 	-name:"💩 广告"
 		type:select
@@ -69,6 +85,7 @@ proxy-groups:
 			-🇺🇲 美国
 		lazy:false
 		disable-udp: false
+		expected-status: 204
 		hidden: false
 	-name:"🌎 国外"
 		type:select
@@ -83,6 +100,7 @@ proxy-groups:
 			-🇺🇲 美国
 		lazy:false
 		disable-udp: false
+		expected-status: 204
 		hidden: false
 	-name:"🧱 国内"
 		type:select
@@ -97,6 +115,7 @@ proxy-groups:
 			-🇺🇲 美国
 		lazy:false
 		disable-udp: false
+		expected-status: 204
 		hidden: false
 	-name:"🎮 游戏下载"
 		type:select
@@ -111,6 +130,7 @@ proxy-groups:
 			-🇺🇲 美国
 		lazy:false
 		disable-udp: false
+		expected-status: 204
 		hidden: false
 	-name:"🍎 苹果"
 		type:select
@@ -125,6 +145,7 @@ proxy-groups:
 			-🇺🇲 美国
 		lazy:false
 		disable-udp: false
+		expected-status: 204
 		hidden: false
 	-name:"Ⓜ️ 微软"
 		type:select
@@ -139,6 +160,7 @@ proxy-groups:
 			-🇺🇲 美国
 		lazy:false
 		disable-udp: false
+		expected-status: 204
 		hidden: false
 	-name:"🐟 未知"
 		type:select
@@ -153,6 +175,7 @@ proxy-groups:
 			-🇺🇲 美国
 		lazy:false
 		disable-udp: false
+		expected-status: 204
 		hidden: false
 	-name:"🇭🇰 香港"
 		type:url-test
@@ -163,6 +186,7 @@ proxy-groups:
 		disable-udp: false
 		filter:"^(?!.*x(?:0.[1-7]|1.[3-9]|[2-9]|[1-9][0-9]))(?=.*(?:港|香港|HongKong|HK|Hong Kong)).*$"
 		#exclude-filter:""
+		expected-status: 204
 		hidden: false
 	-name:"🇯🇵 日本"
 		type:url-test
@@ -173,6 +197,7 @@ proxy-groups:
 		disable-udp: false
 		filter:"^(?!.*x(?:0.[1-7]|1.[3-9]|[2-9]|[1-9][0-9]))(?=.*(?:日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan)).*$"
 		#exclude-filter:""
+		expected-status: 204
 		hidden: false
 	-name:"🇺🇲 美国"
 		type:url-test
@@ -183,6 +208,7 @@ proxy-groups:
 		disable-udp: false
 		filter:"^(?!.*x(?:0.[1-7]|1.[3-9]|[2-9]|[1-9][0-9]))(?=.*(?:美|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|United States|(?<![a-zA-Z])US(?![a-zA-Z])|(?<![a-zA-Z])USA(?![a-zA-Z])|(?<![a-zA-Z])USD(?![a-zA-Z]))).*$"
 		#exclude-filter:""
+		expected-status: 204
 		hidden: false
 	-name:"🇨🇳 台湾"
 		type:url-test
@@ -193,6 +219,7 @@ proxy-groups:
 		disable-udp: false
 		filter:"^(?!.*x(?:0.[1-7]|1.[3-9]|[2-9]|[1-9][0-9]))(?=.*(?:台|新北|彰化|TW|Taiwan)).*$"
 		#exclude-filter:""
+		expected-status: 204
 		hidden: false
 	-name:"🇸🇬 新加坡"
 		type:url-test
@@ -203,6 +230,7 @@ proxy-groups:
 		disable-udp: false
 		filter:"^(?!.*x(?:0.[1-7]|1.[3-9]|[2-9]|[1-9][0-9]))(?=.*(?:新加坡|坡|狮城|SG|Singapore)).*$"
 		#exclude-filter:""
+		expected-status: 204
 		hidden: false
 	-name:"🇰🇷 韩国"
 		type:url-test
@@ -213,6 +241,7 @@ proxy-groups:
 		disable-udp: false
 		filter:"^(?!.*x(?:0.[1-7]|1.[3-9]|[2-9]|[1-9][0-9]))(?=.*(?:KR|Korea|KOR|首尔|韩|韓)).*$"
 		#exclude-filter:""
+		expected-status: 204
 		hidden: false
 rules:
 	- RULE-SET,AD,💩 广告
