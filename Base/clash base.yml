@@ -21,8 +21,8 @@ dns:
 	proxy-server-nameserver:
 		- https://doh.pub/dns-query
 	fallback:
-    - https://dns.google/dns-query
-    - https://1.1.1.1/dns-query
+    		- https://dns.google/dns-query
+    		- https://1.1.1.1/dns-query
 sniff:
 	enable:true
 	sniff:
