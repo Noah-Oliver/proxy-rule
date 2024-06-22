@@ -51,3 +51,102 @@ ntp:
   server: time.apple.com
   port: 123
   interval: 30
+
+  
+# 代理节点
+Proxy:
+# Shadowsocks
+- name: "1"
+  type: ss
+  server: 1.2.4.8
+  port: 443
+  cipher: chacha20-ietf-poly1305
+  password: "password"
+  # udp: true
+
+# Shadowsocks + simple-obfs
+- name: "2"
+  type: ss
+  server: 1.2.4.8
+  port: 443
+  cipher: chacha20-ietf-poly1305
+  password: "password"
+  plugin: obfs
+  plugin-opts:
+    mode: tls # or http
+    # host: bing.com
+
+# Shadowsocks + v2ray-plugin
+- name: "3"
+  type: ss
+  server: 1.2.4.8
+  port: 443
+  cipher: chacha20-ietf-poly1305
+  password: "password"
+  plugin: v2ray-plugin
+  plugin-opts:
+    mode: websocket # no QUIC now
+    # tls: true # wss
+    # skip-cert-verify: true
+    # host: bing.com
+    # path: "/"
+    # mux: true
+    # headers:
+    #   custom: value
+
+# VMess
+- name: "4"
+  type: vmess
+  server: v2ray.cool
+  port: 443
+  uuid: a3482e88-686a-4a58-8126-99c9df64b7bf
+  alterId: 64
+  cipher: auto
+  # udp: true
+  # tls: true
+  # skip-cert-verify: true
+  # network: ws
+  # ws-path: /path
+  # ws-headers:
+  #   Host: v2ray.com
+
+
+# 代理组策略
+Proxy Group:
+# 代理节点选择
+- { name: "Proxy", type: select, proxies: ["1", "2", "3","4"] }
+# 油管
+- { name: "google", type: select, proxies: ["Proxy","1", "2", "3","4"] }
+# netflix
+- { name: "netflix", type: select, proxies: ["Proxy","1", "2", "3","4"] }
+# 动画疯
+- { name: "动画疯", type: select, proxies: ["Proxy","1", "2", "3","4"] }
+# 美区影视
+- { name: "美区影视", type: select, proxies: ["Proxy","1", "2", "3","4"] }
+# fox+
+- { name: "fox+", type: select, proxies: ["Proxy","1", "2", "3","4"] }
+# 白名单模式 PROXY，黑名单模式 DIRECT
+- { name: "Final", type: select, proxies: ["Proxy","网易解锁", "DIRECT"] }
+# Apple 服务代理
+- { name: "Apple", type: select, proxies: ["DIRECT", "Proxy"] }
+# 国际媒体服务
+- { name: "Global_media", type: select, proxies: ["Proxy","网易解锁","1", "2", "3","4"] }
+# 国内媒体服务
+- { name: "Domestic", type: select, proxies: ["DIRECT","网易解锁", "1", "2", "3","4"] }
+#去广告
+- { name: "屏蔽广告", type: select, proxies: ["REJECT","网易解锁", "DIRECT"] }
+#网易解锁
+- { name: "UnblockNeteaseMusic", type: select, proxies: ["网易解锁"] }
+#Telegram
+- { name: "Telegram", type: select, proxies: ["Proxy"] }
+
+#规则
+Rule:
+
+- DOMAIN-KEYWORD,netease,UnblockNeteaseMusic
+# USER-AGENT,NeteaseMusic*,UnblockNeteaseMusic
+# USER-AGENT,%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90*,UnblockNeteaseMusic
+# USER-AGENT, %E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90*,UnblockNeteaseMusic
+# USER-AGENT, %E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90**,UnblockNeteaseMusic
+# USER-AGENT, NeteaseMusic**, UnblockNeteaseMusic
+# USER-AGENT, 网易云音乐*, UnblockNeteaseMusic
