@@ -46,8 +46,15 @@ tun:
 		- any:53
 		- tcp://any:53
 #其余配置
-proxies: ~
-proxy-providers: ~
+Proxy:
+# Shadowsocks
+- name: "1"
+  type: ss
+  server: 1.2.4.8
+  port: 443
+  cipher: chacha20-ietf-poly1305
+  password: "password"
+  # udp: true
 proxy-groups:
 	-name:"✈️ 节点选择"
 		type:select
