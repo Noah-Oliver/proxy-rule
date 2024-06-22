@@ -47,10 +47,7 @@ tun:
 		- tcp://any:53
 #其余配置
 proxies:
-  - name: Shadowsocks
-    type: socks5
-    server: 127.0.0.1
-    port: 1080
+proxy-providers:
 proxy-groups:
 	-name:"✈️ 节点选择"
 		type:select
