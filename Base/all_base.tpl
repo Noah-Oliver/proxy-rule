@@ -52,13 +52,4 @@
       server: time.apple.com
       port: 123
       interval: 30
-	{% if global.clash.new_field_name == "true" %}
-		proxies: ~
-		proxy-groups: ~
-		rules: ~
-	{% else %}
-		Proxy: ~
-		Proxy Group: ~
-		Rule: ~
-	{% endif %}
 {% endif %}
