@@ -55,7 +55,7 @@
           interval: 30
     {% endif %}
 
-    {% if local.clash.new_field_name == "true" %}
+    {% if global.clash.new_field_name == "true" %}
 
         proxies: ~
         proxy-groups: ~
