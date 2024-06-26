@@ -54,11 +54,11 @@
       interval: 30
 	{% if global.clash.new_field_name == "true" %}
 		proxies: ~
-		#proxy-groups: ~
-		#rules: ~
+		proxy-groups: ~
+		rules: ~
 	{% else %}
 		Proxy: ~
-		#Proxy Group: ~
-		#Rule: ~
+		Proxy Group: ~
+		Rule: ~
 	{% endif %}
 {% endif %}
