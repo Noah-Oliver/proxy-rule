@@ -215,6 +215,8 @@ rules:
  - RULE-SET,Download,DIRECT
  - RULE-SET,GameDownloadCN,DIRECT
  - RULE-SET,GameDownload,🎮 游戏下载
+ - RULE-SET,Mydirect,🧱 国内
+ - RULE-SET,Myproxy,🌎 国外
  - RULE-SET,gfw,🌎 国外
  - RULE-SET,Apple,🍎 苹果
  - RULE-SET,Microsoft,Ⓜ️ 微软
@@ -223,8 +225,6 @@ rules:
  - RULE-SET,direct,🧱 国内
  - RULE-SET,lancidr,🧱 国内
  - RULE-SET,cncidr,🧱 国内
- - RULE-SET,Mydirect,🧱 国内
- - RULE-SET,Myproxy,🌎 国外
  - RULE-SET,proxy,🌎 国外
  - MATCH,🐟 未知
 rule-providers:
