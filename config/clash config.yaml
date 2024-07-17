@@ -30,20 +30,20 @@ dns:
  ipv6: true
  enhanced-mode: fake-ip
  default-nameserver:
-  - 223.5.5.5
+  - 1.1.1.1
+  - 1.0.0.1
+  - 8.8.8.8
+  - 8.8.4.4
  fake-ip-filter:
   - '*.lan'
   - localhost.ptlogin2.qq.com
  nameserver:
-  - https://doh.pub/dns-query
-  - https://dns.alidns.com/dns-query
+  - https://cloudflare-dns.com/dns-query
+  - https://dns.google/dns-query
  nameserver-policy:
   "rule-set:direct,Mydirect":
-   - https://doh.pub/dns-query
    - https://dns.alidns.com/dns-query
-  "rule-set:gfw,Apple,Microsoft,google,proxy,Myproxy":
-   - https://dns.google/dns-query
-   - https://1.1.1.1/dns-query
+   - https://doh.pub/dns-query
 sniffer:
  enable: true
  sniff:
