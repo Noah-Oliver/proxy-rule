@@ -1,0 +1,210 @@
+#订阅链接集
+p: &p
+ type: http
+ interval: 86400
+ #proxy: DIRECT
+ health-check:
+  enable: true
+  url: https://www.gstatic.com/generate_204
+  interval: 300
+ override:
+  udp: true
+  ip-version: ipv4-prefer
+  skip-cert-verify: false
+
+#订阅链接
+proxy-providers:
+ provider1:
+  <<: *p
+  url: ""
+#  path: ./proxies/provider1.yaml
+
+#节点类别集
+j: &j
+  type: select
+  proxies:
+   - DIRECT
+   - REJECT
+   - ✈️ 节点选择
+   - 🇭🇰 香港
+   - 🇨🇳 台湾
+   - 🇯🇵 日本
+   - 🇸🇬 新加坡
+   - 🇰🇷 韩国
+   - 🇺🇲 美国
+
+#特殊节点集
+u: &u
+ type: url-test
+ url: 'https://www.gstatic.com/generate_204'
+ interval: 300
+ tolerance: 200
+ lazy: false
+ include-all-providers: true
+ hidden: false
+
+#规则集
+r: &r
+ type: http
+ interval: 86400
+ #proxy: DIRECT
+
+#主配置
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: true
+external-controller: 127.0.0.1:9090
+unified-delay: true
+tcp-concurrent: true
+profile: # 存储 select 选择记录
+ store-selected: true
+ store-fake-ip: true
+#geodata
+geodata-mode: true
+geodata-loader: memconservative
+geo-auto-update: true
+geo-update-interval: 24
+geox-url:
+ geoip: "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
+ geosite: "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
+# mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+# asn: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+dns:
+ enable: true
+ listen: 0.0.0.0:1053
+ ipv6: true
+ enhanced-mode: fake-ip
+ default-nameserver:
+  - 1.1.1.1
+  - 1.0.0.1
+  - 8.8.8.8
+  - 8.8.4.4
+ fake-ip-filter:
+  - '*.lan'
+  - localhost.ptlogin2.qq.com
+ nameserver:
+  - https://cloudflare-dns.com/dns-query
+  - https://dns.google/dns-query
+ nameserver-policy:
+  "geosite:cn,private":
+   - https://dns.alidns.com/dns-query
+   - https://doh.pub/dns-query
+  "rule-set:Mydirect":
+   - https://dns.alidns.com/dns-query
+   - https://doh.pub/dns-query
+sniffer:
+ enable: true
+ sniff:
+  HTTP:
+   ports: [80, 8080-8880]
+   override-destination: true
+  TLS:
+   ports: [443, 8443]
+  QUIC:
+   ports: [443, 8443]
+ skip-domain:
+  - Mijia Cloud
+mixed-port: 7890
+tun:
+ enable: true
+ stack: mixed
+ device: clash
+ auto-route: true
+ auto-detect-interface: true
+ dns-hijack:
+  - any:53
+  - tcp://any:53
+ntp:
+ enable: true
+ write-to-system: false
+ server: time.apple.com
+ port: 123
+ interval: 30
+proxy-groups:
+ - name: "✈️ 节点选择"
+   type: select
+   include-all-providers: true
+ - name: "💩 广告"
+   <<: *j
+ - name: "🌎 国外"
+   <<: *j
+ - name: "🧱 国内"
+   <<: *j
+ - name: "🎮 游戏下载"
+   <<: *j
+ - name: "🐟 未知"
+   <<: *j
+ - name: "🇭🇰 香港"
+   <<: *u
+   filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:港|香港|HongKong|HK|Hong Kong)).*$"
+   #exclude-filter:""
+ - name: "🇨🇳 台湾"
+   <<: *u
+   filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:台|新北|彰化|TW|Taiwan)).*$"
+   #exclude-filter:""
+ - name: "🇯🇵 日本"
+   <<: *u
+   filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan)).*$"
+   #exclude-filter:""
+ - name: "🇸🇬 新加坡"
+   <<: *u
+   filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:新加坡|坡|狮城|SG|Singapore)).*$"
+   #exclude-filter:""
+ - name: "🇰🇷 韩国"
+   <<: *u
+   filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:KR|Korea|KOR|首尔|韩|韓)).*$"
+   #exclude-filter:""
+ - name: "🇺🇲 美国"
+   <<: *u
+   filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:美|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|United States|(?<![a-zA-Z])US(?![a-zA-Z])|(?<![a-zA-Z])USA(?![a-zA-Z])|(?<![a-zA-Z])USD(?![a-zA-Z]))).*$"
+   #exclude-filter:""
+rules:
+ - RULE-SET,AD,💩 广告
+ - RULE-SET,Download,DIRECT
+ - RULE-SET,GameDownloadCN,DIRECT
+ - RULE-SET,GameDownload,🎮 游戏下载
+ - RULE-SET,Mydirect,🧱 国内
+ - RULE-SET,Myproxy,🌎 国外
+ - GEOSITE,gfw,🌎 国外
+ - GEOSITE,telegram,🌎 国外
+ - GEOSITE,google,🌎 国外
+ - GEOSITE,cn,🧱 国内
+ - GEOSITE,private,🧱 国内
+ - GEOSITE,geolocation-!cn,🌎 国外
+ - GEOIP,telegram,🌎 国外
+ - GEOIP,google,🌎 国外
+ - GEOIP,cn,🧱 国内
+ - GEOIP,private,🧱 国内
+ - MATCH,🐟 未知
+rule-providers:
+ AD:
+  <<: *r
+  url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml"
+  behavior: classical
+  path: ./providers/rule-provider_AD.yaml
+ Download:
+  <<: *r
+  url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download.yaml"
+  behavior: classical
+  path: ./providers/rule-provider_Download.yaml
+ GameDownloadCN:
+  <<: *r
+  url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/GameDownloadCN/GameDownloadCN.yaml"
+  behavior: classical
+  path: ./providers/rule-provider_GameDownloadCN.yaml
+ GameDownload:
+  <<: *r
+  url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/GameDownload/GameDownload.yaml"
+  behavior: classical
+  path: ./providers/rule-provider_GameDownload.yaml
+ Mydirect:
+  <<: *r
+  url: "https://raw.githubusercontent.com/Noah-Oliver/proxy-rule/main/rule/clash/Mydirect.yaml"
+  behavior: classical
+  path: ./providers/rule-provider_Mydirect.yaml
+ Myproxy:
+  <<: *r
+  url: "https://raw.githubusercontent.com/Noah-Oliver/proxy-rule/main/rule/clash/Myproxy.yaml"
+  behavior: classical
+  path: ./providers/rule-provider_Myproxy.yaml
