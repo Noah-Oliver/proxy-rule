@@ -23,15 +23,8 @@ proxy-providers:
 j: &j
   type: select
   proxies:
-   - DIRECT
-   - REJECT
-   - ✈️ 节点选择
-   - 🇭🇰 香港
-   - 🇨🇳 台湾
-   - 🇯🇵 日本
-   - 🇸🇬 新加坡
-   - 🇰🇷 韩国
-   - 🇺🇲 美国
+   - 🧱 国内
+   - 🌎 国外
 
 #特殊节点集
 u: &u
@@ -112,9 +105,22 @@ proxy-groups:
    type: select
    include-all-providers: true
  - name: "💩 广告"
-   <<: *j
+   type: select
+   proxies:
+    - REJECT
+    - 🧱 国内
+    - 🌎 国外
  - name: "🌎 国外"
-   <<: *j
+   type: select
+   proxies:
+    - 🧱 国内
+    - ✈️ 节点选择
+    - 🇭🇰 香港
+    - 🇨🇳 台湾
+    - 🇯🇵 日本
+    - 🇸🇬 新加坡
+    - 🇰🇷 韩国
+    - 🇺🇲 美国
  - name: "🧱 国内"
    <<: *j
  - name: "🎮 游戏下载"
