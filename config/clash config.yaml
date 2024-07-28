@@ -21,10 +21,10 @@ proxy-providers:
 
 #节点类别集
 j: &j
-  type: select
-  proxies:
-   - 🧱 国内
-   - 🌎 国外
+   type: select
+   proxies:
+    - 🌏 国内
+    - ✈️ 国外
 
 #特殊节点集
 u: &u
@@ -101,31 +101,34 @@ ntp:
  port: 123
  interval: 30
 proxy-groups:
- - name: "✈️ 节点选择"
+ - name: "✡️ 节点选择"
    type: select
    include-all-providers: true
- - name: "💩 广告"
+ - name: "🚫 广告"
    type: select
    proxies:
     - REJECT
-    - 🧱 国内
-    - 🌎 国外
- - name: "🌎 国外"
+    - 🌏 国内
+    - ✈️ 国外
+ - name: "✈️ 国外"
    type: select
    proxies:
-    - 🧱 国内
-    - ✈️ 节点选择
+    - DIRECT
+    - ✡️ 节点选择
     - 🇭🇰 香港
     - 🇨🇳 台湾
     - 🇯🇵 日本
     - 🇸🇬 新加坡
     - 🇰🇷 韩国
     - 🇺🇲 美国
- - name: "🧱 国内"
+ - name: "🌏 国内"
+   type: select
+   proxies:
+    - DIRECT
+    - ✈️ 国外
+ - name: "⬇️ 游戏下载"
    <<: *j
- - name: "🎮 游戏下载"
-   <<: *j
- - name: "🐟 未知"
+ - name: "🌐 未知"
    <<: *j
  - name: "🇭🇰 香港"
    <<: *u
@@ -152,21 +155,21 @@ proxy-groups:
    filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:美|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|United States|(?<![a-zA-Z])US(?![a-zA-Z])|(?<![a-zA-Z])USA(?![a-zA-Z])|(?<![a-zA-Z])USD(?![a-zA-Z]))).*$"
    #exclude-filter:""
 rules:
- - RULE-SET,AD,💩 广告
+ - RULE-SET,AD,🚫 广告
  - RULE-SET,Download,DIRECT
  - RULE-SET,GameDownloadCN,DIRECT
- - RULE-SET,GameDownload,🎮 游戏下载
- - RULE-SET,Mydirect,🧱 国内
- - RULE-SET,Myproxy,🌎 国外
- - RULE-SET,gfw,🌎 国外
- - RULE-SET,telegram,🌎 国外
- - RULE-SET,google,🌎 国外
- - RULE-SET,direct,🧱 国内
- - RULE-SET,lancidr,🧱 国内
- - RULE-SET,cncidr,🧱 国内
- - RULE-SET,private,🧱 国内
- - RULE-SET,proxy,🌎 国外
- - MATCH,🐟 未知
+ - RULE-SET,GameDownload,⬇️ 游戏下载
+ - RULE-SET,Mydirect,🌏 国内
+ - RULE-SET,Myproxy,✈️ 国外
+ - RULE-SET,gfw,✈️ 国外
+ - RULE-SET,telegram,✈️ 国外
+ - RULE-SET,google,✈️ 国外
+ - RULE-SET,direct,🌏 国内
+ - RULE-SET,lancidr,🌏 国内
+ - RULE-SET,cncidr,🌏 国内
+ - RULE-SET,private,🌏 国内
+ - RULE-SET,proxy,✈️ 国外
+ - MATCH,🌐 未知
 rule-providers:
  AD:
   <<: *r
