@@ -66,8 +66,8 @@ dns:
   - '*.lan'
   - localhost.ptlogin2.qq.com
  nameserver:
-  - https://cloudflare-dns.com/dns-query
   - https://dns.google/dns-query
+  - https://cloudflare-dns.com/dns-query
  nameserver-policy:
   "rule-set:direct,Mydirect,private":
    - https://dns.alidns.com/dns-query
@@ -198,13 +198,13 @@ rule-providers:
   path: ./providers/rule-provider_gfw.yaml
  telegram:
   <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
-  behavior: ipcidr
+  url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml"
+  behavior: classical
   path: ./providers/rule-provider_telegram.yaml
  google:
   <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
-  behavior: domain
+  url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml"
+  behavior: classical
   path: ./providers/rule-provider_google.yaml
  proxy:
   <<: *r
