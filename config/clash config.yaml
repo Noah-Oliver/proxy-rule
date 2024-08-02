@@ -59,18 +59,15 @@ dns:
  ipv6: true
  enhanced-mode: fake-ip
  default-nameserver:
-  - 223.5.5.5
-  - 223.6.6.6
-  - 119.29.29.29
+  - https://1.12.12.12/dns-query
+  - https://120.53.53.53/dns-query
  fake-ip-filter:
   - '*.lan'
   - localhost.ptlogin2.qq.com
  nameserver:
   - https://dns.google/dns-query
-  - https://cloudflare-dns.com/dns-query
  nameserver-policy:
   "rule-set:direct,Mydirect,private":
-   - https://dns.alidns.com/dns-query
    - https://doh.pub/dns-query
 sniffer:
  enable: true
