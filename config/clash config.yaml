@@ -65,12 +65,12 @@ dns:
   - '*.lan'
   - localhost.ptlogin2.qq.com
  nameserver:
-  - https://1.1.1.1/dns-query
-  - https://1.0.0.1/dns-query
+  - https://1.12.12.12/dns-query
+  - https://120.53.53.53/dns-query
  nameserver-policy:
-  "rule-set:direct,Mydirect,private":
-   - https://1.12.12.12/dns-query
-   - https://120.53.53.53/dns-query
+  "rule-set:Myproxy,gfw,telegram,google,proxy":
+   - https://1.1.1.1/dns-query
+   - https://1.0.0.1/dns-query
 sniffer:
  enable: true
  sniff:
