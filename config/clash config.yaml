@@ -17,7 +17,6 @@ proxy-providers:
  provider1:
   <<: *p
   url: ""
-#  path: ./proxies/provider1.yaml
 
 #节点类别集
 j: &j
@@ -72,10 +71,10 @@ dns:
   - https://dns.google/dns-query
   - https://cloudflare-dns.com/dns-query
  nameserver-policy:
-  "rule-set:Mydirect,direct,private":
+  "rule-set:Mydirect,geosite-cn":
    - https://doh.pub/dns-query
    - https://dns.alidns.com/dns-query
-  "rule-set:Myproxy,gfw,telegram,google,proxy":
+  "rule-set:Myproxy,geosite-!cn":
    - https://dns.google/dns-query
    - https://cloudflare-dns.com/dns-query
  proxy-server-nameserver:
@@ -168,85 +167,66 @@ rules:
  - RULE-SET,Download,DIRECT
  - RULE-SET,GameDownloadCN,DIRECT
  - RULE-SET,GameDownload,⬇️ 游戏下载
+
  - RULE-SET,Mydirect,🌏 国内
  - RULE-SET,Myproxy,✈️ 国外
- - RULE-SET,gfw,✈️ 国外
- - RULE-SET,telegram,✈️ 国外
- - RULE-SET,google,✈️ 国外
- - RULE-SET,direct,🌏 国内
- - RULE-SET,lancidr,🌏 国内
- - RULE-SET,cncidr,🌏 国内
- - RULE-SET,private,🌏 国内
- - RULE-SET,proxy,✈️ 国外
+ - RULE-SET,geosite-cn,🌏 国内
+ - RULE-SET,geosite-!cn,✈️ 国外
+
+ - RULE-SET,geoip-cn,🌏 国内
  - MATCH,🌐 未知
 rule-providers:
  AD:
   <<: *r
   url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml"
   behavior: classical
-  path: ./providers/rule-provider_AD.yaml
+  format: yaml
+
  Download:
   <<: *r
   url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download.yaml"
   behavior: classical
-  path: ./providers/rule-provider_Download.yaml
+  format: yaml
+
  GameDownloadCN:
   <<: *r
   url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/GameDownloadCN/GameDownloadCN.yaml"
   behavior: classical
-  path: ./providers/rule-provider_GameDownloadCN.yaml
+  format: yaml
+
  GameDownload:
   <<: *r
   url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/GameDownload/GameDownload.yaml"
   behavior: classical
-  path: ./providers/rule-provider_GameDownload.yaml
- gfw:
+  format: yaml
+
+ geosite-!cn:
   <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt"
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs"
   behavior: domain
-  path: ./providers/rule-provider_gfw.yaml
- telegram:
+  format: mrs
+
+ geosite-cn:
   <<: *r
-  url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml"
-  behavior: classical
-  path: ./providers/rule-provider_telegram.yaml
- google:
-  <<: *r
-  url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml"
-  behavior: classical
-  path: ./providers/rule-provider_google.yaml
- proxy:
-  <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/cn.mrs"
   behavior: domain
-  path: ./providers/rule-provider_proxy.yaml
- direct:
+  format: mrs
+  
+ geoip-cn:
   <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt"
-  behavior: domain
-  path: ./providers/rule-provider_direct.yaml
- lancidr:
-  <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt"
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.mrs"
   behavior: ipcidr
-  path: ./providers/rule-provider_lancidr.yaml
- cncidr:
-  <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
-  behavior: ipcidr
-  path: ./providers/rule-provider_cncidr.yaml
- private:
-  <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt"
-  behavior: domain
-  path: ./providers/rule-provider_private.yaml
+  format: mrs
+
  Mydirect:
   <<: *r
   url: "https://raw.githubusercontent.com/Noah-Oliver/proxy-rule/main/rule/clash/Mydirect.yaml"
   behavior: classical
-  path: ./providers/rule-provider_Mydirect.yaml
+  format: yaml
+
  Myproxy:
   <<: *r
   url: "https://raw.githubusercontent.com/Noah-Oliver/proxy-rule/main/rule/clash/Myproxy.yaml"
   behavior: classical
-  path: ./providers/rule-provider_Myproxy.yaml
+  format: yaml
+
