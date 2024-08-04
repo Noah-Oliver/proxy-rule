@@ -71,10 +71,10 @@ dns:
   - https://dns.google/dns-query
   - https://cloudflare-dns.com/dns-query
  nameserver-policy:
-  "rule-set:Mydirect,geosite-cn":
+  "rule-set:Mydirect,site-cn":
    - https://doh.pub/dns-query
    - https://dns.alidns.com/dns-query
-  "rule-set:Myproxy,geosite-!cn":
+  "rule-set:Myproxy,site-gfw,site-geosite-!cn,site-td-!cn":
    - https://dns.google/dns-query
    - https://cloudflare-dns.com/dns-query
  proxy-server-nameserver:
@@ -170,10 +170,13 @@ rules:
 
  - RULE-SET,Mydirect,🌏 国内
  - RULE-SET,Myproxy,✈️ 国外
- - RULE-SET,geosite-cn,🌏 国内
- - RULE-SET,geosite-!cn,✈️ 国外
+ - RULE-SET,site-gfw,✈️ 国外
+ - RULE-SET,site-cn,🌏 国内
+ - RULE-SET,site-geosite-!cn,✈️ 国外
+ - RULE-SET,site-td-!cn,✈️ 国外
 
- - RULE-SET,geoip-cn,🌏 国内
+ - RULE-SET,ip-telegram,✈️ 国外
+ - RULE-SET,ip-cn,🌏 国内
  - MATCH,🌐 未知
 rule-providers:
  AD:
@@ -200,24 +203,6 @@ rule-providers:
   behavior: classical
   format: yaml
 
- geosite-!cn:
-  <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs"
-  behavior: domain
-  format: mrs
-
- geosite-cn:
-  <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/cn.mrs"
-  behavior: domain
-  format: mrs
-  
- geoip-cn:
-  <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.mrs"
-  behavior: ipcidr
-  format: mrs
-
  Mydirect:
   <<: *r
   url: "https://raw.githubusercontent.com/Noah-Oliver/proxy-rule/main/rule/clash/Mydirect.yaml"
@@ -230,3 +215,38 @@ rule-providers:
   behavior: classical
   format: yaml
 
+ site-gfw:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.mrs"
+  behavior: domain
+  format: mrs
+
+ site-geosite-!cn:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs"
+  behavior: domain
+  format: mrs
+
+ site-td-!cn:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/tld-!cn.mrs"
+  behavior: domain
+  format: mrs
+
+ site-cn:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/cn.mrs"
+  behavior: domain
+  format: mrs
+
+ ip-cn:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.mrs"
+  behavior: ipcidr
+  format: mrs
+
+ ip-telegram:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/telegram.mrs"
+  behavior: ipcidr
+  format: mrs
