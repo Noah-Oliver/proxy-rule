@@ -18,12 +18,6 @@ proxy-providers:
   <<: *p
   url: ""
 
-#节点类别集
-j: &j
-   type: select
-   proxies:
-    - 🌏 国内
-    - ✈️ 国外
 
 #特殊节点集
 u: &u
@@ -71,10 +65,10 @@ dns:
   - https://dns.google/dns-query
   - https://cloudflare-dns.com/dns-query
  nameserver-policy:
-  "rule-set:Mydirect,site-cn":
+  "rule-set:site-geolocation-cn,site-tld-cn":
    - https://doh.pub/dns-query
    - https://dns.alidns.com/dns-query
-  "rule-set:Myproxy,site-gfw,site-geosite-!cn,site-td-!cn":
+  "rule-set:site-geolocation-!cn,site-tld-!cn,site-gfw":
    - https://dns.google/dns-query
    - https://cloudflare-dns.com/dns-query
  proxy-server-nameserver:
@@ -109,35 +103,53 @@ ntp:
  port: 123
  interval: 30
 proxy-groups:
- - name: "✡️ 节点选择"
+ - name: "🪁 节点选择"
    type: select
    include-all-providers: true
- - name: "🚫 广告"
-   type: select
-   proxies:
-    - REJECT
-    - 🌏 国内
-    - ✈️ 国外
  - name: "✈️ 国外"
    type: select
    proxies:
     - DIRECT
-    - ✡️ 节点选择
+    - 🪁 节点选择
     - 🇭🇰 香港
     - 🇨🇳 台湾
     - 🇯🇵 日本
     - 🇸🇬 新加坡
     - 🇰🇷 韩国
     - 🇺🇲 美国
+ - name: "🎮 游戏"
+   type: select
+   proxies:
+    - 🌏 国内
+    - 🪁 节点选择
+    - 🇭🇰 香港
+    - 🇨🇳 台湾
+    - 🇯🇵 日本
+    - 🇸🇬 新加坡
+    - 🇰🇷 韩国
+    - 🇺🇲 美国
+ - name: "⚡ 游戏下载"
+   type: select
+   proxies:
+    - 🌏 国内
+    - ✈️ 国外
+    - 🎮 游戏
  - name: "🌏 国内"
    type: select
    proxies:
     - DIRECT
     - ✈️ 国外
- - name: "⬇️ 游戏下载"
-   <<: *j
+ - name: "💩 广告"
+   type: select
+   proxies:
+    - REJECT
+    - 🌏 国内
+    - ✈️ 国外
  - name: "🌐 未知"
-   <<: *j
+   type: select
+   proxies:
+    - 🌏 国内
+    - ✈️ 国外
  - name: "🇭🇰 香港"
    <<: *u
    filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:港|香港|HongKong|HK|Hong Kong)).*$"
@@ -163,55 +175,61 @@ proxy-groups:
    filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:美|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|United States|(?<![a-zA-Z])US(?![a-zA-Z])|(?<![a-zA-Z])USA(?![a-zA-Z])|(?<![a-zA-Z])USD(?![a-zA-Z]))).*$"
    #exclude-filter:""
 rules:
- - RULE-SET,AD,🚫 广告
  - RULE-SET,Download,DIRECT
- - RULE-SET,GameDownloadCN,DIRECT
- - RULE-SET,GameDownload,⬇️ 游戏下载
+ - AND,((NOT,((RULE-SET,AD-direct))),(RULE-SET,AD)),💩 广告
+ - RULE-SET,site-gfw,✈️ 国外
 
  - RULE-SET,Mydirect,🌏 国内
  - RULE-SET,Myproxy,✈️ 国外
- - RULE-SET,site-gfw,✈️ 国外
- - RULE-SET,site-cn,🌏 国内
- - RULE-SET,site-geosite-!cn,✈️ 国外
- - RULE-SET,site-td-!cn,✈️ 国外
+
+ - AND,((NOT,((OR,((RULE-SET,site-geolocation-cn),(RULE-SET,site-tld-cn),(RULE-SET,ip-cn))))),(RULE-SET,GameDownload)),⚡ 游戏下载
+ - AND,((NOT,((OR,((RULE-SET,site-geolocation-cn),(RULE-SET,site-tld-cn),(RULE-SET,ip-cn))))),(RULE-SET,site-category-games)),🎮 游戏
+ - RULE-SET,site-google,✈️ 国外
+
+ - RULE-SET,site-geolocation-cn,🌏 国内
+ - RULE-SET,site-geolocation-!cn,✈️ 国外
+ - RULE-SET,site-tld-cn,🌏 国内
+ - RULE-SET,site-tld-!cn,✈️ 国外
 
  - RULE-SET,ip-telegram,✈️ 国外
+ - RULE-SET,ip-google,✈️ 国外
+
  - RULE-SET,ip-cn,🌏 国内
  - MATCH,🌐 未知
 rule-providers:
+ AD-direct:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct.yaml"
+  behavior: classical
+  format: yaml
+
  AD:
   <<: *r
-  url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml"
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml"
   behavior: classical
   format: yaml
 
  Download:
   <<: *r
-  url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download.yaml"
-  behavior: classical
-  format: yaml
-
- GameDownloadCN:
-  <<: *r
-  url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/GameDownloadCN/GameDownloadCN.yaml"
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download.yaml"
   behavior: classical
   format: yaml
 
  GameDownload:
   <<: *r
-  url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/GameDownload/GameDownload.yaml"
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload.yaml"
   behavior: classical
   format: yaml
 
  Mydirect:
   <<: *r
-  url: "https://raw.githubusercontent.com/Noah-Oliver/proxy-rule/main/rule/clash/Mydirect.yaml"
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mydirect.yaml"
   behavior: classical
   format: yaml
 
  Myproxy:
   <<: *r
-  url: "https://raw.githubusercontent.com/Noah-Oliver/proxy-rule/main/rule/clash/Myproxy.yaml"
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Myproxy.yaml"
   behavior: classical
   format: yaml
 
@@ -221,21 +239,39 @@ rule-providers:
   behavior: domain
   format: mrs
 
- site-geosite-!cn:
+ site-category-games:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-games.mrs"
+  behavior: domain
+  format: mrs
+
+ site-geolocation-cn:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.mrs"
+  behavior: domain
+  format: mrs
+
+ site-geolocation-!cn:
   <<: *r
   url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs"
   behavior: domain
   format: mrs
 
- site-td-!cn:
+ site-tld-!cn:
   <<: *r
   url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/tld-!cn.mrs"
   behavior: domain
   format: mrs
 
- site-cn:
+ site-tld-cn:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/cn.mrs"
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/tld-cn.mrs"
+  behavior: domain
+  format: mrs
+
+ site-google:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/google.mrs"
   behavior: domain
   format: mrs
 
@@ -248,5 +284,11 @@ rule-providers:
  ip-telegram:
   <<: *r
   url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/telegram.mrs"
+  behavior: ipcidr
+  format: mrs
+
+ ip-google:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/google.mrs"
   behavior: ipcidr
   format: mrs
