@@ -128,7 +128,7 @@ proxy-groups:
     - 🇸🇬 新加坡
     - 🇰🇷 韩国
     - 🇺🇲 美国
- - name: "⚡ 游戏下载"
+ - name: "⚡ 平台游戏下载"
    type: select
    proxies:
     - 🌏 国内
@@ -182,7 +182,7 @@ rules:
  - RULE-SET,Mydirect,🌏 国内
  - RULE-SET,Myproxy,✈️ 国外
 
- - AND,((NOT,((OR,((RULE-SET,site-geolocation-cn),(RULE-SET,site-tld-cn),(RULE-SET,ip-cn))))),(RULE-SET,GameDownload)),⚡ 游戏下载
+ - AND,((NOT,((OR,((RULE-SET,site-geolocation-cn),(RULE-SET,site-tld-cn),(RULE-SET,ip-cn))))),(RULE-SET,GameDownload)),⚡ 平台游戏下载
  - AND,((NOT,((OR,((RULE-SET,site-geolocation-cn),(RULE-SET,site-tld-cn),(RULE-SET,ip-cn))))),(RULE-SET,site-category-games)),🎮 游戏
  - RULE-SET,site-google,✈️ 国外
 
