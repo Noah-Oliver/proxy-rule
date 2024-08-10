@@ -181,7 +181,7 @@ rules:
  - RULE-SET,Mydirect,🎯 直连
  - RULE-SET,Myproxy,✈️ 代理
 
- - AND,((NOT,((OR,((RULE-SET,site-geolocation-cn),(RULE-SET,site-tld-cn),(RULE-SET,ip-cn))))),(RULE-SET,GameDownload)),⚡ 平台游戏下载
+ - RULE-SET,GameDownload,⚡ 平台游戏下载
  - AND,((NOT,((OR,((RULE-SET,site-geolocation-cn),(RULE-SET,site-tld-cn),(RULE-SET,ip-cn))))),(RULE-SET,site-category-games)),🎮 国外游戏
 
  - RULE-SET,site-geolocation-cn,🎯 直连
