@@ -132,8 +132,7 @@ proxy-groups:
    type: select
    proxies:
     - 🎯 直连
-    - ✈️ 代理
-    - 🎮 游戏
+    - 🎮 国外游戏
  - name: "🎯 直连"
    type: select
    proxies:
