@@ -51,6 +51,7 @@ dns:
  listen: 0.0.0.0:1053
  ipv6: true
  enhanced-mode: fake-ip
+ fake-ip-range: 198.18.0.1/16
  default-nameserver:
   - https://1.12.12.12/dns-query
   - https://120.53.53.53/dns-query
@@ -76,6 +77,7 @@ dns:
   - https://dns.alidns.com/dns-query
 sniffer:
  enable: true
+ override-destination: false
  sniff:
   HTTP:
    ports: [80, 8080-8880]
@@ -84,13 +86,12 @@ sniffer:
    ports: [443, 8443]
   QUIC:
    ports: [443, 8443]
- skip-domain:
-  - Mijia Cloud
 mixed-port: 7890
 tun:
  enable: true
- stack: mixed
+ stack: system
  device: clash
+ mtu: 9000
  auto-route: true
  auto-detect-interface: true
  dns-hijack:
