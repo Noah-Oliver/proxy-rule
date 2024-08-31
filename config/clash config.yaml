@@ -113,10 +113,7 @@ proxy-groups:
     - DIRECT
     - 📡 手动
     - 🇭🇰 香港
-    - 🇨🇳 台湾
     - 🇯🇵 日本
-    - 🇸🇬 新加坡
-    - 🇰🇷 韩国
     - 🇺🇲 美国
  - name: "🎮 国外游戏"
    type: select
@@ -124,10 +121,7 @@ proxy-groups:
     - 🎯 直连
     - 📡 手动
     - 🇭🇰 香港
-    - 🇨🇳 台湾
     - 🇯🇵 日本
-    - 🇸🇬 新加坡
-    - 🇰🇷 韩国
     - 🇺🇲 美国
  - name: "⚡ 平台游戏下载"
    type: select
@@ -154,21 +148,9 @@ proxy-groups:
    <<: *u
    filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:港|香港|HongKong|HK|Hong Kong)).*$"
    #exclude-filter:""
- - name: "🇨🇳 台湾"
-   <<: *u
-   filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:台|新北|彰化|TW|Taiwan)).*$"
-   #exclude-filter:""
  - name: "🇯🇵 日本"
    <<: *u
    filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan)).*$"
-   #exclude-filter:""
- - name: "🇸🇬 新加坡"
-   <<: *u
-   filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:新加坡|坡|狮城|SG|Singapore)).*$"
-   #exclude-filter:""
- - name: "🇰🇷 韩国"
-   <<: *u
-   filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:KR|Korea|KOR|首尔|韩|韓)).*$"
    #exclude-filter:""
  - name: "🇺🇲 美国"
    <<: *u
