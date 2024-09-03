@@ -104,78 +104,86 @@ ntp:
  port: 123
  interval: 30
 proxy-groups:
- - name: "📡 手动"
-   type: select
-   include-all-providers: true
- - name: "✈️ 代理"
+ - name: "代理"
    type: select
    proxies:
     - DIRECT
-    - 📡 手动
-    - 🇭🇰 香港
-    - 🇯🇵 日本
-    - 🇺🇲 美国
- - name: "🎮 国外游戏"
-   type: select
-   proxies:
-    - 🎯 直连
-    - 📡 手动
-    - 🇭🇰 香港
-    - 🇯🇵 日本
-    - 🇺🇲 美国
- - name: "⚡ 平台游戏下载"
-   type: select
-   proxies:
-    - 🎯 直连
-    - 🎮 国外游戏
- - name: "🎯 直连"
+    - 香港
+    - 日本
+    - 美国
+   use:
+    - provider1
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png
+ - name: "国外游戏"
    type: select
    proxies:
     - DIRECT
-    - ✈️ 代理
- - name: "💩 广告"
+    - 香港
+    - 日本
+    - 美国
+   use:
+    - provider1
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Game.png
+ - name: "平台游戏下载"
+   type: select
+   proxies:
+    - DIRECT
+    - 国外游戏
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png
+ - name: "直连"
+   type: select
+   proxies:
+    - DIRECT
+    - 代理
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/China.png
+ - name: "广告"
    type: select
    proxies:
     - REJECT
-    - 🎯 直连
-    - ✈️ 代理
- - name: "🌐 未知"
+    - DIRECT
+    - 代理
+   icon: https://github.com/NB921/picture/raw/main/AD3.png
+ - name: "未知"
    type: select
    proxies:
-    - 🎯 直连
-    - ✈️ 代理
- - name: "🇭🇰 香港"
+    - DIRECT
+    - 代理
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Blackhole.png
+ - name: "香港"
    <<: *u
    filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:港|香港|HongKong|HK|Hong Kong)).*$"
    #exclude-filter:""
- - name: "🇯🇵 日本"
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png
+ - name: "日本"
    <<: *u
    filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan)).*$"
    #exclude-filter:""
- - name: "🇺🇲 美国"
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png
+ - name: "美国"
    <<: *u
    filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:美|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|United States|(?<![a-zA-Z])US(?![a-zA-Z])|(?<![a-zA-Z])USA(?![a-zA-Z])|(?<![a-zA-Z])USD(?![a-zA-Z]))).*$"
    #exclude-filter:""
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png
 rules:
  - RULE-SET,Download,DIRECT
- - AND,((NOT,((RULE-SET,AD-direct))),(RULE-SET,AD)),💩 广告
- - RULE-SET,site-gfw,✈️ 代理
+ - AND,((NOT,((RULE-SET,AD-direct))),(RULE-SET,AD)),广告
+ - RULE-SET,site-gfw,代理
 
- - RULE-SET,Mydirect,🎯 直连
- - RULE-SET,Myproxy,✈️ 代理
+ - RULE-SET,Mydirect,直连
+ - RULE-SET,Myproxy,代理
 
- - RULE-SET,GameDownload,⚡ 平台游戏下载
- - AND,((NOT,((OR,((RULE-SET,site-geolocation-cn),(RULE-SET,site-tld-cn),(RULE-SET,ip-cn))))),(RULE-SET,site-category-games)),🎮 国外游戏
+ - RULE-SET,GameDownload,平台游戏下载
+ - AND,((NOT,((OR,((RULE-SET,site-geolocation-cn),(RULE-SET,site-tld-cn),(RULE-SET,ip-cn))))),(RULE-SET,site-category-games)),国外游戏
 
- - RULE-SET,site-geolocation-cn,🎯 直连
- - RULE-SET,site-geolocation-!cn,✈️ 代理
- - RULE-SET,site-tld-cn,🎯 直连
- - RULE-SET,site-tld-!cn,✈️ 代理
+ - RULE-SET,site-geolocation-cn,直连
+ - RULE-SET,site-geolocation-!cn,代理
+ - RULE-SET,site-tld-cn,直连
+ - RULE-SET,site-tld-!cn,代理
 
- - RULE-SET,ip-telegram,✈️ 代理
+ - RULE-SET,ip-telegram,代理
 
- - RULE-SET,ip-cn,🎯 直连
- - MATCH,🌐 未知
+ - RULE-SET,ip-cn,直连
+ - MATCH,未知
 rule-providers:
  AD-direct:
   <<: *r
