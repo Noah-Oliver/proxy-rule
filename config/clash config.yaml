@@ -108,9 +108,9 @@ proxy-groups:
    type: select
    proxies:
     - DIRECT
-    - 香港
-    - 日本
-    - 美国
+    - url-test 香港
+    - url-test 日本
+    - url-test 美国
    use:
     - provider1
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png
@@ -118,9 +118,9 @@ proxy-groups:
    type: select
    proxies:
     - DIRECT
-    - 香港
-    - 日本
-    - 美国
+    - url-test 香港
+    - url-test 日本
+    - url-test 美国
    use:
     - provider1
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Game.png
@@ -136,6 +136,12 @@ proxy-groups:
     - DIRECT
     - 代理
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/China.png
+ - name: "未知"
+   type: select
+   proxies:
+    - DIRECT
+    - 代理
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Blackhole.png
  - name: "广告"
    type: select
    proxies:
@@ -143,23 +149,17 @@ proxy-groups:
     - DIRECT
     - 代理
    icon: https://github.com/NB921/picture/raw/main/AD3.png
- - name: "未知"
-   type: select
-   proxies:
-    - DIRECT
-    - 代理
-   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Blackhole.png
- - name: "香港"
+ - name: "url-test 香港"
    <<: *u
    filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:港|香港|HongKong|HK|Hong Kong)).*$"
    #exclude-filter:""
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png
- - name: "日本"
+ - name: "url-test 日本"
    <<: *u
    filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan)).*$"
    #exclude-filter:""
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png
- - name: "美国"
+ - name: "url-test 美国"
    <<: *u
    filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:美|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|United States|(?<![a-zA-Z])US(?![a-zA-Z])|(?<![a-zA-Z])USA(?![a-zA-Z])|(?<![a-zA-Z])USD(?![a-zA-Z]))).*$"
    #exclude-filter:""
