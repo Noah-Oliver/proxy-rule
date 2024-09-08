@@ -243,7 +243,7 @@ rule-providers:
 
  site-category-app-download:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/blob/meta/geo/geosite/category-android-app-download.mrs"
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-android-app-download.mrs"
   behavior: domain
   format: mrs
 
