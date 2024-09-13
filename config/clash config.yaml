@@ -135,12 +135,14 @@ proxy-groups:
    proxies:
     - DIRECT
     - 代理
+    - 国外游戏
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/China.png
  - name: "未知"
    type: select
    proxies:
     - DIRECT
     - 代理
+    - 国外游戏
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Blackhole.png
  - name: "广告"
    type: select
@@ -148,6 +150,7 @@ proxy-groups:
     - REJECT
     - DIRECT
     - 代理
+    - 国外游戏
    icon: https://github.com/NB921/picture/raw/main/AD3.png
  - name: "url-test 香港"
    <<: *u
