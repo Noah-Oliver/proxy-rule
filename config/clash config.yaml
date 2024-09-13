@@ -203,7 +203,7 @@ rule-providers:
   <<: *r
   url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/applications.txt"
   behavior: classical
-  format: text
+  format: yaml
 
  GameDownload:
   <<: *r
@@ -227,7 +227,7 @@ rule-providers:
   <<: *r
   url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/gfw.txt"
   behavior: domain
-  format: text
+  format: yaml
 
  site-games:
   <<: *r
@@ -239,28 +239,28 @@ rule-providers:
   <<: *r
   url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt"
   behavior: domain
-  format: text
+  format: yaml
 
  site-proxy:
   <<: *r
   url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt"
   behavior: domain
-  format: text
+  format: yaml
 
  site-!cn:
   <<: *r
   url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt"
   behavior: domain
-  format: text
+  format: yaml
 
  ip-cn:
   <<: *r
   url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt"
   behavior: ipcidr
-  format: text
+  format: yaml
 
  ip-telegram:
   <<: *r
   url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/telegramcidr.txt"
   behavior: ipcidr
-  format: text
+  format: yaml
