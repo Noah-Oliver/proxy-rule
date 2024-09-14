@@ -16,7 +16,7 @@ p: &p
 proxy-providers:
  provider1:
   <<: *p
-  url: ""
+  url: "&flag=meta&types=all"
 
 
 #特殊节点集
