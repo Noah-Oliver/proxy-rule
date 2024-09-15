@@ -1,1 +1,282 @@
+#订阅链接集
+p: &p
+ type: http
+ interval: 86400
+ #proxy: DIRECT
+ health-check:
+  enable: true
+  url: https://www.gstatic.com/generate_204
+  interval: 300
+ override:
+  udp: true
+  ip-version: ipv4-prefer
+  skip-cert-verify: false
 
+#订阅链接
+proxy-providers:
+ provider1:
+  <<: *p
+  url: "&flag=meta&types=all"
+
+
+#特殊节点集
+u: &u
+ type: url-test
+ url: 'https://www.gstatic.com/generate_204'
+ interval: 300
+ tolerance: 200
+ lazy: false
+ include-all-providers: true
+ hidden: false
+
+#规则集
+r: &r
+ type: http
+ interval: 86400
+ #proxy: DIRECT
+
+#主配置
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: true
+external-controller: 127.0.0.1:9090
+unified-delay: true
+tcp-concurrent: true
+profile: # 存储 select 选择记录
+ store-selected: true
+ store-fake-ip: true
+dns:
+ enable: true
+ listen: 0.0.0.0:1053
+ ipv6: true
+ enhanced-mode: fake-ip
+ fake-ip-range: 198.18.0.1/16
+ default-nameserver:
+  - https://1.12.12.12/dns-query
+  - https://120.53.53.53/dns-query
+  - https://223.5.5.5/dns-query
+  - https://223.6.6.6/dns-query
+ fake-ip-filter:
+  - '*.lan'
+  - localhost.ptlogin2.qq.com
+ nameserver:
+  - https://doh.pub/dns-query
+  - https://dns.alidns.com/dns-query
+  - https://dns.google/dns-query
+  - https://cloudflare-dns.com/dns-query
+ nameserver-policy:
+  "rule-set:Mydirect,site-direct":
+   - https://doh.pub/dns-query
+   - https://dns.alidns.com/dns-query
+  "rule-set:Myproxy,site-gfw,site-proxy,site-!cn":
+   - https://dns.google/dns-query
+   - https://cloudflare-dns.com/dns-query
+ proxy-server-nameserver:
+  - https://doh.pub/dns-query
+  - https://dns.alidns.com/dns-query
+sniffer:
+ enable: true
+ override-destination: false
+ sniff:
+  HTTP:
+   ports: [80, 8080-8880]
+   override-destination: true
+  TLS:
+   ports: [443, 8443]
+  QUIC:
+   ports: [443, 8443]
+mixed-port: 7890
+tun:
+ enable: true
+ stack: system
+ device: clash
+ mtu: 9000
+ auto-route: true
+ auto-detect-interface: true
+ dns-hijack:
+  - any:53
+  - tcp://any:53
+ntp:
+ enable: true
+ write-to-system: false
+ server: time.apple.com
+ port: 123
+ interval: 30
+proxy-groups:
+ - name: "代理"
+   type: select
+   proxies:
+    - DIRECT
+    - url-test 香港
+    - url-test 日本
+    - url-test 美国
+   use:
+    - provider1
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png
+ - name: "GPT"
+   type: select
+   proxies:
+    - DIRECT
+    - 代理
+    - url-test 香港
+    - url-test 日本
+    - url-test 美国
+   icon: https://github.com/NB921/picture/raw/main/chatgpt.png
+ - name: "国外游戏"
+   type: select
+   proxies:
+    - DIRECT
+    - url-test 香港
+    - url-test 日本
+    - url-test 美国
+   use:
+    - provider1
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Game.png
+ - name: "平台游戏下载"
+   type: select
+   proxies:
+    - DIRECT
+    - 国外游戏
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png
+ - name: "直连"
+   type: select
+   proxies:
+    - DIRECT
+    - 代理
+    - 国外游戏
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/China.png
+ - name: "未知"
+   type: select
+   proxies:
+    - DIRECT
+    - 代理
+    - 国外游戏
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Blackhole.png
+ - name: "广告"
+   type: select
+   proxies:
+    - REJECT
+    - DIRECT
+    - 代理
+    - 国外游戏
+   icon: https://github.com/NB921/picture/raw/main/AD3.png
+ - name: "url-test 香港"
+   <<: *u
+   filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:港|香港|HongKong|HK|Hong Kong)).*$"
+   #exclude-filter:""
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png
+ - name: "url-test 日本"
+   <<: *u
+   filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan)).*$"
+   #exclude-filter:""
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png
+ - name: "url-test 美国"
+   <<: *u
+   filter: "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:美|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|United States|(?<![a-zA-Z])US(?![a-zA-Z])|(?<![a-zA-Z])USA(?![a-zA-Z])|(?<![a-zA-Z])USD(?![a-zA-Z]))).*$"
+   #exclude-filter:""
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png
+rules:
+ - RULE-SET,Download,DIRECT
+ - AND,((NOT,((RULE-SET,AD-direct))),(RULE-SET,AD)),广告
+ - RULE-SET,site-gfw,代理
+
+ - RULE-SET,Mydirect,直连
+ - RULE-SET,Myproxy,代理
+
+ - RULE-SET,GameDownload,平台游戏下载
+ - RULE-SET,site-GPT,GPT
+ - AND,((NOT,((RULE-SET,site-direct))),(RULE-SET,site-games)),国外游戏
+
+ - RULE-SET,site-direct,直连
+ - RULE-SET,site-proxy,代理
+ - RULE-SET,site-!cn,代理
+
+ - RULE-SET,ip-telegram,代理
+ - RULE-SET,ip-cn,直连
+
+ - MATCH,未知
+rule-providers:
+ AD-direct:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct.yaml"
+  behavior: classical
+  format: yaml
+
+ AD:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml"
+  behavior: classical
+  format: yaml
+
+ Download:
+  <<: *r
+  url: "https://github.com/Loyalsoldier/clash-rules/raw/release/applications.txt"
+  behavior: classical
+  format: yaml
+
+ GameDownload:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload.yaml"
+  behavior: classical
+  format: yaml
+
+ Mydirect:
+  <<: *r
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mydirect.yaml"
+  behavior: classical
+  format: yaml
+
+ Myproxy:
+  <<: *r
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Myproxy.yaml"
+  behavior: classical
+  format: yaml
+
+ site-gfw:
+  <<: *r
+  url: "https://github.com/Loyalsoldier/clash-rules/raw/release/gfw.txt"
+  behavior: domain
+  format: yaml
+
+ site-games:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/Game.yaml"
+  behavior: classical
+  format: yaml
+
+ site-GPT:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/OpenAI/OpenAI.yaml"
+  behavior: classical
+  format: yaml
+
+ site-direct:
+  <<: *r
+  url: "https://github.com/Loyalsoldier/clash-rules/raw/release/direct.txt"
+  behavior: domain
+  format: yaml
+
+ site-proxy:
+  <<: *r
+  url: "https://github.com/Loyalsoldier/clash-rules/raw/release/proxy.txt"
+  behavior: domain
+  format: yaml
+
+ site-!cn:
+  <<: *r
+  url: "https://github.com/Loyalsoldier/clash-rules/raw/release/tld-not-cn.txt"
+  behavior: domain
+  format: yaml
+
+ ip-cn:
+  <<: *r
+  url: "https://github.com/Loyalsoldier/clash-rules/raw/release/cncidr.txt"
+  behavior: ipcidr
+  format: yaml
+
+ ip-telegram:
+  <<: *r
+  url: "https://github.com/Loyalsoldier/clash-rules/raw/release/telegramcidr.txt"
+  behavior: ipcidr
+  format: yaml
