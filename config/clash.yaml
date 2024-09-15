@@ -104,6 +104,16 @@ ntp:
  port: 123
  interval: 30
 proxy-groups:
+ - name: "GLOBAL"
+   type: select
+   proxies:
+    - DIRECT
+    - url-test 香港
+    - url-test 日本
+    - url-test 美国
+   use:
+    - provider1
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png
  - name: "代理"
    type: select
    proxies:
