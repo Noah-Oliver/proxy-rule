@@ -1,7 +1,7 @@
 #订阅链接集
 p: &p
  type: http
- interval: 86400
+ interval: 28800
  #proxy: DIRECT
  health-check:
   enable: true
@@ -32,7 +32,7 @@ u: &u
 #规则集
 r: &r
  type: http
- interval: 86400
+ interval: 28800
  #proxy: DIRECT
 
 #主配置
@@ -122,11 +122,14 @@ proxy-groups:
     - url-test 香港
     - url-test 日本
     - url-test 美国
+   use:
+    - provider1
    icon: https://github.com/NB921/picture/raw/main/chatgpt.png
  - name: "国外游戏"
    type: select
    proxies:
     - DIRECT
+    - 代理
     - url-test 香港
     - url-test 日本
     - url-test 美国
@@ -138,6 +141,11 @@ proxy-groups:
    proxies:
     - DIRECT
     - 国外游戏
+    - url-test 香港
+    - url-test 日本
+    - url-test 美国
+   use:
+    - provider1
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png
  - name: "直连"
    type: select
@@ -145,14 +153,14 @@ proxy-groups:
     - DIRECT
     - 代理
     - 国外游戏
-   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/China.png
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png
  - name: "未知"
    type: select
    proxies:
     - DIRECT
     - 代理
     - 国外游戏
-   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Blackhole.png
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Stack.png
  - name: "广告"
    type: select
    proxies:
