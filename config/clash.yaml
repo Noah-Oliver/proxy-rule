@@ -66,10 +66,10 @@ dns:
   - https://dns.google/dns-query
   - https://cloudflare-dns.com/dns-query
  nameserver-policy:
-  "rule-set:C-Mydirect,D-direct,C-direct":
+  "rule-set:Mydirect,site-direct,site-cn":
    - https://doh.pub/dns-query
    - https://dns.alidns.com/dns-query
-  "rule-set:C-Myproxy,D-proxy,C-proxy":
+  "rule-set:Myproxy,site-gfw,site-proxy,site-!cn":
    - https://dns.google/dns-query
    - https://cloudflare-dns.com/dns-query
  proxy-server-nameserver:
@@ -185,99 +185,113 @@ proxy-groups:
    #exclude-filter:""
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png
 rules:
- - RULE-SET,C-Download,DIRECT
- - AND,((NOT,((RULE-SET,C-AD-direct))),(RULE-SET,D-AD)),广告
+ - RULE-SET,Download,DIRECT
+ - AND,((NOT,((RULE-SET,AD-direct))),(RULE-SET,AD)),广告
 
- - RULE-SET,C-Mydirect,直连
- - RULE-SET,C-Myproxy,代理
+ - RULE-SET,Mydirect,直连
+ - RULE-SET,Myproxy,代理
 
- - RULE-SET,C-GameDownload,平台游戏下载
- - RULE-SET,C-GPT,GPT
- - AND,((NOT,((OR,((RULE-SET,C-direct),(RULE-SET,D-direct),(RULE-SET,I-direct))))),(RULE-SET,C-games)),国外游戏
+ - RULE-SET,GameDownload,平台游戏下载
+ - RULE-SET,site-GPT,GPT
+ - RULE-SET,telegram,代理
+ - AND,((NOT,((OR,((RULE-SET,site-direct),(RULE-SET,site-cn),(RULE-SET,ip-cn))))),(RULE-SET,site-games)),国外游戏
 
- - RULE-SET,D-direct,直连
- - RULE-SET,C-direct,直连
- - RULE-SET,D-proxy,代理
- - RULE-SET,C-proxy,代理
+ - RULE-SET,site-gfw,代理
+ - RULE-SET,site-direct,直连
+ - RULE-SET,site-proxy,代理
+ - RULE-SET,site-cn,直连
+ - RULE-SET,site-!cn,代理
 
- - RULE-SET,I-direct,直连
+ - RULE-SET,ip-cn,直连
 
  - MATCH,未知
 rule-providers:
- C-AD-direct:
+ AD-direct:
   <<: *r
   url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct.yaml"
   behavior: classical
   format: yaml
 
- D-AD:
+ AD:
   <<: *r
   url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Domain.yaml"
   behavior: domain
   format: yaml
 
- C-Download:
+ Download:
   <<: *r
   url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download.yaml"
   behavior: classical
   format: yaml
 
- C-GameDownload:
+ GameDownload:
   <<: *r
   url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload.yaml"
   behavior: classical
   format: yaml
 
- C-Mydirect:
+ Mydirect:
   <<: *r
   url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mydirect.yaml"
   behavior: classical
   format: yaml
 
- C-Myproxy:
+ Myproxy:
   <<: *r
   url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Myproxy.yaml"
   behavior: classical
   format: yaml
 
- C-games:
+ site-games:
   <<: *r
   url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/Game.yaml"
   behavior: classical
   format: yaml
 
- C-GPT:
+ telegram:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Telegram/Telegram.yaml"
+  behavior: classical
+  format: yaml
+
+ site-GPT:
   <<: *r
   url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/OpenAI/OpenAI.yaml"
   behavior: classical
   format: yaml
 
- D-direct:
+ site-gfw:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml"
+  url: "https://github.com/Loyalsoldier/clash-rules/raw/release/gfw.txt"
   behavior: domain
   format: yaml
 
- C-direct:
+ site-direct:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/ChinaMax/ChinaMax.yaml"
-  behavior: classical
-  format: yaml
-
- D-proxy:
-  <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Global/Global_Domain.yaml"
+  url: "https://github.com/Loyalsoldier/clash-rules/raw/release/direct.txt"
   behavior: domain
   format: yaml
 
- C-proxy:
+ site-proxy:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Global/Global.yaml"
-  behavior: classical
+  url: "https://github.com/Loyalsoldier/clash-rules/raw/release/proxy.txt"
+  behavior: domain
   format: yaml
 
- I-direct:
+ site-cn:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/ChinaMax/ChinaMax_IP.yaml"
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/tld-cn.mrs"
+  behavior: domain
+  format: mrs
+
+ site-!cn:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/tld-!cn.mrs"
+  behavior: domain
+  format: mrs
+
+ ip-cn:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.mrs"
   behavior: ipcidr
-  format: yaml
+  format: mrs
