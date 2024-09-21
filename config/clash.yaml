@@ -47,7 +47,6 @@ profile: # 存储 select 选择记录
  store-selected: true
 dns:
  enable: true
- listen: 0.0.0.0:1053
  ipv6: true
  enhanced-mode: redir-host
  default-nameserver:
@@ -82,16 +81,6 @@ sniffer:
   QUIC:
    ports: [443, 8443]
 mixed-port: 7890
-tun:
- enable: true
- stack: mixed
- device: utun0
- mtu: 9000
- auto-route: true
- auto-detect-interface: true
- dns-hijack:
-  - any:53
-  - tcp://any:53
 proxy-groups:
  - name: "代理"
    type: select
