@@ -51,25 +51,23 @@ dns:
  enhanced-mode: fake-ip
  fake-ip-range: 198.18.0.1/16
  default-nameserver:
-  - https://1.12.12.12/dns-query
-  - https://120.53.53.53/dns-query
-  - https://223.5.5.5/dns-query
-  - https://223.6.6.6/dns-query
+  - 119.29.29.29
+  - 223.5.5.5
  nameserver:
-  - https://doh.pub/dns-query
-  - https://dns.alidns.com/dns-query
-  - https://dns.google/dns-query
-  - https://cloudflare-dns.com/dns-query
+  - 119.29.29.29
+  - 223.5.5.5
+  - 8.8.8.8
+  - 1.1.1.1
  nameserver-policy:
   "rule-set:Mydirect,Direct":
-   - https://doh.pub/dns-query
-   - https://dns.alidns.com/dns-query
+   - 119.29.29.29
+   - 223.5.5.5
   "rule-set:Myproxy,Proxy":
-   - https://dns.google/dns-query
-   - https://cloudflare-dns.com/dns-query
+   - 8.8.8.8
+   - 1.1.1.1
  proxy-server-nameserver:
-  - https://doh.pub/dns-query
-  - https://dns.alidns.com/dns-query
+  - 119.29.29.29
+  - 223.5.5.5
 sniffer:
  enable: true
  override-destination: false
