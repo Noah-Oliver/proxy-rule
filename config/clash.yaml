@@ -45,11 +45,11 @@ unified-delay: true
 tcp-concurrent: true
 profile: # 存储 select 选择记录
  store-selected: true
- store-fake-ip: true
 dns:
  enable: true
  listen: 0.0.0.0:1053
  ipv6: true
+ enhanced-mode: redir-host
  default-nameserver:
   - https://1.12.12.12/dns-query
   - https://120.53.53.53/dns-query
@@ -84,8 +84,8 @@ sniffer:
 mixed-port: 7890
 tun:
  enable: true
- stack: system
- device: clash
+ stack: mixed
+ device: utun0
  mtu: 9000
  auto-route: true
  auto-detect-interface: true
