@@ -24,7 +24,7 @@ u: &u
  type: url-test
  url: 'https://www.gstatic.com/generate_204'
  interval: 300
- tolerance: 200
+# tolerance: 200
  lazy: false
  include-all-providers: true
  hidden: false
@@ -188,8 +188,8 @@ rules:
  - RULE-SET,Download,DIRECT
  - AND,((NOT,((RULE-SET,AD-direct))),(RULE-SET,AD)),广告
 
- - RULE-SET,Mydirect,直连
  - RULE-SET,Myproxy,代理
+ - RULE-SET,Mydirect,直连
 
  - RULE-SET,GameDownload,平台游戏下载
  - RULE-SET,GPT,GPT
