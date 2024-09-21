@@ -48,8 +48,7 @@ profile: # 存储 select 选择记录
 dns:
  enable: true
  ipv6: true
- enhanced-mode: fake-ip
- fake-ip-range: 198.18.0.1/16
+ enhanced-mode: redir-host
  default-nameserver:
   - https://1.12.12.12/dns-query
   - https://120.53.53.53/dns-query
