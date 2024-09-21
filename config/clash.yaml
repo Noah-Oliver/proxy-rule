@@ -91,12 +91,6 @@ tun:
  dns-hijack:
   - any:53
   - tcp://any:53
-ntp:
- enable: true
- write-to-system: false
- server: time.apple.com
- port: 123
- interval: 30
 proxy-groups:
  - name: "代理"
    type: select
