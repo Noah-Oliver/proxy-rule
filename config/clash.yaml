@@ -42,6 +42,7 @@ ipv6: true
 external-controller: 127.0.0.1:9090
 unified-delay: true
 tcp-concurrent: true
+find-process-mode: strict
 profile: # 存储 select 选择记录
  store-selected: true
  store-fake-ip: false
@@ -59,10 +60,10 @@ dns:
   - 8.8.8.8
   - 1.1.1.1
  nameserver-policy:
-  "rule-set:Mydirect,Direct":
+  "rule-set:Mydirect,Direct1,Direct2":
    - 119.29.29.29
    - 223.5.5.5
-  "rule-set:Myproxy,Proxy":
+  "rule-set:Myproxy,GFW,Proxy1,Proxy2":
    - 8.8.8.8
    - 1.1.1.1
  proxy-server-nameserver:
@@ -173,8 +174,11 @@ rules:
  - RULE-SET,GPT,GPT
  - RULE-SET,Telegram,代理
 
- - RULE-SET,Proxy,代理
- - RULE-SET,Direct,直连
+ - RULE-SET,GFW,代理
+ - RULE-SET,Proxy1,代理
+ - RULE-SET,Proxy2,代理
+ - RULE-SET,Direct1,直连
+ - RULE-SET,Direct2,直连
 
  - RULE-SET,ip-cn,直连
 
@@ -234,15 +238,33 @@ rule-providers:
   behavior: classical
   format: yaml
 
- Direct:
+ GFW:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/cn.mrs"
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.mrs"
   behavior: domain
   format: mrs
 
- Proxy:
+ Proxy1:
   <<: *r
   url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs"
+  behavior: domain
+  format: mrs
+
+ Proxy2:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/tld-!cn.mrs"
+  behavior: domain
+  format: mrs
+
+ Direct1:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.mrs"
+  behavior: domain
+  format: mrs
+
+ Direct2:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/tld-cn.mrs"
   behavior: domain
   format: mrs
 
