@@ -236,15 +236,15 @@ rule-providers:
 
  Direct:
   <<: *r
-  url: "https://github.com/Loyalsoldier/clash-rules/raw/release/direct.txt"
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/cn.mrs"
   behavior: domain
-  format: yaml
+  format: mrs
 
  Proxy:
   <<: *r
-  url: "https://github.com/Loyalsoldier/clash-rules/raw/release/proxy.txt"
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs"
   behavior: domain
-  format: yaml
+  format: mrs
 
  ip-cn:
   <<: *r
