@@ -164,15 +164,15 @@ rules:
  - AND,((NOT,((RULE-SET,AD-direct))),(RULE-SET,AD)),广告
 
  - RULE-SET,GameDownload,平台游戏下载
- - RULE-SET,Myproxy,代理
- - RULE-SET,Mydirect,直连
  - RULE-SET,Mygames,游戏
  - RULE-SET,GPT,GPT
  - RULE-SET,Telegram,代理
 
  - RULE-SET,GFW,代理
+ - RULE-SET,Myproxy,代理
  - RULE-SET,Proxy1,代理
  - RULE-SET,Proxy2,代理
+ - RULE-SET,Mydirect,直连
  - RULE-SET,Direct1,直连
  - RULE-SET,Direct2,直连
 
