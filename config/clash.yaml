@@ -19,7 +19,7 @@ proxy-providers:
 u: &u
  type: url-test
  url: 'https://www.gstatic.com/generate_204'
- interval: 5
+ interval: 300
  tolerance: 50
  timeout: 2000
  lazy: false
