@@ -80,7 +80,7 @@
         "server": "DNS_fakeip"
       }
     ],
-    "final": "DNS_fakeip",
+    "final": "DNS_direct",
     "strategy": "prefer_ipv4",
     "disable_cache": false,
     "disable_expire": false,
