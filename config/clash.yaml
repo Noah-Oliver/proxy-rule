@@ -6,7 +6,7 @@ p: &p
  override:
   udp: true
   ip-version: ipv4-prefer
-  skip-cert-verify: false
+  skip-cert-verify: true
 
 #订阅链接
 proxy-providers:
