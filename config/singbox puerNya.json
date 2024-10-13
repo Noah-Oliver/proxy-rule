@@ -276,7 +276,6 @@
       "download_ua": "Clash.Meta",
       "download_interval": "6h",
       "download_detour": "国外",
-      "healthcheck_when_network_change": false,
       "outbound_override": {
         "domain_strategy": "prefer_ipv4"
       }
