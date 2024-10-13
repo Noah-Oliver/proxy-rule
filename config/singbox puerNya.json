@@ -1,0 +1,508 @@
+{
+  "log": {
+    "disabled": true,
+    "level": "info",
+    "output": "box.log",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "DNS_direct",
+        "address": [
+          "119.29.29.29",
+          "223.5.5.5"
+        ],
+        "address_resolver": "DNS_resolver",
+        "address_strategy": "prefer_ipv4",
+        "strategy": "prefer_ipv4",
+        "detour": "直连"
+      },
+      {
+        "tag": "DNS_proxy",
+        "address": [
+          "1.1.1.1",
+          "8.8.8.8"
+        ],
+        "address_resolver": "DNS_resolver",
+        "address_strategy": "prefer_ipv4",
+        "strategy": "prefer_ipv4",
+        "detour": "国外"
+      },
+      {
+        "tag": "DNS_block",
+        "address": ["rcode://refused"]
+      },
+      {
+        "tag": "DNS_fakeip",
+        "address": ["fakeip"]
+      },
+      {
+        "tag": "DNS_resolver",
+        "address": [
+          "119.29.29.29",
+          "223.5.5.5"
+        ],
+        "address_strategy": "prefer_ipv4",
+        "strategy": "prefer_ipv4",
+        "detour": "直连"
+      }
+    ],
+    "rules": [
+      {
+        "outbound": ["any"],
+        "server": "DNS_resolver",
+        "disable_cache": true
+      },
+      {
+        "clash_mode": "Global",
+        "server": "DNS_proxy"
+      },
+      {
+        "clash_mode": "Direct",
+        "server": "DNS_direct"
+      },
+      {
+        "rule_set": [
+          "Mydirect",
+          "direct1",
+          "direct2"
+        ],
+        "server": "DNS_direct"
+      },
+      {
+        "rule_set": [
+          "Myproxy",
+          "GFW",
+          "proxy1",
+          "proxy2"
+        ],
+        "server": "DNS_fakeip"
+      }
+    ],
+    "final": "DNS_fakeip",
+    "strategy": "prefer_ipv4",
+    "disable_cache": false,
+    "disable_expire": false,
+    "independent_cache": false,
+    "reverse_mapping": false,
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
+    }
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "sing-box",
+      "address": [
+        "172.18.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+      "mtu": 9090,
+      "auto_route": true,
+      "strict_route": true,
+      "stack": "mixed",
+      "tcp_fast_open": false,
+      "tcp_multi_path": true,
+      "udp_fragment": false,
+      "udp_timeout": "5m",
+      "sniff": true,
+      "sniff_override_destination": false,
+      "sniff_timeout": "300ms",
+      "domain_strategy": "prefer_ipv4",
+      "udp_disable_domain_unmapping": false
+    },
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "::",
+      "listen_port": 1080,
+      "tcp_fast_open": false,
+      "tcp_multi_path": true,
+      "udp_fragment": false,
+      "udp_timeout": "5m",
+      "sniff": true,
+      "sniff_override_destination": false,
+      "sniff_timeout": "300ms",
+      "domain_strategy": "prefer_ipv4",
+      "udp_disable_domain_unmapping": false
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "direct",
+      "tag": "直连"
+    },
+    {
+      "type": "block",
+      "tag": "拒绝"
+    },
+    {
+      "type": "dns",
+      "tag": "DNS"
+    },
+    {
+      "type": "selector",
+      "tag": "国外",
+      "outbounds": [
+        "直连",
+        "香港最快",
+        "日本最快",
+        "美国最快"
+      ],
+      "providers": ["providers"],
+      "use_all_providers": false,
+      "default": "香港最快",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "GPT",
+      "outbounds": [
+        "直连",
+        "国外",
+        "香港最快",
+        "日本最快",
+        "美国最快"
+      ],
+      "providers": ["providers"],
+      "use_all_providers": false,
+      "default": "美国最快",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "游戏",
+      "outbounds": [
+        "直连",
+        "国外",
+        "香港最快",
+        "日本最快",
+        "美国最快"
+      ],
+      "providers": ["providers"],
+      "use_all_providers": false,
+      "default": "香港最快",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "平台游戏下载",
+      "outbounds": [
+        "直连",
+        "国外",
+        "游戏",
+        "香港最快",
+        "日本最快",
+        "美国最快"
+      ],
+      "providers": ["providers"],
+      "use_all_providers": false,
+      "default": "香港最快",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "国内",
+      "outbounds": [
+        "直连",
+        "国外",
+        "游戏"
+      ],
+      "use_all_providers": false,
+      "default": "直连",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "未知",
+      "outbounds": [
+        "直连",
+        "国外",
+        "游戏"
+      ],
+      "use_all_providers": false,
+      "default": "直连",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "广告",
+      "outbounds": [
+        "拒绝",
+        "直连",
+        "国外",
+        "游戏"
+      ],
+      "use_all_providers": false,
+      "default": "拒绝",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "urltest",
+      "tag": "香港最快",
+      "use_all_providers": true,
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "5m",
+      "tolerance": 50,
+      "idle_timeout": "30m",
+      "interrupt_exist_connections": true,
+      "includes": [
+        "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:港|香港|HongKong|HK|Hong Kong)).*$"
+      ]
+    },
+    {
+      "type": "urltest",
+      "tag": "日本最快",
+      "use_all_providers": true,
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "5m",
+      "tolerance": 50,
+      "idle_timeout": "30m",
+      "interrupt_exist_connections": true,
+      "includes": [
+        "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan)).*$"
+      ]
+    },
+    {
+      "type": "urltest",
+      "tag": "美国最快",
+      "use_all_providers": true,
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "5m",
+      "tolerance": 50,
+      "idle_timeout": "30m",
+      "interrupt_exist_connections": true,
+      "includes": [
+        "^(?!.*x(?:[2-9]|[1-9][0-9]))(?=.*(?:美|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|United States|(?<![a-zA-Z])US(?![a-zA-Z])|(?<![a-zA-Z])USA(?![a-zA-Z])|(?<![a-zA-Z])USD(?![a-zA-Z]))).*$"
+      ]
+    }
+  ],
+  "outbound_providers": [
+    {
+      "type": "remote",
+      "tag": "providers",
+      "path": "./remote.yaml",
+      "enable_healthcheck": false,
+      "healthcheck_url": "https://www.gstatic.com/generate_204",
+      "healthcheck_interval": "5m",
+      "download_url": "",
+      "download_ua": "Clash.Meta",
+      "download_interval": "6h",
+      "download_detour": "国外",
+      "healthcheck_when_network_change": false,
+      "outbound_override": {
+        "domain_strategy": "prefer_ipv4"
+      }
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "clash_mode": "Global",
+        "outbound": "国外"
+      },
+      {
+        "clash_mode": "Direct",
+        "outbound": "直连"
+      },
+      {
+        "rule_set": ["Download"],
+        "outbound": "直连"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": ["AD"]
+          },
+          {
+            "rule_set": ["AD_direct"],
+            "invert": true
+          }
+        ],
+        "outbound": "广告"
+      },
+      {
+        "rule_set": ["GameDownload"],
+        "outbound": "平台游戏下载"
+      },
+      {
+        "rule_set": ["Mygames"],
+        "outbound": "游戏"
+      },
+      {
+        "rule_set": ["GPT"],
+        "outbound": "GPT"
+      },
+      {
+        "rule_set": [
+          "Telegram",
+          "Myproxy"
+        ],
+        "outbound": "国外"
+      },
+      {
+        "rule_set": ["Mydirect"],
+        "outbound": "国内"
+      },
+      {
+        "rule_set": [
+          "GFW",
+          "proxy1",
+          "proxy2"
+        ],
+        "outbound": "国外"
+      },
+      {
+        "rule_set": [
+          "direct1",
+          "direct2",
+          "ip_cn"
+        ],
+        "outbound": "国内"
+      }
+    ],
+    "rule_set": [
+      {
+        "type": "remote",
+        "tag": "AD",
+        "format": "source",
+        "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Domain.yaml",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "AD_direct",
+        "format": "source",
+        "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct.yaml",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "Download",
+        "format": "source",
+        "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download.yaml",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "GameDownload",
+        "format": "source",
+        "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload.yaml",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "Mydirect",
+        "format": "source",
+        "url": "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mydirect.yaml",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "Myproxy",
+        "format": "source",
+        "url": "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Myproxy.yaml",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "Mygames",
+        "format": "source",
+        "url": "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mygames.yaml",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "Telegram",
+        "format": "source",
+        "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Telegram/Telegram.yaml",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "GPT",
+        "format": "source",
+        "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/OpenAI/OpenAI.yaml",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "GFW",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/gfw.srs",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "proxy1",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/geolocation-!cn.srs",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "proxy2",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/tld-!cn.srs",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "direct1",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/geolocation-cn.srs",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "direct2",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/tld-cn.srs",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      },
+      {
+        "type": "remote",
+        "tag": "ip_cn",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geoip/cn.srs",
+        "download_detour": "国外",
+        "update_interval": "1d"
+      }
+    ],
+    "final": "未知",
+    "auto_detect_interface": true,
+    "override_android_vpn": true
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "store_fakeip": false
+    },
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090",
+      "external_ui": "dashboard",
+      "external_ui_download_detour": "国外",
+      "default_mode": "Rule"
+    }
+  }
+}
