@@ -103,30 +103,15 @@
       "auto_route": true,
       "strict_route": true,
       "stack": "mixed",
-      "tcp_fast_open": false,
-      "tcp_multi_path": true,
-      "udp_fragment": false,
-      "udp_timeout": "5m",
-      "sniff": true,
-      "sniff_override_destination": false,
-      "sniff_timeout": "300ms",
-      "domain_strategy": "prefer_ipv4",
-      "udp_disable_domain_unmapping": false
+      "sniff": true
     },
     {
       "type": "mixed",
       "tag": "mixed-in",
       "listen": "::",
       "listen_port": 1080,
-      "tcp_fast_open": false,
-      "tcp_multi_path": true,
-      "udp_fragment": false,
-      "udp_timeout": "5m",
       "sniff": true,
-      "sniff_override_destination": false,
-      "sniff_timeout": "300ms",
-      "domain_strategy": "prefer_ipv4",
-      "udp_disable_domain_unmapping": false
+      "users": []
     }
   ],
   "outbounds": [
