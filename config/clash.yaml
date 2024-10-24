@@ -22,6 +22,7 @@ u: &u
  interval: 300
  tolerance: 50
  timeout: 2000
+ exclude-filter: "^(?=.*(((?:x|X|倍|倍率.?)((1(?:[.](?:[0-9]+)?[1-9]))|([2-9](?:[.][0-9]+)?)|([1-9][0-9]+(?:[.][0-9]+)?)))|(((1(?:[.](?:[0-9]+)?[1-9]))|([2-9](?:[.][0-9]+)?)|([1-9][0-9]+(?:[.][0-9]+)?))(?:.?x|X|倍|倍率)))).*$"
  lazy: false
  include-all-providers: true
 
@@ -49,21 +50,27 @@ dns:
  enhanced-mode: fake-ip
  fake-ip-range: 198.18.0.1/16
  default-nameserver:
+  - 1.2.4.8
   - 223.5.5.5
   - 119.29.29.29
  nameserver:
+  - 1.2.4.8
   - 223.5.5.5
   - 119.29.29.29
   - 1.1.1.1
   - 8.8.8.8
+  - 9.9.9.9
  nameserver-policy:
   "rule-set:Mydirect,Direct1,Direct2":
+   - 1.2.4.8
    - 223.5.5.5
    - 119.29.29.29
   "rule-set:Myproxy,GFW,Proxy1,Proxy2":
    - 1.1.1.1
    - 8.8.8.8
+   - 9.9.9.9
  proxy-server-nameserver:
+  - 1.2.4.8
   - 223.5.5.5
   - 119.29.29.29
 sniffer:
@@ -148,17 +155,14 @@ proxy-groups:
  - name: "url-test 香港"
    <<: *u
    filter: "港|香港|HongKong|HK|Hong Kong"
-   exclude-filter: "(x|X)(?:1[.][1-9]|1[.][1-9][0-9]{1,}|[2-9]|[1-9][0-9]{1,})|(1[.][1-9]|1[.][1-9][0-9]{1,}|[2-9]|[1-9][0-9]{1,})(?:x|X|倍|倍率)"
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png
  - name: "url-test 日本"
    <<: *u
    filter: "日|日本|JP|Japan"
-   exclude-filter: "(x|X)(?:1[.][1-9]|1[.][1-9][0-9]{1,}|[2-9]|[1-9][0-9]{1,})|(1[.][1-9]|1[.][1-9][0-9]{1,}|[2-9]|[1-9][0-9]{1,})(?:x|X|倍|倍率)"
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png
  - name: "url-test 美国"
    <<: *u
    filter: "美|美国|United States|(?<![a-zA-Z])US(?![a-zA-Z])|(?<![a-zA-Z])USA(?![a-zA-Z])|(?<![a-zA-Z])USD(?![a-zA-Z])"
-   exclude-filter: "(x|X)(?:1[.][1-9]|1[.][1-9][0-9]{1,}|[2-9]|[1-9][0-9]{1,})|(1[.][1-9]|1[.][1-9][0-9]{1,}|[2-9]|[1-9][0-9]{1,})(?:x|X|倍|倍率)"
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png
 rules:
  - RULE-SET,Download,DIRECT
