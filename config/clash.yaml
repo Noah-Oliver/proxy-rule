@@ -50,29 +50,29 @@ dns:
  enhanced-mode: fake-ip
  fake-ip-range: 198.18.0.1/16
  default-nameserver:
+  - 1.2.4.8
   - 223.5.5.5
   - 119.29.29.29
-  - 180.76.76.76
  nameserver:
+  - 1.2.4.8
   - 223.5.5.5
   - 119.29.29.29
-  - 180.76.76.76
   - 1.1.1.1
   - 8.8.8.8
   - 9.9.9.9
  nameserver-policy:
   "rule-set:Mydirect,Direct1,Direct2":
+   - 1.2.4.8
    - 223.5.5.5
    - 119.29.29.29
-   - 180.76.76.76
   "rule-set:Myproxy,GFW,Proxy1,Proxy2":
    - 1.1.1.1
    - 8.8.8.8
    - 9.9.9.9
  proxy-server-nameserver:
+  - 1.2.4.8
   - 223.5.5.5
   - 119.29.29.29
-  - 180.76.76.76
 sniffer:
  enable: true
  override-destination: false
