@@ -5,7 +5,6 @@ p: &p
  #proxy: DIRECT
  override:
   udp: true
-  ip-version: dual
   skip-cert-verify: true
 
 #订阅链接
