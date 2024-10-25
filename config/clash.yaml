@@ -43,7 +43,7 @@ tcp-concurrent: true
 find-process-mode: strict
 profile: # 存储 select 选择记录
  store-selected: true
- store-fake-ip: false
+ store-fake-ip: true
 dns:
  enable: true
  ipv6: true
@@ -51,22 +51,24 @@ dns:
  fake-ip-range: 198.18.0.1/16
  default-nameserver:
   - 119.29.29.29
-  - 119.28.28.28
+  - 223.5.5.5
  nameserver:
   - 119.29.29.29
-  - 119.28.28.28
+  - 223.5.5.5
   - 1.1.1.1
-  - 1.0.0.1
+  - 9.9.9.9
  nameserver-policy:
-  "rule-set:Mydirect,Direct1,Direct2":
+  "rule-set:Mydirect":
    - 119.29.29.29
-   - 119.28.28.28
+   - 223.5.5.5
+  "rule-set:Direct1,Direct2":
+   - system
   "rule-set:Myproxy,GFW,Proxy1,Proxy2":
    - 1.1.1.1
-   - 1.0.0.1
+   - 9.9.9.9
  proxy-server-nameserver:
   - 119.29.29.29
-  - 119.28.28.28
+  - 223.5.5.5
 sniffer:
  enable: true
  override-destination: false
