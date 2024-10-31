@@ -42,7 +42,7 @@ tcp-concurrent: true
 find-process-mode: strict
 profile: # 存储 select 选择记录
  store-selected: true
- store-fake-ip: true
+ store-fake-ip: false
 dns:
  enable: true
  ipv6: true
