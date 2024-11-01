@@ -161,7 +161,7 @@ proxy-groups:
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png
 rules:
  - RULE-SET,Download,DIRECT
- - RULE-SET,AD,广告
+ - AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),广告
 
  - RULE-SET,GameDownload,平台游戏下载
  - RULE-SET,Mygames,游戏
@@ -182,7 +182,13 @@ rules:
 rule-providers:
  AD:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Advertising/Advertising_Classical.yaml"
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml"
+  behavior: classical
+  format: yaml
+
+ AD!:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct.yaml"
   behavior: classical
   format: yaml
 
