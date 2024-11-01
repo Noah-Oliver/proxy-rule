@@ -183,7 +183,7 @@ rule-providers:
  AD:
   <<: *r
   url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Advertising/Advertising_Classical.yaml"
-  behavior: domain
+  behavior: classical
   format: yaml
 
  Download:
