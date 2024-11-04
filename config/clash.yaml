@@ -80,7 +80,7 @@ sniffer:
 mixed-port: 7890
 tun:
  enable: true
- stack: mixed
+ stack: system
  device: clash
  mtu: 9000
  auto-route: true
