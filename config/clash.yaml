@@ -78,16 +78,6 @@ sniffer:
   QUIC:
    ports: [443, 8443]
 mixed-port: 7890
-tun:
- enable: true
- stack: mixed
- device: clash
- mtu: 9000
- auto-route: true
- auto-detect-interface: true
- dns-hijack:
-  - any:53
-  - tcp://any:53
 proxy-groups:
  - name: "代理"
    type: select
