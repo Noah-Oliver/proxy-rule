@@ -47,25 +47,28 @@ dns:
  ipv6: true
  enhanced-mode: redir-host
  default-nameserver:
-  - 119.29.29.29
-  - 223.5.5.5
+  - system
+  - dhcp://system
  nameserver:
-  - 119.29.29.29
-  - 223.5.5.5
-  - 1.1.1.1
-  - 9.9.9.9
+  - https://cloudflare-dns.com/dns-query
+  - https://dns.quad9.net/dns-query
+  - https://dns.google/dns-query
+  - https://doh.opendns.com/dns-query
  nameserver-policy:
-  "rule-set:Mydirect":
-   - 119.29.29.29
-   - 223.5.5.5
+#  "rule-set:Mydirect":
+#   - 119.29.29.29
+#   - 223.5.5.5
   "rule-set:Direct1,Direct2":
    - system
-  "rule-set:Myproxy,GFW,Proxy1,Proxy2":
-   - 1.1.1.1
-   - 9.9.9.9
+   - dhcp://system
+#  "rule-set:Myproxy,GFW,Proxy1,Proxy2":
+#   - 1.1.1.1
+#   - 9.9.9.9
  proxy-server-nameserver:
-  - 119.29.29.29
-  - 223.5.5.5
+  - https://cloudflare-dns.com/dns-query
+  - https://dns.quad9.net/dns-query
+  - https://dns.google/dns-query
+  - https://doh.opendns.com/dns-query
 sniffer:
  enable: true
  override-destination: false
