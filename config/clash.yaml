@@ -50,23 +50,15 @@ dns:
   - system
   - dhcp://system
  nameserver:
-  - 1.1.1.1
-  - 9.9.9.9
-  - 208.67.222.222
+  - 'https://cloudflare-dns.com/dns-query#代理'
+  - 'https://dns.quad9.net/dns-query#代理'
  nameserver-policy:
-#  "rule-set:Mydirect":
-#   - 119.29.29.29
-#   - 223.5.5.5
   "rule-set:Direct1,Direct2":
    - system
    - dhcp://system
-#  "rule-set:Myproxy,GFW,Proxy1,Proxy2":
-#   - 1.1.1.1
-#   - 9.9.9.9
  proxy-server-nameserver:
-  - 1.1.1.1
-  - 9.9.9.9
-  - 208.67.222.222
+  - '1.1.1.1#代理'
+  - '9.9.9.9#代理'
 sniffer:
  enable: true
  override-destination: false
