@@ -48,14 +48,12 @@ dns:
  enhanced-mode: redir-host
  default-nameserver:
   - system
-  - dhcp://system
  nameserver:
-  - '1.1.1.1#代理'
-  - '9.9.9.9#代理'
+  - system
  nameserver-policy:
-  "rule-set:Direct1,Direct2":
-   - system
-   - dhcp://system
+  "rule-set:Myproxy,GFW,Proxy1,Proxy2":
+   - '1.1.1.1#代理'
+   - '9.9.9.9#代理'
 sniffer:
  enable: true
  override-destination: false
