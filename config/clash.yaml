@@ -50,10 +50,10 @@ dns:
   - system
   - dhcp://system
  nameserver:
-  - https://cloudflare-dns.com/dns-query
-  - https://dns.quad9.net/dns-query
-  - https://dns.google/dns-query
-  - https://doh.opendns.com/dns-query
+  - 1.1.1.1
+  - 8.8.8.8
+  - 9.9.9.9
+  - 208.67.222.222
  nameserver-policy:
 #  "rule-set:Mydirect":
 #   - 119.29.29.29
@@ -65,10 +65,10 @@ dns:
 #   - 1.1.1.1
 #   - 9.9.9.9
  proxy-server-nameserver:
-  - https://cloudflare-dns.com/dns-query
-  - https://dns.quad9.net/dns-query
-  - https://dns.google/dns-query
-  - https://doh.opendns.com/dns-query
+  - 1.1.1.1
+  - 8.8.8.8
+  - 9.9.9.9
+  - 208.67.222.222
 sniffer:
  enable: true
  override-destination: false
