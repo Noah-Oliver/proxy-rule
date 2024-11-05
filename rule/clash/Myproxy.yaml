@@ -8,3 +8,4 @@ payload:
  - DOMAIN,sing-box.sagernet.org
  - DOMAIN,m.manhuagui.com
  - PROCESS-NAME,org.telegram.messenger.web #电报安卓app
+ - IP-CIDR,1.1.1.1
