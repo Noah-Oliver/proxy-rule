@@ -51,9 +51,11 @@ dns:
  nameserver:
   - system
  nameserver-policy:
-  "rule-set:Myproxy,GFW,Proxy1,Proxy2":
+  "rule-set:GPT,Myproxy,GFW,Proxy1,Proxy2":
    - '1.1.1.1#代理'
    - '9.9.9.9#代理'
+ proxy-server-nameserver:
+  - system
 sniffer:
  enable: true
  override-destination: false
