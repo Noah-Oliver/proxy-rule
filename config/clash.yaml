@@ -5,7 +5,7 @@ p: &p
  #proxy: DIRECT
  override:
   udp: true
-  skip-cert-verify: true
+  skip-cert-verify: false
 
 #订阅链接
 proxy-providers:
@@ -38,7 +38,7 @@ log-level: info
 ipv6: true
 external-controller: 127.0.0.1:9090
 unified-delay: true
-tcp-concurrent: true
+tcp-concurrent: false
 find-process-mode: strict
 profile: # 存储 select 选择记录
  store-selected: true
