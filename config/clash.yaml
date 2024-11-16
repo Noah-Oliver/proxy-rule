@@ -19,7 +19,7 @@ u: &u
  type: url-test
  url: 'https://www.gstatic.com/generate_204'
  interval: 300
- #tolerance: 50
+ tolerance: 20
  timeout: 2000
  exclude-filter: "^(?=.*(((?:x|X|倍|倍率.?)((1(?:[.](?:[0-9]+)?[1-9]))|([2-9](?:[.][0-9]+)?)|([1-9][0-9]+(?:[.][0-9]+)?)))|(((1(?:[.](?:[0-9]+)?[1-9]))|([2-9](?:[.][0-9]+)?)|([1-9][0-9]+(?:[.][0-9]+)?))(?:.?x|X|倍|倍率)))).*$"
  lazy: false
@@ -47,13 +47,16 @@ dns:
  ipv6: true
  enhanced-mode: redir-host
  default-nameserver:
+  - 8.8.8.8
   - 119.29.29.29
   - 223.5.5.5
  nameserver:
+  - 8.8.8.8
   - 119.29.29.29
   - 223.5.5.5
  nameserver-policy:
   "rule-set:GPT,Myproxy,GFW,Proxy1,Proxy2":
+   - '8.8.8.8#代理'
    - '1.1.1.1#代理'
    - '9.9.9.9#代理'
 sniffer:
