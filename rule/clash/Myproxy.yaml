@@ -1,11 +1,15 @@
 payload:
- - DOMAIN-SUFFIX,ffqla.net
- - DOMAIN-SUFFIX,clash-gaming.com
- - DOMAIN-SUFFIX,metacubex.one
- - DOMAIN-SUFFIX,qoo-app.com
  - DOMAIN,tenkafuma.com
  - DOMAIN,sing-boxp.dustinwin.top
  - DOMAIN,sing-box.sagernet.org
  - DOMAIN,m.manhuagui.com
+
+ - DOMAIN-SUFFIX,ffqla.net
+ - DOMAIN-SUFFIX,clash-gaming.com
+ - DOMAIN-SUFFIX,metacubex.one
+ - DOMAIN-SUFFIX,qoo-app.com
+
+ - DOMAIN-KEYWORD,google
+
  - PROCESS-NAME,org.telegram.messenger.web #电报安卓app
  - PROCESS-NAME,com.android.vending #谷歌商店安卓app
