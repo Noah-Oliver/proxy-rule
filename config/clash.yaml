@@ -45,21 +45,20 @@ profile: # 存储 select 选择记录
  store-selected: true
 dns:
  enable: true
+ respect-rules: true
+ listen: 0.0.0.0:1053
  ipv6: true
  enhanced-mode: redir-host
  default-nameserver:
-  - 8.8.8.8
-  - 119.29.29.29
-  - 223.5.5.5
+  - system
  nameserver:
   - 8.8.8.8
   - 119.29.29.29
   - 223.5.5.5
- nameserver-policy:
-  "rule-set:GPT,Myproxy,Proxy1":
-   - '8.8.8.8#代理'
-   - '1.1.1.1#代理'
-   - '9.9.9.9#代理'
+ proxy-server-nameserver:
+  - '8.8.8.8#代理'
+  - '1.1.1.1#代理'
+  - '9.9.9.9#代理'
 sniffer:
  enable: true
  override-destination: false
