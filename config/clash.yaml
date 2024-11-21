@@ -46,19 +46,16 @@ profile: # 存储 select 选择记录
 dns:
  enable: true
  ipv6: true
- listen: 0.0.0.0:1053
  enhanced-mode: redir-host
  default-nameserver:
   - system
  nameserver:
   - 8.8.8.8
+  - 119.29.29.29
  nameserver-policy:
   "rule-set:GPT,Myproxy,Proxy1":
    - '8.8.8.8#代理'
    - '1.1.1.1#代理'
-  "rule-set:Mydirect,Direct1":
-   - 8.8.8.8
-   - 119.29.29.29
 sniffer:
  enable: true
  override-destination: false
@@ -79,8 +76,7 @@ proxy-groups:
     - url-test 香港
     - url-test 日本
     - url-test 美国
-   use:
-    - provider1
+   include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png
  - name: "GPT"
    type: select
@@ -90,8 +86,7 @@ proxy-groups:
     - url-test 香港
     - url-test 日本
     - url-test 美国
-   use:
-    - provider1
+   include-all-providers: true
    icon: https://github.com/NB921/picture/raw/main/chatgpt.png
  - name: "游戏"
    type: select
@@ -101,8 +96,7 @@ proxy-groups:
     - url-test 香港
     - url-test 日本
     - url-test 美国
-   use:
-    - provider1
+   include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Game.png
  - name: "平台游戏下载"
    type: select
@@ -113,8 +107,7 @@ proxy-groups:
     - url-test 香港
     - url-test 日本
     - url-test 美国
-   use:
-    - provider1
+   include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png
  - name: "直连"
    type: select
@@ -181,7 +174,7 @@ rule-providers:
 
  Download:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download.yaml"
+  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt"
   behavior: classical
   format: yaml
 
@@ -217,18 +210,18 @@ rule-providers:
 
  Proxy1:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs"
+  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
   behavior: domain
-  format: mrs
+  format: yaml
 
  Direct1:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.mrs"
+  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt"
   behavior: domain
-  format: mrs
+  format: yaml
 
  ip-cn:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.mrs"
+  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
   behavior: ipcidr
-  format: mrs
+  format: yaml
