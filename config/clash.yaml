@@ -46,7 +46,6 @@ profile: # 存储 select 选择记录
 dns:
  enable: true
  ipv6: true
- respect-rules: true
  listen: 0.0.0.0:1053
  enhanced-mode: redir-host
  default-nameserver:
@@ -57,17 +56,9 @@ dns:
   "rule-set:GPT,Myproxy,Proxy1":
    - '8.8.8.8#代理'
    - '1.1.1.1#代理'
-   - '9.9.9.9#代理'
   "rule-set:Mydirect,Direct1":
-   - system
+   - 8.8.8.8
    - 119.29.29.29
-   - 223.5.5.5
- proxy-server-nameserver:
-  - 8.8.8.8
-  - 119.29.29.29
-  - 223.5.5.5
- direct-nameserver:
-  - system
 sniffer:
  enable: true
  override-destination: false
