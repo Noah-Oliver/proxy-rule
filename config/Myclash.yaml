@@ -1,0 +1,192 @@
+#订阅链接集
+p: &p
+ type: http
+ interval: 28800
+ #proxy: DIRECT
+ override:
+  udp: true
+  skip-cert-verify: false
+ exclude-filter: ":|：|!|！"
+
+#订阅链接
+proxy-providers:
+ provider1:
+  <<: *p
+  url: "&flag=meta&types=all"
+
+#规则集
+r: &r
+ type: http
+ interval: 28800
+ #proxy: DIRECT
+
+#主配置
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: true
+external-controller: 127.0.0.1:9090
+unified-delay: true
+tcp-concurrent: false
+find-process-mode: strict
+profile: # 存储 select 选择记录
+ store-selected: true
+dns:
+ enable: true
+ ipv6: true
+ enhanced-mode: redir-host
+ default-nameserver:
+  - system
+ nameserver:
+  - system
+  - 119.29.29.29
+  - 223.5.5.5
+ nameserver-policy:
+  "rule-set:GPT,Myproxy,Proxy1":
+   - '8.8.8.8#代理'
+   - '1.1.1.1#代理'
+sniffer:
+ enable: true
+ override-destination: false
+ sniff:
+  HTTP:
+   ports: [80, 8080-8880]
+   override-destination: true
+  TLS:
+   ports: [443, 8443]
+  QUIC:
+   ports: [443, 8443]
+mixed-port: 7890
+proxy-groups:
+ - name: "PROXY"
+   type: select
+   proxies:
+    - DIRECT
+   include-all-providers: true
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png
+ - name: "GPT"
+   type: select
+   proxies:
+    - DIRECT
+    - PROXY
+   include-all-providers: true
+   icon: https://github.com/NB921/picture/raw/main/chatgpt.png
+ - name: "游戏"
+   type: select
+   proxies:
+    - DIRECT
+    - PROXY
+   include-all-providers: true
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Game.png
+ - name: "平台游戏下载"
+   type: select
+   proxies:
+    - DIRECT
+    - PROXY
+    - 游戏
+   include-all-providers: true
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png
+ - name: "国内网站"
+   type: select
+   proxies:
+    - DIRECT
+    - PROXY
+    - 游戏
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png
+ - name: "未知"
+   type: select
+   proxies:
+    - DIRECT
+    - PROXY
+    - 游戏
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Stack.png
+ - name: "广告"
+   type: select
+   proxies:
+    - REJECT
+    - DIRECT
+    - PROXY
+    - 游戏
+   icon: https://github.com/NB921/picture/raw/main/AD3.png
+rules:
+ - RULE-SET,Download,DIRECT
+ - AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),广告
+
+ - RULE-SET,GameDownload,平台游戏下载
+ - RULE-SET,Mygames,游戏
+ - RULE-SET,GPT,GPT
+
+ - RULE-SET,Myproxy,PROXY
+ - RULE-SET,Mydirect,国内网站
+ - RULE-SET,Proxy1,PROXY
+ - RULE-SET,Direct1,国内网站
+
+ - RULE-SET,ip-cn,国内网站
+
+ - MATCH,未知
+rule-providers:
+ AD:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml"
+  behavior: classical
+  format: yaml
+
+ AD!:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct.yaml"
+  behavior: classical
+  format: yaml
+
+ Download:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download.yaml"
+  behavior: classical
+  format: yaml
+
+ GameDownload:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload.yaml"
+  behavior: classical
+  format: yaml
+
+ Mydirect:
+  <<: *r
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mydirect.yaml"
+  behavior: classical
+  format: yaml
+
+ Myproxy:
+  <<: *r
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Myproxy.yaml"
+  behavior: classical
+  format: yaml
+
+ Mygames:
+  <<: *r
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mygames.yaml"
+  behavior: classical
+  format: yaml
+
+ GPT:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/OpenAI/OpenAI.yaml"
+  behavior: classical
+  format: yaml
+
+ Proxy1:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs"
+  behavior: domain
+  format: mrs
+
+ Direct1:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.mrs"
+  behavior: domain
+  format: mrs
+
+ ip-cn:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.mrs"
+  behavior: ipcidr
+  format: mrs
