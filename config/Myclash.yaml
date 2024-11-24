@@ -82,7 +82,6 @@ proxy-groups:
    type: select
    proxies:
     - DIRECT
-    - PROXY
     - 游戏
    include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png
@@ -91,14 +90,12 @@ proxy-groups:
    proxies:
     - DIRECT
     - PROXY
-    - 游戏
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png
  - name: "未知"
    type: select
    proxies:
     - DIRECT
     - PROXY
-    - 游戏
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Stack.png
  - name: "广告"
    type: select
@@ -106,7 +103,6 @@ proxy-groups:
     - REJECT
     - DIRECT
     - PROXY
-    - 游戏
    icon: https://github.com/NB921/picture/raw/main/AD3.png
 rules:
  - RULE-SET,Download,DIRECT
