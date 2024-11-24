@@ -42,7 +42,7 @@ dns:
   - 119.29.29.29
   - 223.5.5.5
  nameserver-policy:
-  "rule-set:GPT,Myproxy,Proxy1":
+  "rule-set:Wuran,GPT,Myproxy,Proxy1":
    - '8.8.8.8#代理'
    - '1.1.1.1#代理'
 sniffer:
@@ -160,6 +160,12 @@ rule-providers:
  Mygames:
   <<: *r
   url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mygames.yaml"
+  behavior: classical
+  format: yaml
+
+ Wuran:
+  <<: *r
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Wuran.yaml"
   behavior: classical
   format: yaml
 
