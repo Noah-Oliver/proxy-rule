@@ -38,7 +38,7 @@ dns:
  default-nameserver:
   - system
  nameserver:
-  - system
+  - 8.8.8.8
   - 119.29.29.29
   - 223.5.5.5
  nameserver-policy:
