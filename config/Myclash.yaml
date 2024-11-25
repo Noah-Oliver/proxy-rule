@@ -31,20 +31,6 @@ tcp-concurrent: true
 find-process-mode: strict
 profile: # 存储 select 选择记录
  store-selected: true
-dns:
- enable: true
- ipv6: true
- enhanced-mode: redir-host
- default-nameserver:
-  - 223.5.5.5
-  - 119.29.29.29
- nameserver:
-  - 223.5.5.5
-  - 119.29.29.29
- nameserver-policy:
-  "rule-set:GPT,Myproxy,Proxy1":
-   - '1.1.1.1#代理'
-   - '9.9.9.9#代理'
 sniffer:
  enable: true
  override-destination: false
