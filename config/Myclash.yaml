@@ -36,14 +36,12 @@ dns:
  ipv6: true
  enhanced-mode: redir-host
  nameserver:
-   - '119.29.29.29#国内网站'
    - '180.76.76.76#国内网站'
-   - '114.114.114.114#国内网站'
+   - '180.184.1.1#国内网站'
  nameserver-policy:
   'rule-set:GPT,Myproxy,Proxy1':
-   - '1.1.1.1#PROXY'
    - '8.8.8.8#PROXY'
-   - '9.9.9.9#PROXY'
+   - '1.1.1.1#PROXY'
 sniffer:
  enable: true
  override-destination: false
