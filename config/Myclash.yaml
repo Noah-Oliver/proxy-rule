@@ -42,6 +42,17 @@ dns:
   'rule-set:GPT,Myproxy,Proxy1':
    - '8.8.8.8#PROXY'
    - '1.1.1.1#PROXY'
+tun:
+ enable: true
+ stack: mixed
+ auto-route: true
+ auto-redirect: true
+ auto-detect-interface: true
+ dns-hijack:
+  - any:53
+  - tcp://any:53
+ mtu: 9000
+ strict-route: true
 sniffer:
  enable: true
  override-destination: false
