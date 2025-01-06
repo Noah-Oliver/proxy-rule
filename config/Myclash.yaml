@@ -32,7 +32,11 @@ find-process-mode: strict
 profile: # 存储 select 选择记录
  store-selected: true
 dns:
- enable: false
+ enable: true
+ ipv6: true
+ enhanced-mode: redir-host
+ default-nameserver:
+  - system
 tun:
  enable: true
  stack: mixed
