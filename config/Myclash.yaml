@@ -36,12 +36,15 @@ dns:
  ipv6: true
  enhanced-mode: redir-host
  nameserver:
-   - '180.76.76.76#国内网站'
-   - '180.184.1.1#国内网站'
+   - 'dhcp://system#PROXY'
+   - 'system#PROXY'
  nameserver-policy:
-  'rule-set:GPT,Myproxy,Proxy1':
-   - '8.8.8.8#PROXY'
-   - '1.1.1.1#PROXY'
+  'rule-set:Mydirect,Direct1':
+   - 'dhcp://system#国内网站'
+   - 'system#国内网站'
+#  'rule-set:GPT,Myproxy,Proxy1':
+#   - 'dhcp://system#PROXY'
+#   - 'system#PROXY'
 tun:
  enable: true
  stack: mixed
