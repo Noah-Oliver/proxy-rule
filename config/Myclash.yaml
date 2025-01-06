@@ -32,19 +32,7 @@ find-process-mode: strict
 profile: # 存储 select 选择记录
  store-selected: true
 dns:
- enable: true
- ipv6: true
- enhanced-mode: redir-host
- nameserver:
-   - 'dhcp://system#PROXY'
-   - 'system#PROXY'
- nameserver-policy:
-  'rule-set:Mydirect,Direct1':
-   - 'dhcp://system#国内网站'
-   - 'system#国内网站'
-#  'rule-set:GPT,Myproxy,Proxy1':
-#   - 'dhcp://system#PROXY'
-#   - 'system#PROXY'
+ enable: false
 tun:
  enable: true
  stack: mixed
