@@ -37,28 +37,6 @@ dns:
  enhanced-mode: redir-host
  default-nameserver:
   - system
-tun:
- enable: true
- stack: mixed
- auto-route: true
- auto-redirect: true
- auto-detect-interface: true
- dns-hijack:
-  - any:53
-  - tcp://any:53
- mtu: 9000
- strict-route: true
-sniffer:
- enable: true
- override-destination: false
- sniff:
-  HTTP:
-   ports: [80, 8080-8880]
-   override-destination: true
-  TLS:
-   ports: [443, 8443]
-  QUIC:
-   ports: [443, 8443]
 mixed-port: 7890
 proxy-groups:
  - name: "PROXY"
@@ -124,6 +102,12 @@ rules:
 
  - MATCH,未知
 rule-providers:
+ Download:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download.yaml"
+  behavior: classical
+  format: yaml
+
  AD:
   <<: *r
   url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml"
@@ -136,27 +120,9 @@ rule-providers:
   behavior: classical
   format: yaml
 
- Download:
-  <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download.yaml"
-  behavior: classical
-  format: yaml
-
  GameDownload:
   <<: *r
   url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload.yaml"
-  behavior: classical
-  format: yaml
-
- Mydirect:
-  <<: *r
-  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mydirect.yaml"
-  behavior: classical
-  format: yaml
-
- Myproxy:
-  <<: *r
-  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Myproxy.yaml"
   behavior: classical
   format: yaml
 
@@ -172,20 +138,32 @@ rule-providers:
   behavior: classical
   format: yaml
 
+ Myproxy:
+  <<: *r
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Myproxy.yaml"
+  behavior: classical
+  format: yaml
+
+ Mydirect:
+  <<: *r
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mydirect.yaml"
+  behavior: classical
+  format: yaml
+
  Proxy1:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs"
-  behavior: domain
-  format: mrs
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.yaml"
+  behavior: classical
+  format: yaml
 
  Direct1:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.mrs"
-  behavior: domain
-  format: mrs
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.yaml"
+  behavior: classical
+  format: yaml
 
  ip-cn:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.mrs"
-  behavior: ipcidr
-  format: mrs
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.yaml"
+  behavior: classical
+  format: yaml
