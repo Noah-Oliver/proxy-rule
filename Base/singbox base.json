@@ -9,7 +9,7 @@
     "servers": [
       {
         "tag": "DNS_direct",
-        "address": "223.5.5.5",
+        "address": "local",
         "address_resolver": "DNS_resolver",
         "address_strategy": "prefer_ipv4",
         "detour": "国内网站"
@@ -31,7 +31,7 @@
       },
       {
         "tag": "DNS_resolver",
-        "address": "223.5.5.5",
+        "address": "local",
         "address_strategy": "prefer_ipv4",
         "detour": "国内网站"
       }
@@ -103,7 +103,160 @@
     }
   ],
   "outbounds": [],
-  "route": {},
+  "route": {
+    "rules": [
+      {
+        "clash_mode": "global",
+        "outbound": "PROXY"
+      },
+      {
+        "clash_mode": "direct",
+        "outbound": "direct"
+      },
+      {
+        "rule_set": ["Download"],
+        "outbound": "direct"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": ["AD"]
+          },
+          {
+            "rule_set": ["AD!"],
+            "invert": true
+          }
+        ],
+        "outbound": "广告"
+      },
+      {
+        "rule_set": ["GameDownload"],
+        "outbound": "平台游戏下载"
+      },
+      {
+        "rule_set": ["Mygames"],
+        "outbound": "游戏"
+      },
+      {
+        "rule_set": ["GPT"],
+        "outbound": "GPT"
+      },
+      {
+        "rule_set": ["Myproxy"],
+        "outbound": "PROXY"
+      },
+      {
+        "rule_set": ["Mydirect"],
+        "outbound": "国内网站"
+      },
+      {
+        "rule_set": ["Proxy1"],
+        "outbound": "PROXY"
+      },
+      {
+        "rule_set": [
+          "Direct1",
+          "ip-cn"
+        ],
+        "outbound": "国内网站"
+      }
+    ],
+    "rule_set": [
+      {
+        "type": "remote",
+        "tag": "Download",
+        "format": "source",
+        "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download.yaml",
+        "download_detour": "PROXY",
+        "update_interval": "8h"
+      },
+      {
+        "type": "remote",
+        "tag": "AD",
+        "format": "source",
+        "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml",
+        "download_detour": "PROXY",
+        "update_interval": "8h"
+      },
+      {
+        "type": "remote",
+        "tag": "AD!",
+        "format": "source",
+        "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct.yaml",
+        "download_detour": "PROXY",
+        "update_interval": "8h"
+      },
+      {
+        "type": "remote",
+        "tag": "GameDownload",
+        "format": "source",
+        "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload.yaml",
+        "download_detour": "PROXY",
+        "update_interval": "8h"
+      },
+      {
+        "type": "remote",
+        "tag": "Mygames",
+        "format": "source",
+        "url": "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mygames.yaml",
+        "download_detour": "PROXY",
+        "update_interval": "8h"
+      },
+      {
+        "type": "remote",
+        "tag": "GPT",
+        "format": "source",
+        "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/OpenAI/OpenAI.yaml",
+        "download_detour": "PROXY",
+        "update_interval": "8h"
+      },
+      {
+        "type": "remote",
+        "tag": "Myproxy",
+        "format": "source",
+        "url": "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Myproxy.yaml",
+        "download_detour": "PROXY",
+        "update_interval": "8h"
+      },
+      {
+        "type": "remote",
+        "tag": "Mydirect",
+        "format": "source",
+        "url": "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mydirect.yaml",
+        "download_detour": "PROXY",
+        "update_interval": "8h"
+      },
+      {
+        "type": "remote",
+        "tag": "Proxy1",
+        "format": "source",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.yaml",
+        "download_detour": "PROXY",
+        "update_interval": "8h"
+      },
+      {
+        "type": "remote",
+        "tag": "Direct1",
+        "format": "source",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.yaml",
+        "download_detour": "PROXY",
+        "update_interval": "8h"
+      },
+      {
+        "type": "remote",
+        "tag": "ip-cn",
+        "format": "source",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.yaml",
+        "download_detour": "PROXY",
+        "update_interval": "8h"
+      }
+    ],
+    "final": "未知",
+    "auto_detect_interface": true,
+    "override_android_vpn": true
+  },
   "experimental": {
     "cache_file": {
       "enabled": true,
