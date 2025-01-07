@@ -162,7 +162,7 @@
       "tag": "广告",
       "type": "selector",
       "outbounds": [
-        "reject",
+        "block",
         "direct",
         "PROXY"
       ]
