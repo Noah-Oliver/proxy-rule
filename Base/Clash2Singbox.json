@@ -194,8 +194,7 @@
             "invert": true
           }
         ],
-        "outbound": "广告",
-        "action": "reject"
+        "outbound": "广告"
       },
       {
         "rule_set": ["GameDownload"],
