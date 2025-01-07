@@ -153,17 +153,17 @@ rule-providers:
  Proxy1:
   <<: *r
   url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.yaml"
-  behavior: classical
+  behavior: domain
   format: yaml
 
  Direct1:
   <<: *r
   url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.yaml"
-  behavior: classical
+  behavior: domain
   format: yaml
 
  ip-cn:
   <<: *r
   url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.yaml"
-  behavior: classical
+  behavior: ipcidr
   format: yaml
