@@ -234,7 +234,6 @@
         "tag": "Download",
         "format": "source",
         "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download.yaml",
-        "download_detour": "PROXY",
         "update_interval": "8h"
       },
       {
@@ -242,7 +241,6 @@
         "tag": "AD",
         "format": "source",
         "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml",
-        "download_detour": "PROXY",
         "update_interval": "8h"
       },
       {
@@ -250,7 +248,6 @@
         "tag": "AD!",
         "format": "source",
         "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct.yaml",
-        "download_detour": "PROXY",
         "update_interval": "8h"
       },
       {
@@ -258,7 +255,6 @@
         "tag": "GameDownload",
         "format": "source",
         "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload.yaml",
-        "download_detour": "PROXY",
         "update_interval": "8h"
       },
       {
@@ -266,7 +262,6 @@
         "tag": "Mygames",
         "format": "source",
         "url": "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mygames.yaml",
-        "download_detour": "PROXY",
         "update_interval": "8h"
       },
       {
@@ -274,7 +269,6 @@
         "tag": "GPT",
         "format": "source",
         "url": "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/OpenAI/OpenAI.yaml",
-        "download_detour": "PROXY",
         "update_interval": "8h"
       },
       {
@@ -282,7 +276,6 @@
         "tag": "Myproxy",
         "format": "source",
         "url": "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Myproxy.yaml",
-        "download_detour": "PROXY",
         "update_interval": "8h"
       },
       {
@@ -290,7 +283,6 @@
         "tag": "Mydirect",
         "format": "source",
         "url": "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mydirect.yaml",
-        "download_detour": "PROXY",
         "update_interval": "8h"
       },
       {
@@ -298,7 +290,6 @@
         "tag": "Proxy1",
         "format": "source",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.yaml",
-        "download_detour": "PROXY",
         "update_interval": "8h"
       },
       {
@@ -306,7 +297,6 @@
         "tag": "Direct1",
         "format": "source",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.yaml",
-        "download_detour": "PROXY",
         "update_interval": "8h"
       },
       {
@@ -314,7 +304,6 @@
         "tag": "ip-cn",
         "format": "source",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.yaml",
-        "download_detour": "PROXY",
         "update_interval": "8h"
       }
     ],
