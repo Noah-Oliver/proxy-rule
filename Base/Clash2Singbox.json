@@ -171,7 +171,7 @@
       "tag": "自动选择",
       "type": "urltest",
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "8h",
+      "interval": "28m",
       "outbounds": [
         "include: .*",
         "exclude: :|：|!|！"
