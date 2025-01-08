@@ -31,12 +31,6 @@ tcp-concurrent: true
 find-process-mode: strict
 profile: # 存储 select 选择记录
  store-selected: true
-dns:
- enable: true
- ipv6: true
- enhanced-mode: redir-host
- default-nameserver:
-  - system
 mixed-port: 7890
 proxy-groups:
  - name: "PROXY"
