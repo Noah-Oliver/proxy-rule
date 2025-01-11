@@ -43,31 +43,6 @@ tcp-concurrent: false
 find-process-mode: strict
 profile: # 存储 select 选择记录
  store-selected: true
-dns:
- enable: true
- ipv6: true
- enhanced-mode: redir-host
- default-nameserver:
-  - system
- nameserver:
-  - 8.8.8.8
-  - 119.29.29.29
-  - 223.5.5.5
- nameserver-policy:
-  "rule-set:GPT,Myproxy,Proxy1":
-   - '8.8.8.8#代理'
-   - '1.1.1.1#代理'
-sniffer:
- enable: true
- override-destination: false
- sniff:
-  HTTP:
-   ports: [80, 8080-8880]
-   override-destination: true
-  TLS:
-   ports: [443, 8443]
-  QUIC:
-   ports: [443, 8443]
 mixed-port: 7890
 proxy-groups:
  - name: "PROXY"
