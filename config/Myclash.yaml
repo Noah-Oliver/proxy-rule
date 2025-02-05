@@ -25,6 +25,7 @@ allow-lan: true
 mode: rule
 log-level: info
 ipv6: true
+disable-keep-alive: true
 external-controller: 127.0.0.1:9090
 unified-delay: true
 tcp-concurrent: false
