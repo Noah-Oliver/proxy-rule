@@ -90,6 +90,7 @@ rules:
 
  - RULE-SET,Myproxy,PROXY
  - RULE-SET,Mydirect,国内网站
+ - RULE-SET,Gfw,PROXY
  - RULE-SET,Proxy1,PROXY
  - RULE-SET,Direct1,国内网站
 
@@ -143,6 +144,12 @@ rule-providers:
   <<: *r
   url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mydirect.yaml"
   behavior: classical
+  format: yaml
+
+ Gfw:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.yaml"
+  behavior: domain
   format: yaml
 
  Proxy1:
