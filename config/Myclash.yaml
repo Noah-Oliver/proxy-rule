@@ -82,6 +82,7 @@ proxy-groups:
    icon: https://github.com/NB921/picture/raw/main/AD3.png
 rules:
  - RULE-SET,Download,DIRECT
+ - RULE-SET,Private,DIRECT
  - AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),广告
 
  - RULE-SET,GameDownload,平台游戏下载
@@ -92,9 +93,11 @@ rules:
  - RULE-SET,Mydirect,国内网站
  - RULE-SET,Gfw,PROXY
  - RULE-SET,Proxy1,PROXY
+ - RULE-SET,Proxy2,PROXY
  - RULE-SET,Direct1,国内网站
 
- - RULE-SET,ip-cn,国内网站
+ - RULE-SET,Cn1,国内网站
+ - RULE-SET,Cn2,DIRECT
 
  - MATCH,未知
 rule-providers:
@@ -102,6 +105,12 @@ rule-providers:
   <<: *r
   url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt"
   behavior: classical
+  format: yaml
+
+ Private:
+  <<: *r
+  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt"
+  behavior: domain
   format: yaml
 
  AD:
@@ -158,14 +167,26 @@ rule-providers:
   behavior: domain
   format: yaml
 
+ Proxy2:
+  <<: *r
+  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/tld-not-cn.txt"
+  behavior: domain
+  format: yaml
+
  Direct1:
   <<: *r
   url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt"
   behavior: domain
   format: yaml
 
- ip-cn:
+ Cn1:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.yaml"
+  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
+  behavior: ipcidr
+  format: yaml
+
+ Cn2:
+  <<: *r
+  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt"
   behavior: ipcidr
   format: yaml
