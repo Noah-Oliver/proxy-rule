@@ -61,18 +61,12 @@ proxy-groups:
     - 游戏
    include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png
- - name: "国内网站"
+ - name: "Others"
    type: select
    proxies:
     - DIRECT
     - PROXY
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png
- - name: "未知"
-   type: select
-   proxies:
-    - DIRECT
-    - PROXY
-   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Stack.png
  - name: "广告"
    type: select
    proxies:
@@ -90,16 +84,11 @@ rules:
  - RULE-SET,GPT,GPT
 
  - RULE-SET,Myproxy,PROXY
- - RULE-SET,Mydirect,国内网站
+ - RULE-SET,Mydirect,Others
  - RULE-SET,Gfw,PROXY
  - RULE-SET,Proxy1,PROXY
- - RULE-SET,Proxy2,PROXY
- - RULE-SET,Direct1,国内网站
 
- - RULE-SET,Cn1,国内网站
- - RULE-SET,Cn2,DIRECT
-
- - MATCH,未知
+ - MATCH,Others
 rule-providers:
  Download:
   <<: *r
@@ -163,30 +152,6 @@ rule-providers:
 
  Proxy1:
   <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
-  behavior: domain
-  format: yaml
-
- Proxy2:
-  <<: *r
   url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/tld-not-cn.txt"
   behavior: domain
-  format: yaml
-
- Direct1:
-  <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt"
-  behavior: domain
-  format: yaml
-
- Cn1:
-  <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
-  behavior: ipcidr
-  format: yaml
-
- Cn2:
-  <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt"
-  behavior: ipcidr
   format: yaml
