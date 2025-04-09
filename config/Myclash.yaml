@@ -84,7 +84,7 @@ rules:
  - RULE-SET,GPT,GPT
 
  - RULE-SET,Myproxy,PROXY
- - RULE-SET,Mydirect,Others
+ - RULE-SET,Mydirect,国内网站
  - RULE-SET,Proxy1,PROXY
  - RULE-SET,Direct1,国内网站
  - RULE-SET,Cn1,国内网站
