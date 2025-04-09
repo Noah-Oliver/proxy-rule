@@ -127,7 +127,7 @@ rule-providers:
 
  Proxy1:
   <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/tld-not-cn.txt"
+  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
   behavior: domain
   format: yaml
 
