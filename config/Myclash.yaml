@@ -40,13 +40,6 @@ proxy-groups:
     - DIRECT
    include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png
- - name: "GPT"
-   type: select
-   proxies:
-    - DIRECT
-    - PROXY
-   include-all-providers: true
-   icon: https://github.com/NB921/picture/raw/main/chatgpt.png
  - name: "游戏"
    type: select
    proxies:
@@ -86,7 +79,6 @@ rules:
 
  - RULE-SET,GameDownload,平台游戏下载
  - RULE-SET,Mygames,游戏
- - RULE-SET,GPT,GPT
 
  - RULE-SET,Myproxy,PROXY
  - RULE-SET,Mydirect,国内网站
@@ -118,12 +110,6 @@ rule-providers:
  Mygames:
   <<: *r
   url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mygames.yaml"
-  behavior: classical
-  format: yaml
-
- GPT:
-  <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/OpenAI/OpenAI.yaml"
   behavior: classical
   format: yaml
 
