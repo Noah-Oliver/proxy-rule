@@ -127,7 +127,7 @@ rule-providers:
 
  Proxy1:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs"
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.mrs"
   behavior: domain
   format: mrs
 
