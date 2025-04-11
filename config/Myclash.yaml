@@ -97,7 +97,7 @@ rule-providers:
 
  Download:
   <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt"
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download.yaml"
   behavior: classical
   format: yaml
 
@@ -127,18 +127,18 @@ rule-providers:
 
  Proxy1:
   <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs"
   behavior: domain
-  format: yaml
+  format: mrs
 
  Direct1:
   <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt"
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.mrs"
   behavior: domain
-  format: yaml
+  format: mrs
 
  Cn1:
   <<: *r
-  url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.mrs"
   behavior: ipcidr
-  format: yaml
+  format: mrs
