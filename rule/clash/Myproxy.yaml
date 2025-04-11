@@ -3,11 +3,12 @@ payload:
  - DOMAIN,sing-boxp.dustinwin.top
  - DOMAIN,sing-box.sagernet.org
  - DOMAIN,m.manhuagui.com
- - DOMAIN,ipwho.is
- - DOMAIN,api.ip.sb
- - DOMAIN,ipapi.co
- - DOMAIN,ipinfo.io
 
+
+ - DOMAIN-SUFFIX,ipwho.is
+ - DOMAIN-SUFFIX,api.ip.sb
+ - DOMAIN-SUFFIX,ipapi.co
+ - DOMAIN-SUFFIX,ipinfo.io
  - DOMAIN-SUFFIX,ffqla.net
  - DOMAIN-SUFFIX,clash-gaming.com
  - DOMAIN-SUFFIX,metacubex.one
