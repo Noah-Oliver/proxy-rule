@@ -4,11 +4,6 @@ payload:
  - DOMAIN,sing-box.sagernet.org
  - DOMAIN,m.manhuagui.com
 
-
- - DOMAIN-SUFFIX,ipwho.is
- - DOMAIN-SUFFIX,api.ip.sb
- - DOMAIN-SUFFIX,ipapi.co
- - DOMAIN-SUFFIX,ipinfo.io
  - DOMAIN-SUFFIX,ffqla.net
  - DOMAIN-SUFFIX,clash-gaming.com
  - DOMAIN-SUFFIX,metacubex.one
