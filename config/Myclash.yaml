@@ -28,7 +28,7 @@ ipv6: true
 disable-keep-alive: true
 external-controller: 127.0.0.1:9090
 unified-delay: true
-tcp-concurrent: true
+tcp-concurrent: false
 find-process-mode: strict
 profile: # 存储 select 选择记录
  store-selected: true
