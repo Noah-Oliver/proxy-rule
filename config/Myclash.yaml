@@ -40,6 +40,13 @@ proxy-groups:
     - DIRECT
    include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png
+ - name: "GPT"
+   type: select
+   proxies:
+    - DIRECT
+    - PROXY
+   include-all-providers: true
+   icon: https://github.com/NB921/picture/raw/main/chatgpt.png
  - name: "游戏"
    type: select
    proxies:
@@ -79,6 +86,7 @@ rules:
 
  - RULE-SET,GameDownload,平台游戏下载
  - RULE-SET,Mygames,游戏
+ - RULE-SET,GPT,GPT
 
  - RULE-SET,Myproxy,PROXY
  - RULE-SET,Mydirect,国内网站
@@ -86,30 +94,37 @@ rules:
  - RULE-SET,Direct1,国内网站
 
  - RULE-SET,Cn1,国内网站
+ - RULE-SET,Cn2,国内网站
 
  - MATCH,未知
 rule-providers:
  AD:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml"
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical_No_Resolve.yaml"
   behavior: classical
   format: yaml
 
  Download:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download.yaml"
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download_No_Resolve.yaml"
   behavior: classical
   format: yaml
 
  GameDownload:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload.yaml"
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload_No_Resolve.yaml"
   behavior: classical
   format: yaml
 
  Mygames:
   <<: *r
   url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mygames.yaml"
+  behavior: classical
+  format: yaml
+
+ GPT:
+  <<: *r
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/OpenAI/OpenAI_No_Resolve.yaml"
   behavior: classical
   format: yaml
 
@@ -127,18 +142,24 @@ rule-providers:
 
  Proxy1:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.mrs"
-  behavior: domain
-  format: mrs
+  url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ProxyGFWlist.list"
+  behavior: classical
+  format: yaml
 
  Direct1:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.mrs"
-  behavior: domain
-  format: mrs
+  url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaDomain.list"
+  behavior: classical
+  format: yaml
 
  Cn1:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.mrs"
-  behavior: ipcidr
-  format: mrs
+  url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaIp.list"
+  behavior: classical
+  format: yaml
+
+ Cn2:
+  <<: *r
+  url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaIpV6.list"
+  behavior: classical
+  format: yaml
