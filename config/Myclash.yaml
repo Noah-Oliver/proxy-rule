@@ -144,22 +144,22 @@ rule-providers:
   <<: *r
   url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ProxyGFWlist.list"
   behavior: classical
-  format: yaml
+  format: text
 
  Direct1:
   <<: *r
   url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaDomain.list"
   behavior: classical
-  format: yaml
+  format: text
 
  Cn1:
   <<: *r
   url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaIp.list"
   behavior: classical
-  format: yaml
+  format: text
 
  Cn2:
   <<: *r
   url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaIpV6.list"
   behavior: classical
-  format: yaml
+  format: text
