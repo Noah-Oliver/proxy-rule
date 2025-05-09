@@ -10,6 +10,7 @@ payload:
  - DOMAIN-SUFFIX,qoo-app.com
  - DOMAIN-SUFFIX,91short.com
  - DOMAIN-SUFFIX,cloudflare.com
+ - DOMAIN-SUFFIX,driverscloud.com
 
  - DOMAIN-KEYWORD,google
 
