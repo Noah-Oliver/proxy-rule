@@ -11,6 +11,7 @@ payload:
  - DOMAIN-SUFFIX,91short.com
  - DOMAIN-SUFFIX,cloudflare.com
  - DOMAIN-SUFFIX,driverscloud.com
+ - DOMAIN-SUFFIX,obsproject.com
 
  - DOMAIN-KEYWORD,google
 
