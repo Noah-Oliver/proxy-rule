@@ -9,6 +9,7 @@ payload:
  - DOMAIN-SUFFIX,metacubex.one
  - DOMAIN-SUFFIX,qoo-app.com
  - DOMAIN-SUFFIX,91short.com
+ - DOMAIN-SUFFIX,cloudflare.com
 
  - DOMAIN-KEYWORD,google
 
