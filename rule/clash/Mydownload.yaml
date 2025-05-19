@@ -88,3 +88,4 @@ payload:
 
 #Xbox download
  - DOMAIN,tlu.dl.delivery.mp.microsoft.com
+ - DOMAIN,assets1.xboxlive.cn
