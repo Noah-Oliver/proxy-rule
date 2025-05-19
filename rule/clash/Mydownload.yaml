@@ -45,4 +45,5 @@ payload:
  - PROCESS-NAME,xdman
  - PROCESS-NAME,xdman.exe
 
-#额外
+#Xbox download
+ - DOMAIN,tlu.dl.delivery.mp.microsoft.com
