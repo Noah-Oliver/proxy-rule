@@ -79,7 +79,7 @@ proxy-groups:
    type: select
    proxies:
     - DIRECT
-    - 游戏
+    - Games
    include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png
  - name: "CN"
