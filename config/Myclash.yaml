@@ -61,40 +61,40 @@ proxy-groups:
     - DIRECT
    include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png
- - name: "GPT"
+ - name: "Unlock"
    type: select
    proxies:
     - DIRECT
     - PROXY
    include-all-providers: true
-   icon: https://github.com/NB921/picture/raw/main/chatgpt.png
- - name: "游戏"
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png
+ - name: "Games"
    type: select
    proxies:
     - DIRECT
     - PROXY
    include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Game.png
- - name: "平台游戏下载"
+ - name: "Download"
    type: select
    proxies:
     - DIRECT
     - 游戏
    include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png
- - name: "国内网站"
+ - name: "CN"
    type: select
    proxies:
     - DIRECT
     - PROXY
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png
- - name: "未知"
+ - name: "No match"
    type: select
    proxies:
     - DIRECT
     - PROXY
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Stack.png
- - name: "广告"
+ - name: "AD"
    type: select
    proxies:
     - REJECT
@@ -102,22 +102,21 @@ proxy-groups:
     - PROXY
    icon: https://github.com/NB921/picture/raw/main/AD3.png
 rules:
- - RULE-SET,AD,广告
- - RULE-SET,Download,DIRECT
+ - RULE-SET,AD,AD
 
- - RULE-SET,GameDownload,平台游戏下载
- - RULE-SET,Mygames,游戏
- - RULE-SET,GPT,GPT
-
+ - RULE-SET,Mydownload,Download
+ - RULE-SET,Myunlock,Unlock
+ - RULE-SET,Mygames,Games
  - RULE-SET,Myproxy,PROXY
- - RULE-SET,Mydirect,国内网站
+ - RULE-SET,Mydirect,CN
+
  - RULE-SET,Proxy1,PROXY
- - RULE-SET,Direct1,国内网站
+ - RULE-SET,Direct1,CN
 
- - RULE-SET,Cn1,国内网站
- - RULE-SET,Cn2,国内网站
+ - RULE-SET,Cn1,CN
+ - RULE-SET,Cn2,CN
 
- - MATCH,未知
+ - MATCH,No match
 rule-providers:
  AD:
   <<: *r
@@ -125,27 +124,21 @@ rule-providers:
   behavior: classical
   format: yaml
 
- Download:
+ Mydownload:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download_No_Resolve.yaml"
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mydownload.yaml"
   behavior: classical
   format: yaml
 
- GameDownload:
+ Myunlock:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload_No_Resolve.yaml"
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Myunlock.yaml"
   behavior: classical
   format: yaml
 
  Mygames:
   <<: *r
   url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mygames.yaml"
-  behavior: classical
-  format: yaml
-
- GPT:
-  <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/OpenAI/OpenAI_No_Resolve.yaml"
   behavior: classical
   format: yaml
 
