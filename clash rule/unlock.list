@@ -1,69 +1,66 @@
-payload:
-#OpenAi
- - DOMAIN,browser-intake-datadoghq.com
- - DOMAIN,chat.openai.com.cdn.cloudflare.net
- - DOMAIN,gemini.google.com
- - DOMAIN,openai-api.arkoselabs.com
- - DOMAIN,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
- - DOMAIN,openaicomproductionae4b.blob.core.windows.net
- - DOMAIN,production-openaicom-storage.azureedge.net
- - DOMAIN,static.cloudflareinsights.com
- - DOMAIN-SUFFIX,ai.com
- - DOMAIN-SUFFIX,algolia.net
- - DOMAIN-SUFFIX,api.statsig.com
- - DOMAIN-SUFFIX,auth0.com
- - DOMAIN-SUFFIX,chatgpt.com
- - DOMAIN-SUFFIX,chatgpt.livekit.cloud
- - DOMAIN-SUFFIX,client-api.arkoselabs.com
- - DOMAIN-SUFFIX,events.statsigapi.net
- - DOMAIN-SUFFIX,featuregates.org
- - DOMAIN-SUFFIX,host.livekit.cloud
- - DOMAIN-SUFFIX,identrust.com
- - DOMAIN-SUFFIX,intercom.io
- - DOMAIN-SUFFIX,intercomcdn.com
- - DOMAIN-SUFFIX,launchdarkly.com
- - DOMAIN-SUFFIX,oaistatic.com
- - DOMAIN-SUFFIX,oaiusercontent.com
- - DOMAIN-SUFFIX,observeit.net
- - DOMAIN-SUFFIX,openai.com
- - DOMAIN-SUFFIX,openaiapi-site.azureedge.net
- - DOMAIN-SUFFIX,openaicom.imgix.net
- - DOMAIN-SUFFIX,segment.io
- - DOMAIN-SUFFIX,sentry.io
- - DOMAIN-SUFFIX,stripe.com
- - DOMAIN-SUFFIX,turn.livekit.cloud
- - DOMAIN-KEYWORD,openai
- - IP-CIDR,24.199.123.28/32,no-resolve
- - IP-CIDR,64.23.132.171/32,no-resolve
- - IP-ASN,20473,no-resolve
-#Spotify
- - DOMAIN,audio4-ak-spotify-com.akamaized.net
- - DOMAIN,cdn-spotify-experiments.conductrics.com
- - DOMAIN,heads-ak-spotify-com.akamaized.net
- - DOMAIN,spotify.com.edgesuite.net
- - DOMAIN,spotify.map.fastly.net
- - DOMAIN,spotify.map.fastlylb.net
- - DOMAIN-SUFFIX,audio-ak-spotify-com.akamaized.net
- - DOMAIN-SUFFIX,byspotify.com
- - DOMAIN-SUFFIX,heads4-ak-spotify-com.akamaized.net
- - DOMAIN-SUFFIX,pscdn.co
- - DOMAIN-SUFFIX,scdn.co
- - DOMAIN-SUFFIX,spoti.fi
- - DOMAIN-SUFFIX,spotify-com.akamaized.net
- - DOMAIN-SUFFIX,spotify-everywhere.com
- - DOMAIN-SUFFIX,spotify.app.link
- - DOMAIN-SUFFIX,spotify.com
- - DOMAIN-SUFFIX,spotify.design
- - DOMAIN-SUFFIX,spotifycdn.com
- - DOMAIN-SUFFIX,spotifycdn.net
- - DOMAIN-SUFFIX,spotifycharts.com
- - DOMAIN-SUFFIX,spotifycodes.com
- - DOMAIN-SUFFIX,spotifyforbrands.com
- - DOMAIN-SUFFIX,spotifyjobs.com
- - DOMAIN-SUFFIX,spotifynewsroom.jp
- - DOMAIN-SUFFIX,spotilocal.com
- - DOMAIN-SUFFIX,tospotify.com
- - DOMAIN-KEYWORD,spotify
- - IP-CIDR,104.154.127.126/32,no-resolve
- - IP-CIDR,35.186.224.47/32,no-resolve
- - PROCESS-NAME,com.spotify.music
+#unlock
+DOMAIN,audio4-ak-spotify-com.akamaized.net
+DOMAIN,browser-intake-datadoghq.com
+DOMAIN,cdn-spotify-experiments.conductrics.com
+DOMAIN,chat.openai.com.cdn.cloudflare.net
+DOMAIN,gemini.google.com
+DOMAIN,heads-ak-spotify-com.akamaized.net
+DOMAIN,openai-api.arkoselabs.com
+DOMAIN,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
+DOMAIN,openaicomproductionae4b.blob.core.windows.net
+DOMAIN,production-openaicom-storage.azureedge.net
+DOMAIN,spotify.com.edgesuite.net
+DOMAIN,spotify.map.fastly.net
+DOMAIN,spotify.map.fastlylb.net
+DOMAIN,static.cloudflareinsights.com
+DOMAIN-KEYWORD,openai
+DOMAIN-KEYWORD,spotify
+DOMAIN-SUFFIX,ai.com
+DOMAIN-SUFFIX,algolia.net
+DOMAIN-SUFFIX,api.statsig.com
+DOMAIN-SUFFIX,audio-ak-spotify-com.akamaized.net
+DOMAIN-SUFFIX,auth0.com
+DOMAIN-SUFFIX,byspotify.com
+DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,chatgpt.livekit.cloud
+DOMAIN-SUFFIX,client-api.arkoselabs.com
+DOMAIN-SUFFIX,events.statsigapi.net
+DOMAIN-SUFFIX,featuregates.org
+DOMAIN-SUFFIX,heads4-ak-spotify-com.akamaized.net
+DOMAIN-SUFFIX,host.livekit.cloud
+DOMAIN-SUFFIX,identrust.com
+DOMAIN-SUFFIX,intercom.io
+DOMAIN-SUFFIX,intercomcdn.com
+DOMAIN-SUFFIX,launchdarkly.com
+DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaiusercontent.com
+DOMAIN-SUFFIX,observeit.net
+DOMAIN-SUFFIX,openai.com
+DOMAIN-SUFFIX,openaiapi-site.azureedge.net
+DOMAIN-SUFFIX,openaicom.imgix.net
+DOMAIN-SUFFIX,pscdn.co
+DOMAIN-SUFFIX,scdn.co
+DOMAIN-SUFFIX,segment.io
+DOMAIN-SUFFIX,sentry.io
+DOMAIN-SUFFIX,spoti.fi
+DOMAIN-SUFFIX,spotify.app.link
+DOMAIN-SUFFIX,spotify.com
+DOMAIN-SUFFIX,spotify.design
+DOMAIN-SUFFIX,spotifycdn.com
+DOMAIN-SUFFIX,spotifycdn.net
+DOMAIN-SUFFIX,spotifycharts.com
+DOMAIN-SUFFIX,spotifycodes.com
+DOMAIN-SUFFIX,spotify-com.akamaized.net
+DOMAIN-SUFFIX,spotify-everywhere.com
+DOMAIN-SUFFIX,spotifyforbrands.com
+DOMAIN-SUFFIX,spotifyjobs.com
+DOMAIN-SUFFIX,spotifynewsroom.jp
+DOMAIN-SUFFIX,spotilocal.com
+DOMAIN-SUFFIX,stripe.com
+DOMAIN-SUFFIX,tospotify.com
+DOMAIN-SUFFIX,turn.livekit.cloud
+IP-CIDR,104.154.127.126/32,no-resolve
+IP-CIDR,24.199.123.28/32,no-resolve
+IP-CIDR,35.186.224.47/32,no-resolve
+IP-CIDR,64.23.132.171/32,no-resolve
+PROCESS-NAME,com.spotify.music
