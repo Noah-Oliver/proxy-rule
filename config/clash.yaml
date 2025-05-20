@@ -14,18 +14,6 @@ proxy-providers:
   <<: *p
   url: "&flag=meta&types=all"
 
-
-#特殊节点集
-u: &u
- type: url-test
- url: 'https://www.gstatic.com/generate_204'
- interval: 300
- tolerance: 20
- timeout: 2000
- exclude-filter: "^(?=.*(((?:x|X|倍|倍率.?)((1(?:[.](?:[0-9]+)?[1-9]))|(([2-9]|([1-9][0-9]+))(?:[.][0-9]+)?)))|(((1(?:[.](?:[0-9]+)?[1-9]))|(([2-9]|([1-9][0-9]+))(?:[.][0-9]+)?))(?:.?x|X|倍|倍率)))).*$"
- lazy: false
- include-all-providers: true
-
 #规则集
 r: &r
  type: http
@@ -37,6 +25,7 @@ allow-lan: true
 mode: rule
 log-level: info
 ipv6: true
+disable-keep-alive: true
 external-controller: 127.0.0.1:9090
 unified-delay: true
 tcp-concurrent: false
@@ -44,160 +33,147 @@ find-process-mode: strict
 profile: # 存储 select 选择记录
  store-selected: true
 mixed-port: 7890
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.v2ex.com
+  skip-domain:
+    - Mijia Cloud
+  skip-src-address:
+    - 192.168.0.3/32
+  skip-dst-address:
+    - 192.168.0.3/32
 proxy-groups:
  - name: "PROXY"
    type: select
    proxies:
     - DIRECT
-    - url-test 香港
-    - url-test 日本
-    - url-test 美国
    include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png
- - name: "GPT"
+ - name: "Unlock"
    type: select
    proxies:
     - DIRECT
     - PROXY
-    - url-test 香港
-    - url-test 日本
-    - url-test 美国
    include-all-providers: true
-   icon: https://github.com/NB921/picture/raw/main/chatgpt.png
- - name: "游戏"
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png
+ - name: "Game"
    type: select
    proxies:
     - DIRECT
     - PROXY
-    - url-test 香港
-    - url-test 日本
-    - url-test 美国
    include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Game.png
- - name: "平台游戏下载"
+ - name: "Download"
    type: select
    proxies:
     - DIRECT
-    - PROXY
-    - 游戏
-    - url-test 香港
-    - url-test 日本
-    - url-test 美国
+    - Game
    include-all-providers: true
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png
- - name: "国内网站"
+ - name: "CN"
    type: select
    proxies:
     - DIRECT
     - PROXY
-    - 游戏
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png
- - name: "未知"
+ - name: "No match"
    type: select
    proxies:
     - DIRECT
     - PROXY
-    - 游戏
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Stack.png
- - name: "广告"
+ - name: "AD"
    type: select
    proxies:
     - REJECT
     - DIRECT
     - PROXY
-    - 游戏
    icon: https://github.com/NB921/picture/raw/main/AD3.png
- - name: "url-test 香港"
-   <<: *u
-   filter: "港|香港|HongKong|HK|Hong Kong"
-   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png
- - name: "url-test 日本"
-   <<: *u
-   filter: "日|日本|JP|Japan"
-   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png
- - name: "url-test 美国"
-   <<: *u
-   filter: "美|美国|United States|(?<![a-zA-Z])US(?![a-zA-Z])|(?<![a-zA-Z])USA(?![a-zA-Z])|(?<![a-zA-Z])USD(?![a-zA-Z])"
-   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png
 rules:
- - RULE-SET,Download,DIRECT
- - AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),广告
+ - RULE-SET,AD,AD
 
- - RULE-SET,GameDownload,平台游戏下载
- - RULE-SET,Mygames,游戏
- - RULE-SET,GPT,GPT
+ - RULE-SET,download,Download
+ - RULE-SET,unlock,Unlock
+ - RULE-SET,game,Game
+ - RULE-SET,proxy,PROXY
+ - RULE-SET,direct,CN
 
- - RULE-SET,Myproxy,PROXY
- - RULE-SET,Mydirect,国内网站
  - RULE-SET,Proxy1,PROXY
- - RULE-SET,Direct1,国内网站
+ - RULE-SET,Direct1,CN
 
- - RULE-SET,ip-cn,国内网站
+ - RULE-SET,Cn1,CN
+ - RULE-SET,Cn2,CN
 
- - MATCH,未知
+ - MATCH,No match
 rule-providers:
  AD:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml"
+  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical_No_Resolve.yaml"
   behavior: classical
   format: yaml
 
- AD!:
+ download:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct.yaml"
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list"
   behavior: classical
-  format: yaml
+  format: text
 
- Download:
+ unlock:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download.yaml"
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list"
   behavior: classical
-  format: yaml
+  format: text
 
- GameDownload:
+ game:
   <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload.yaml"
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/game.list"
   behavior: classical
-  format: yaml
+  format: text
 
- Mydirect:
+ proxy:
   <<: *r
-  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mydirect.yaml"
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list"
   behavior: classical
-  format: yaml
+  format: text
 
- Myproxy:
+ direct:
   <<: *r
-  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Myproxy.yaml"
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list"
   behavior: classical
-  format: yaml
-
- Mygames:
-  <<: *r
-  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/rule/clash/Mygames.yaml"
-  behavior: classical
-  format: yaml
-
- GPT:
-  <<: *r
-  url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/OpenAI/OpenAI.yaml"
-  behavior: classical
-  format: yaml
+  format: text
 
  Proxy1:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs"
-  behavior: domain
-  format: mrs
+  url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ProxyGFWlist.list"
+  behavior: classical
+  format: text
 
  Direct1:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.mrs"
-  behavior: domain
-  format: mrs
+  url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaDomain.list"
+  behavior: classical
+  format: text
 
- ip-cn:
+ Cn1:
   <<: *r
-  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.mrs"
-  behavior: ipcidr
-  format: mrs
+  url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaIp.list"
+  behavior: classical
+  format: text
+
+ Cn2:
+  <<: *r
+  url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaIpV6.list"
+  behavior: classical
+  format: text
