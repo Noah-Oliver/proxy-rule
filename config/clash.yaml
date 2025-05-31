@@ -6,7 +6,7 @@ p: &p
  override:
   udp: true
   skip-cert-verify: false
- exclude-filter: ":|：|!|！"
+ exclude-filter: "套餐到期|剩余流量"
 
 #订阅链接
 proxy-providers:
