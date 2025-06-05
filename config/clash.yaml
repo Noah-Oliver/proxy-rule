@@ -95,7 +95,7 @@ proxy-groups:
     - PROXY
    icon: https://github.com/NB921/picture/raw/main/AD3.png
 rules:
- - AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),广告
+ - AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),AD
 
  - RULE-SET,download,Download
  - RULE-SET,unlock,Unlock
