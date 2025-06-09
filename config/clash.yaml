@@ -33,6 +33,9 @@ find-process-mode: strict
 profile: # 存储 select 选择记录
  store-selected: true
 mixed-port: 7890
+dns:
+  enable: true
+  ipv6: true
 sniffer:
   enable: true
   force-dns-mapping: true
