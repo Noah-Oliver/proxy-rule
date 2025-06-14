@@ -46,7 +46,7 @@ function main(config) {
   config["sniffer"] = {
     enable: true,
     "force-dns-mapping": true,
-    "parse-pure-ip": false,
+    "parse-pure-ip": true,
     "override-destination": false,
     sniff: {
       HTTP: {
