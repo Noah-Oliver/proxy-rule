@@ -5,10 +5,8 @@
  */
 const enable = true
 
-//代理分组去除通用
-const groupExcludeFilter = {
-  "exclude-filter": "剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址",
-}
+//proxies排除节点
+const blockKeywords = ["剩余","流量","套餐","到期","使用","文档","最新","网址","官网","更新","订阅","地址"]
 
 // 规则集通用配置
 const ruleProviderCommon = {
@@ -75,6 +73,17 @@ function main(config) {
     ],
   }
 
+  config["proxies"] = config.proxies.filter(proxy => {
+    return !blockKeywords.some(keyword => proxy.name.includes(keyword));
+  })
+
+  config["proxies"] = config.proxies.map(proxy => {
+    return {
+      ...proxy,
+      udp: true
+    }
+  })
+
   //总开关关闭时不处理策略组
   if (!enable) {
     return config;
@@ -83,7 +92,6 @@ function main(config) {
   config["proxy-groups"] = [
     {
       name: "PROXY",
-      ...groupExcludeFilter,
       type: "select",
       proxies: ["DIRECT",],
       "include-all": true,
@@ -91,7 +99,6 @@ function main(config) {
     },
     {
       name: "Unlock",
-      ...groupExcludeFilter,
       type: "select",
       proxies: ["DIRECT","PROXY",],
       "include-all": true,
@@ -99,7 +106,6 @@ function main(config) {
     },
     {
       name: "Download",
-      ...groupExcludeFilter,
       type: "select",
       proxies: ["DIRECT","PROXY",],
       "include-all": true,
@@ -107,21 +113,18 @@ function main(config) {
     },
     {
       name: "CN",
-      ...groupExcludeFilter,
       type: "select",
       proxies: ["DIRECT","PROXY",],
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png",
     },
     {
       name: "No match",
-      ...groupExcludeFilter,
       type: "select",
       proxies: ["DIRECT","PROXY",],
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Stack.png",
     },
     {
       name: "AD",
-      ...groupExcludeFilter,
       type: "select",
       proxies: ["REJECT","DIRECT","PROXY",],
       icon: "https://github.com/NB921/picture/raw/main/AD3.png",
