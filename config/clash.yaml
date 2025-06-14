@@ -98,6 +98,7 @@ proxy-groups:
     - PROXY
    icon: https://github.com/NB921/picture/raw/main/AD3.png
 rules:
+ - AND,((DST-PORT,443),(NETWORK,udp)),REJECT
  - AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),AD
 
  - RULE-SET,download,Download
