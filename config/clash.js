@@ -17,90 +17,6 @@ const ruleProviderCommon = {
   //proxy: "DIRECT",
 }
 
-// 规则集配置
-const ruleProviders = {
-  AD: {
-    ...ruleProviderCommon,
-    url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical_No_Resolve.yaml",
-    behavior: "classical",
-    format: "yaml",
-  },
-  "AD!": {
-    ...ruleProviderCommon,
-    url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct_No_Resolve.yaml",
-    behavior: "classical",
-    format: "yaml",
-  },
-  download: {
-    ...ruleProviderCommon,
-    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list",
-    behavior: "classical",
-    format: "text",
-  },
-  unlock: {
-    ...ruleProviderCommon,
-    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list",
-    behavior: "classical",
-    format: "text",
-  },
-  proxy: {
-    ...ruleProviderCommon,
-    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list",
-    behavior: "classical",
-    format: "text",
-  },
-  direct: {
-    ...ruleProviderCommon,
-    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list",
-    behavior: "classical",
-    format: "text",
-  },
-  Proxy1: {
-    ...ruleProviderCommon,
-    url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ProxyGFWlist.list",
-    behavior: "classical",
-    format: "text",
-  },
-  Direct1: {
-    ...ruleProviderCommon,
-    url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaDomain.list",
-    behavior: "classical",
-    format: "text",
-  },
-  Cn1: {
-    ...ruleProviderCommon,
-    url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaIp.list",
-    behavior: "classical",
-    format: "text",
-  },
-  Cn2: {
-    ...ruleProviderCommon,
-    url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaIpV6.list",
-    behavior: "classical",
-    format: "text",
-  },
-}
-
-// 规则
-const rules = [
-  // 自定义规则
-  "AND,((DST-PORT,443),(NETWORK,udp)),REJECT",
-  "AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),AD",
-
-  "RULE-SET,download,Download",
-  "RULE-SET,unlock,Unlock",
-  "RULE-SET,proxy,PROXY",
-  "RULE-SET,direct,CN",
-
-  "RULE-SET,Proxy1,PROXY",
-  "RULE-SET,Direct1,CN",
-
-  "RULE-SET,Cn1,CN",
-  "RULE-SET,Cn2,CN",
-
-  "MATCH,No match",
-]
-
 // 程序入口
 function main(config) {
   const proxyCount = config?.proxies?.length ?? 0;
@@ -158,6 +74,12 @@ function main(config) {
       "192.168.0.3/32",
     ],
   }
+
+  //总开关关闭时不处理策略组
+  if (!enable) {
+    return config;
+  }
+
   config["proxy-groups"] = [
     {
       name: "PROXY",
@@ -207,8 +129,86 @@ function main(config) {
   ]
 
   // 覆盖原配置中的规则
-  config["rule-providers"] = ruleProviders
-  config["rules"] = rules
+  config["rule-providers"] = {
+    AD: {
+    ...ruleProviderCommon,
+    url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical_No_Resolve.yaml",
+    behavior: "classical",
+    format: "yaml",
+    },
+    "AD!": {
+    ...ruleProviderCommon,
+    url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct_No_Resolve.yaml",
+    behavior: "classical",
+    format: "yaml",
+    },
+    download: {
+    ...ruleProviderCommon,
+    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list",
+    behavior: "classical",
+    format: "text",
+    },
+    unlock: {
+    ...ruleProviderCommon,
+    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list",
+    behavior: "classical",
+    format: "text",
+    },
+    proxy: {
+    ...ruleProviderCommon,
+    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list",
+    behavior: "classical",
+    format: "text",
+    },
+    direct: {
+    ...ruleProviderCommon,
+    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list",
+    behavior: "classical",
+    format: "text",
+    },
+    Proxy1: {
+    ...ruleProviderCommon,
+    url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ProxyGFWlist.list",
+    behavior: "classical",
+    format: "text",
+    },
+    Direct1: {
+    ...ruleProviderCommon,
+    url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaDomain.list",
+    behavior: "classical",
+    format: "text",
+    },
+    Cn1: {
+    ...ruleProviderCommon,
+    url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaIp.list",
+    behavior: "classical",
+    format: "text",
+    },
+    Cn2: {
+    ...ruleProviderCommon,
+    url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaIpV6.list",
+    behavior: "classical",
+    format: "text",
+    },
+  }
+  config["rules"] = [
+    // 自定义规则
+    "AND,((DST-PORT,443),(NETWORK,udp)),REJECT",
+    "AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),AD",
+
+    "RULE-SET,download,Download",
+    "RULE-SET,unlock,Unlock",
+    "RULE-SET,proxy,PROXY",
+    "RULE-SET,direct,CN",
+
+    "RULE-SET,Proxy1,PROXY",
+    "RULE-SET,Direct1,CN",
+
+    "RULE-SET,Cn1,CN",
+    "RULE-SET,Cn2,CN",
+
+    "MATCH,No match",
+  ]
 
   // 返回修改后的配置
   return config
