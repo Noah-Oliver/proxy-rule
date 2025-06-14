@@ -103,8 +103,6 @@ const rules = [
 
 // 程序入口
 function main(config) {
-  //去掉免费节点
-  const proxies = config.proxies.filter((proxy) => !proxy.name.includes("剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址"));
   const proxyCount = config?.proxies?.length ?? 0;
   const proxyProviderCount =
     typeof config?.["proxy-providers"] === "object"
