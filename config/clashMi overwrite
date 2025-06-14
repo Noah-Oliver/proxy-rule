@@ -24,7 +24,6 @@ tun:
  device: utun0
  mtu: 9000
  auto-route: true
- auto-redirect: true
  strict-route: true
  auto-detect-interface: true
  dns-hijack:
