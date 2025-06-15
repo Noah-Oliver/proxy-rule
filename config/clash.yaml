@@ -35,7 +35,9 @@ profile: # 存储 select 选择记录
 mixed-port: 7890
 dns:
   enable: true
+  cache-algorithm: arc
   ipv6: true
+  enhanced-mode: redir-host
 sniffer:
   enable: true
   force-dns-mapping: true
