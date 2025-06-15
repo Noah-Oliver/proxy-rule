@@ -41,7 +41,9 @@ function main(config) {
   }
   config["dns"] = {
     enable: true,
+    "cache-algorithm": "arc",
     ipv6: true,
+    "enhanced-mode": "redir-host",
   }
   config["sniffer"] = {
     enable: true,
