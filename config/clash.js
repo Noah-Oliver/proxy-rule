@@ -33,7 +33,7 @@ function main(config) {
   config["disable-keep-alive"] = true
   config["external-controller"] = "127.0.0.1:9090"
   config["unified-delay"] = true
-  config["tcp-concurrent"] = true
+  config["tcp-concurrent"] = false
   config["find-process-mode"] = "strict"
   config["profile"] = {
     //存储 select 选择记录
