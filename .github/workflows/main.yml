@@ -1,0 +1,35 @@
+name: Merge and Deduplicate Lists
+
+on:
+  workflow_dispatch: # 可手动触发，也可以改成 schedule 定时触发
+
+jobs:
+  merge_lists:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Download list files
+      run: |
+        curl -sSL https://github.com/Loyalsoldier/clash-rules/raw/release/gfw.txt -o list1.txt
+        curl -sSL https://github.com/Loyalsoldier/clash-rules/raw/release/proxy.txt -o list2.txt
+
+    - name: Merge and deduplicate
+      run: |
+        mkdir -p output
+        cat list1.txt list2.txt | sort | uniq > output/merged_list.txt
+
+    - name: Upload file to GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: nightly-merge
+        files: output/merged_list.txt
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
