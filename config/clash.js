@@ -42,8 +42,15 @@ function main(config) {
   config["dns"] = {
     enable: true,
     "cache-algorithm": "arc",
+    "respect-rules": true,
     ipv6: true,
     "enhanced-mode": "redir-host",
+    "default-nameserver": ["system"],
+    "nameserver": ["system"],
+    "proxy-server-nameserver": ["8.8.8.8","1.1.1.1"],
+    "nameserver-policy": {
+      "rule-set:unlock,proxy,Proxy1": ["8.8.8.8#PROXY","1.1.1.1#PROXY"]
+    }
   }
   config["sniffer"] = {
     enable: true,
@@ -197,8 +204,6 @@ function main(config) {
     },
   }
   config["rules"] = [
-    // 自定义规则
-    "AND,((DST-PORT,443),(NETWORK,udp)),REJECT",
     "AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),AD",
 
     "RULE-SET,download,Download",
