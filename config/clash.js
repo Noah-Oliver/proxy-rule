@@ -47,7 +47,7 @@ function main(config) {
     "enhanced-mode": "redir-host",
     "default-nameserver": ["system"],
     "nameserver": ["system"],
-    "proxy-server-nameserver": ["8.8.8.8","1.1.1.1"],
+    "proxy-server-nameserver": ["8.8.8.8#PROXY","1.1.1.1#PROXY"],
     "nameserver-policy": {
       "rule-set:unlock,proxy,Proxy1": ["8.8.8.8#PROXY","1.1.1.1#PROXY"]
     }
