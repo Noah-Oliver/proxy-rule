@@ -42,15 +42,10 @@ function main(config) {
   config["dns"] = {
     enable: true,
     "cache-algorithm": "arc",
-    "respect-rules": true,
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["system"],
-    "nameserver": ["system"],
-    "proxy-server-nameserver": ["8.8.8.8#PROXY","1.1.1.1#PROXY"],
-    "nameserver-policy": {
-      "rule-set:unlock,proxy,Proxy1": ["8.8.8.8#PROXY","1.1.1.1#PROXY"]
-    }
+    "default-nameserver": ["119.29.29.29","223.5.5.5"],
+    "nameserver": ["119.29.29.29","223.5.5.5"]
   }
   config["sniffer"] = {
     enable: true,
@@ -60,6 +55,7 @@ function main(config) {
     sniff: {
       HTTP: {
         ports: [80, '8080-8880'],
+        "override-destination": true,
       },
       TLS: {
         ports: [443, 8443],
