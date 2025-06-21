@@ -47,6 +47,14 @@ function main(config) {
     "default-nameserver": ["119.29.29.29","223.5.5.5"],
     "nameserver": ["119.29.29.29","223.5.5.5"]
   }
+  config["tun"] = {
+    enable: true,
+    stack: "system",
+    "auto-route": true,
+    "auto-detect-interface": true,
+    "dns-hijack": ["any:53","tcp://any:53"],
+    mtu: 9000
+  }
   config["sniffer"] = {
     enable: true,
     "force-dns-mapping": true,
