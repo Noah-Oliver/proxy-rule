@@ -56,6 +56,11 @@ function main(config) {
     "enhanced-mode": "redir-host",
     "default-nameserver": ["119.29.29.29","223.5.5.5"],
     "nameserver": ["119.29.29.29","223.5.5.5"],
+    "nameserver-policy": {
+      "rule-set:unlock,proxy": ["8.8.8.8#PROXY","1.1.1.1#PROXY"],
+      "geosite:category-ai-!cn,spotify": ["8.8.8.8#PROXY","1.1.1.1#PROXY"],
+      "geosite:gfw,category-android-app-download,category-porn,geolocation-!cn,tld-!cn": ["8.8.8.8#PROXY","1.1.1.1#PROXY"],
+    },
   }
   config["tun"] = {
     enable: true,
