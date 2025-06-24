@@ -205,7 +205,6 @@ function main(config) {
     "RULE-SET,download,Download",
     "RULE-SET,download1,Download",
     "GEOSITE,category-game-platforms-download,Download",
-    "GEOSITE,category-android-app-download,Download",
 
     "RULE-SET,unlock,Unlock",
     "GEOSITE,category-ai-!cn,Unlock",
@@ -217,6 +216,8 @@ function main(config) {
     "GEOSITE,gfw,PROXY",
     "GEOSITE,geolocation-!cn,PROXY",
     "GEOSITE,tld-!cn,PROXY",
+    "GEOSITE,category-android-app-download,PROXY",
+    "GEOSITE,category-porn,PROXY",
     "GEOSITE,cn,CN",
     "GEOIP,cn,CN",
 
