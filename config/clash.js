@@ -31,6 +31,16 @@ function main(config) {
   config["log-level"] = "info"
   config["ipv6"] = true
   config["disable-keep-alive"] = true
+  config["geodata-mode"] = true
+  config["geodata-loader"] = "memconservative"
+  config["geo-auto-update"] = true
+  config["geo-update-interval"] = 24
+  config["geox-url"] = {
+    geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat",
+    geosite: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat",
+    mmdb: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb",
+    asn: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb",
+  }
   config["external-controller"] = "127.0.0.1:9090"
   config["unified-delay"] = true
   config["tcp-concurrent"] = false
@@ -45,7 +55,7 @@ function main(config) {
     ipv6: true,
     "enhanced-mode": "redir-host",
     "default-nameserver": ["119.29.29.29","223.5.5.5"],
-    "nameserver": ["119.29.29.29","223.5.5.5"]
+    "nameserver": ["119.29.29.29","223.5.5.5"],
   }
   config["tun"] = {
     enable: true,
@@ -158,6 +168,12 @@ function main(config) {
     behavior: "classical",
     format: "yaml",
     },
+    download1: {
+    ...ruleProviderCommon,
+    url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download_No_Resolve.yaml",
+    behavior: "classical",
+    format: "yaml",
+    },
     download: {
     ...ruleProviderCommon,
     url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list",
@@ -182,44 +198,27 @@ function main(config) {
     behavior: "classical",
     format: "text",
     },
-    Proxy1: {
-    ...ruleProviderCommon,
-    url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ProxyGFWlist.list",
-    behavior: "classical",
-    format: "text",
-    },
-    Direct1: {
-    ...ruleProviderCommon,
-    url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaDomain.list",
-    behavior: "classical",
-    format: "text",
-    },
-    Cn1: {
-    ...ruleProviderCommon,
-    url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaIp.list",
-    behavior: "classical",
-    format: "text",
-    },
-    Cn2: {
-    ...ruleProviderCommon,
-    url: "https://github.com/ACL4SSR/ACL4SSR/raw/master/Clash/ChinaIpV6.list",
-    behavior: "classical",
-    format: "text",
-    },
   }
   config["rules"] = [
     "AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),AD",
 
     "RULE-SET,download,Download",
+    "RULE-SET,download1,Download",
+    "GEOSITE,category-game-platforms-download,Download",
+    "GEOSITE,category-android-app-download,Download",
+
     "RULE-SET,unlock,Unlock",
+    "GEOSITE,category-ai-!cn,Unlock",
+    "GEOSITE,spotify,Unlock",
+
     "RULE-SET,proxy,PROXY",
     "RULE-SET,direct,CN",
 
-    "RULE-SET,Proxy1,PROXY",
-    "RULE-SET,Direct1,CN",
-
-    "RULE-SET,Cn1,CN",
-    "RULE-SET,Cn2,CN",
+    "GEOSITE,gfw,PROXY",
+    "GEOSITE,geolocation-!cn,PROXY",
+    "GEOSITE,tld-!cn,PROXY",
+    "GEOSITE,cn,CN",
+    "GEOIP,cn,CN",
 
     "MATCH,No match",
   ]
