@@ -214,11 +214,11 @@ function main(config) {
     "RULE-SET,direct,CN",
 
     "GEOSITE,gfw,PROXY",
-    "GEOSITE,geolocation-!cn,PROXY",
-    "GEOSITE,tld-!cn,PROXY",
     "GEOSITE,category-android-app-download,PROXY",
     "GEOSITE,category-porn,PROXY",
     "GEOSITE,cn,CN",
+    "GEOSITE,geolocation-!cn,PROXY",
+    "GEOSITE,tld-!cn,PROXY",
     "GEOIP,cn,CN",
 
     "MATCH,No match",
