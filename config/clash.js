@@ -43,8 +43,9 @@ function main(config) {
   }
   config["external-controller"] = "127.0.0.1:9090"
   config["unified-delay"] = true
-  config["tcp-concurrent"] = true
+  config["tcp-concurrent"] = false
   config["find-process-mode"] = "strict"
+  config["etag-support"]= true
   config["profile"] = {
     //存储 select 选择记录
     "store-selected": true,
@@ -54,12 +55,12 @@ function main(config) {
     "cache-algorithm": "arc",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["119.29.29.29","223.5.5.5"],
-    "nameserver": ["119.29.29.29","223.5.5.5"],
+    "default-nameserver": ["223.5.5.5","119.29.29.29"],
+    "nameserver": ["223.5.5.5","119.29.29.29"],
     "nameserver-policy": {
-      "rule-set:unlock,proxy": ["8.8.8.8#PROXY","1.1.1.1#PROXY"],
-      "geosite:category-ai-!cn,spotify": ["8.8.8.8#PROXY","1.1.1.1#PROXY"],
-      "geosite:gfw,category-android-app-download,category-porn,geolocation-!cn,tld-!cn": ["8.8.8.8#PROXY","1.1.1.1#PROXY"],
+      "rule-set:unlock,proxy": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
+      "geosite:category-ai-!cn,spotify": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
+      "geosite:gfw,category-android-app-download,category-porn,geolocation-!cn,tld-!cn": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
     },
   }
   config["tun"] = {
@@ -78,7 +79,6 @@ function main(config) {
     sniff: {
       HTTP: {
         ports: [80, '8080-8880'],
-        "override-destination": true,
       },
       TLS: {
         ports: [443, 8443],
