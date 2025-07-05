@@ -43,7 +43,7 @@ function main(config) {
   }
   config["external-controller"] = "127.0.0.1:9090"
   config["unified-delay"] = true
-  config["tcp-concurrent"] = false
+  config["tcp-concurrent"] = true
   config["find-process-mode"] = "strict"
   config["etag-support"]= true
   config["profile"] = {
@@ -55,8 +55,8 @@ function main(config) {
     "cache-algorithm": "arc",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["223.5.5.5","119.29.29.29"],
-    "nameserver": ["223.5.5.5","119.29.29.29"],
+    "default-nameserver": ["system"],
+    "nameserver": ["system"],
     "nameserver-policy": {
       "rule-set:unlock,proxy": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
       "geosite:category-ai-!cn,spotify": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
