@@ -43,12 +43,13 @@ function main(config) {
   }
   config["external-controller"] = "127.0.0.1:9090"
   config["unified-delay"] = true
-  config["tcp-concurrent"] = true
+  config["tcp-concurrent"] = false
   config["find-process-mode"] = "strict"
   config["etag-support"]= true
   config["profile"] = {
     //存储 select 选择记录
     "store-selected": true,
+    "store-fake-ip": false,
   }
   config["dns"] = {
     enable: true,
