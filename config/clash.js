@@ -56,8 +56,8 @@ function main(config) {
     "cache-algorithm": "arc",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["system"],
-    "nameserver": ["system"],
+    "default-nameserver": ["system","223.5.5.5","119.29.29.29"],
+    "nameserver": ["system","223.5.5.5","119.29.29.29"],
     "nameserver-policy": {
       "rule-set:unlock,proxy": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
       "geosite:category-ai-!cn,spotify": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
@@ -69,7 +69,7 @@ function main(config) {
     stack: "system",
     "auto-route": true,
     "auto-detect-interface": true,
-    "dns-hijack": ["any:53","tcp://any:53"],
+    "dns-hijack": [],
     mtu: 9000
   }
   config["sniffer"] = {
@@ -88,18 +88,6 @@ function main(config) {
         ports: [443, 8443],
       },
     },
-    "force-domain": [
-      "+.v2ex.com",
-    ],
-    "skip-domain": [
-      "Mijia Cloud",
-    ],
-    "skip-src-address": [
-      "192.168.0.3/32",
-    ],
-    "skip-dst-address": [
-      "192.168.0.3/32",
-    ],
   }
 
   config["proxies"] = config.proxies.filter(proxy => {
