@@ -59,9 +59,9 @@ function main(config) {
     "default-nameserver": ["system","223.5.5.5","119.29.29.29"],
     "nameserver": ["system","223.5.5.5","119.29.29.29"],
     "nameserver-policy": {
-      "rule-set:unlock,proxy": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
-      "geosite:category-ai-!cn,spotify": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
-      "geosite:gfw,category-android-app-download,category-porn,geolocation-!cn,tld-!cn": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
+      "rule-set:unlock,proxy": ["1.1.1.1","8.8.8.8"],
+      "geosite:category-ai-!cn,spotify": ["1.1.1.1","8.8.8.8"],
+      "geosite:gfw,category-android-app-download,category-porn,geolocation-!cn,tld-!cn": ["1.1.1.1","8.8.8.8"],
     },
   }
   config["tun"] = {
