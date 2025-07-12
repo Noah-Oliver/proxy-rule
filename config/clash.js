@@ -31,16 +31,6 @@ function main(config) {
   config["log-level"] = "info"
   config["ipv6"] = true
   config["disable-keep-alive"] = true
-  config["geodata-mode"] = true
-  config["geodata-loader"] = "memconservative"
-  config["geo-auto-update"] = true
-  config["geo-update-interval"] = 24
-  config["geox-url"] = {
-    geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat",
-    geosite: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat",
-    mmdb: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb",
-    asn: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb",
-  }
   config["external-controller"] = "127.0.0.1:9090"
   config["unified-delay"] = true
   config["tcp-concurrent"] = false
@@ -59,9 +49,8 @@ function main(config) {
     "default-nameserver": ["system","223.5.5.5","119.29.29.29"],
     "nameserver": ["system","223.5.5.5","119.29.29.29"],
     "nameserver-policy": {
-      "rule-set:unlock,proxy": ["1.1.1.1","8.8.8.8"],
-      "geosite:category-ai-!cn,spotify": ["1.1.1.1","8.8.8.8"],
-      "geosite:gfw,category-android-app-download,category-porn,geolocation-!cn,tld-!cn": ["1.1.1.1","8.8.8.8"],
+      "rule-set:0unlock,ai,spotify": ["1.1.1.1","8.8.8.8"],
+      "rule-set:0proxy,gfw,android-app-download,yl,cn!,tld-!cn": ["1.1.1.1","8.8.8.8"],
     },
   }
   config["tun"] = {
@@ -135,7 +124,7 @@ function main(config) {
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png",
     },
     {
-      name: "No match",
+      name: "unclear",
       type: "select",
       proxies: ["DIRECT","PROXY",],
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Stack.png",
@@ -150,80 +139,156 @@ function main(config) {
 
   // 覆盖原配置中的规则
   config["rule-providers"] = {
+    "0direct": {
+    ...ruleProviderCommon,
+    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list",
+    behavior: "classical",
+    format: "text",
+    },
+
+    "0download": {
+    ...ruleProviderCommon,
+    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list",
+    behavior: "classical",
+    format: "text",
+    },
+
+    "0proxy": {
+    ...ruleProviderCommon,
+    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list",
+    behavior: "classical",
+    format: "text",
+    },
+
+    "0unlock": {
+    ...ruleProviderCommon,
+    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list",
+    behavior: "classical",
+    format: "text",
+    },
+
     AD: {
     ...ruleProviderCommon,
     url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical_No_Resolve.yaml",
     behavior: "classical",
     format: "yaml",
     },
+
     "AD!": {
     ...ruleProviderCommon,
     url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct_No_Resolve.yaml",
     behavior: "classical",
     format: "yaml",
     },
-    download1: {
+
+    download: {
     ...ruleProviderCommon,
     url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download_No_Resolve.yaml",
     behavior: "classical",
     format: "yaml",
     },
-    "game-platforms-download": {
+
+    "game-platforms-download1": {
     ...ruleProviderCommon,
     url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload_No_Resolve.yaml",
     behavior: "classical",
     format: "yaml",
     },
-    download: {
+
+    "game-platforms-download2": {
     ...ruleProviderCommon,
-    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list",
-    behavior: "classical",
+    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-game-platforms-download.list",
+    behavior: "domain",
     format: "text",
     },
-    unlock: {
+
+    ai: {
     ...ruleProviderCommon,
-    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list",
-    behavior: "classical",
+    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ai-!cn.list",
+    behavior: "domain",
     format: "text",
     },
-    proxy: {
+
+    spotify: {
     ...ruleProviderCommon,
-    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list",
-    behavior: "classical",
+    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/spotify.list",
+    behavior: "domain",
     format: "text",
     },
-    direct: {
+
+    cn: {
     ...ruleProviderCommon,
-    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list",
-    behavior: "classical",
+    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/cn.list",
+    behavior: "domain",
+    format: "text",
+    },
+
+    cnip: {
+    ...ruleProviderCommon,
+    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.list",
+    behavior: "ipcidr",
+    format: "text",
+    },
+
+    gfw: {
+    ...ruleProviderCommon,
+    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.list",
+    behavior: "domain",
+    format: "text",
+    },
+
+    "android-app-download": {
+    ...ruleProviderCommon,
+    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-android-app-download.list",
+    behavior: "domain",
+    format: "text",
+    },
+
+    yl: {
+    ...ruleProviderCommon,
+    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-porn.list",
+    behavior: "domain",
+    format: "text",
+    },
+
+    "cn!": {
+    ...ruleProviderCommon,
+    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.list",
+    behavior: "domain",
+    format: "text",
+    },
+
+    "tld-!cn": {
+    ...ruleProviderCommon,
+    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/tld-!cn.list",
+    behavior: "domain",
     format: "text",
     },
   }
   config["rules"] = [
     "AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),AD",
 
+    "RULE-SET,0download,Download",
     "RULE-SET,download,Download",
-    "RULE-SET,download1,Download",
-    "RULE-SET,game-platforms-download,Download",
-    "GEOSITE,category-game-platforms-download,Download",
+    "RULE-SET,game-platforms-download1,Download",
+    "RULE-SET,game-platforms-download2,Download",
 
+    "RULE-SET,0unlock,Unlock",
+    "RULE-SET,ai,Unlock",
+    "RULE-SET,spotify,Unlock",
 
-    "RULE-SET,unlock,Unlock",
-    "GEOSITE,category-ai-!cn,Unlock",
-    "GEOSITE,spotify,Unlock",
+    "RULE-SET,0proxy,PROXY",
+    "RULE-SET,0direct,CN",
 
-    "RULE-SET,proxy,PROXY",
-    "RULE-SET,direct,CN",
+    "RULE-SET,gfw,PROXY",
+    "RULE-SET,android-app-download,PROXY",
+    "RULE-SET,yl,PROXY",
+    "RULE-SET,cn,CN",
+    "RULE-SET,cn!,PROXY",
+    "RULE-SET,tld-!cn,PROXY",
+    "RULE-SET,cnip,CN",
 
-    "GEOSITE,gfw,PROXY",
-    "GEOSITE,category-android-app-download,PROXY",
-    "GEOSITE,category-porn,PROXY",
-    "GEOSITE,cn,CN",
-    "GEOSITE,geolocation-!cn,PROXY",
-    "GEOSITE,tld-!cn,PROXY",
-    "GEOIP,cn,CN",
-
-    "MATCH,No match",
+    "MATCH,unclear",
   ]
 
   // 返回修改后的配置
