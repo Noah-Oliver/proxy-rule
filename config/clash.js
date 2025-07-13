@@ -124,7 +124,7 @@ function main(config) {
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png",
     },
     {
-      name: "unclear",
+      name: "Unclear",
       type: "select",
       proxies: ["DIRECT","PROXY",],
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Stack.png",
@@ -288,7 +288,7 @@ function main(config) {
     "RULE-SET,tld-!cn,PROXY",
     "RULE-SET,cnip,CN",
 
-    "MATCH,unclear",
+    "MATCH,Unclear",
   ]
 
   // 返回修改后的配置
