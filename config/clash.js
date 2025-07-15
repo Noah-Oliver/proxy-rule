@@ -62,7 +62,7 @@ function main(config) {
     "auto-route": true,
     "auto-detect-interface": true,
     "dns-hijack": ["any:53","tcp://any:53"],
-    mtu: 9000
+    mtu: 9000,
   }
   config["sniffer"] = {
     enable: true,
@@ -89,7 +89,7 @@ function main(config) {
   config["proxies"] = config.proxies.map(proxy => {
     return {
       ...proxy,
-      udp: true
+      udp: true,
     }
   })
 
@@ -102,40 +102,40 @@ function main(config) {
     {
       name: "PROXY",
       type: "select",
-      proxies: ["DIRECT",],
+      proxies: ["DIRECT"],
       "include-all": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png",
     },
     {
       name: "Unlock",
       type: "select",
-      proxies: ["DIRECT","PROXY",],
+      proxies: ["DIRECT","PROXY"],
       "include-all": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png",
     },
     {
       name: "Download",
       type: "select",
-      proxies: ["DIRECT","PROXY",],
+      proxies: ["DIRECT","PROXY"],
       "include-all": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png",
     },
     {
       name: "CN",
       type: "select",
-      proxies: ["DIRECT","PROXY",],
+      proxies: ["DIRECT","PROXY"],
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png",
     },
     {
       name: "Unclear",
       type: "select",
-      proxies: ["DIRECT","PROXY",],
+      proxies: ["DIRECT","PROXY"],
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Stack.png",
     },
     {
       name: "AD",
       type: "select",
-      proxies: ["REJECT","DIRECT","PROXY",],
+      proxies: ["REJECT","DIRECT","PROXY"],
       icon: "https://github.com/NB921/picture/raw/main/AD3.png",
     },
   ]
@@ -291,7 +291,7 @@ function main(config) {
     "RULE-SET,tld-!cn,PROXY",
     "RULE-SET,cnip,CN",
 
-    "MATCH,Unclear",
+    "MATCH,Unclear"
   ]
 
   // 返回修改后的配置
