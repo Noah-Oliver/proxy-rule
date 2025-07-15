@@ -46,11 +46,11 @@ function main(config) {
     "cache-algorithm": "arc",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["system","223.5.5.5","119.29.29.29"],
-    "nameserver": ["system","223.5.5.5","119.29.29.29"],
+    "default-nameserver": ["223.5.5.5","119.29.29.29"],
+    "nameserver": ["https://dns.alidns.com/dns-query","https://doh.pub/dns-query"],
     "nameserver-policy": {
-      "rule-set:0unlock,ai,spotify": ["1.1.1.1","8.8.8.8"],
-      "rule-set:0proxy,gfw,android-app-download,yl,cn!,tld-!cn": ["1.1.1.1","8.8.8.8"],
+      "rule-set:0unlock,ai,spotify": ["https://dns.cloudflare.com/dns-query","https://dns.google/dns-query"],
+      "rule-set:0proxy,gfw,android-app-download,yl,cn!,tld-!cn": ["https://dns.cloudflare.com/dns-query","https://dns.google/dns-query"],
     },
   }
   config["tun"] = {
