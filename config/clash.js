@@ -44,7 +44,7 @@ function main(config) {
   config["dns"] = {
     enable: true,
     "cache-algorithm": "arc",
-    listen: "0.0.0.0:1053"
+    listen: "0.0.0.0:1053",
     ipv6: true,
     "enhanced-mode": "redir-host",
     "default-nameserver": ["223.5.5.5","119.29.29.29"],
