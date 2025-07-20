@@ -33,7 +33,7 @@ function main(config) {
   config["disable-keep-alive"] = true
   config["external-controller"] = "127.0.0.1:9090"
   config["unified-delay"] = true
-  config["tcp-concurrent"] = true
+  config["tcp-concurrent"] = false
   config["find-process-mode"] = "strict"
   config["etag-support"]= true
   config["profile"] = {
@@ -47,22 +47,14 @@ function main(config) {
     listen: "0.0.0.0:1053",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["223.5.5.5","119.29.29.29"],
-    "nameserver": ["https://dns.alidns.com/dns-query","https://doh.pub/dns-query"],
+    "default-nameserver": ["223.5.5.5","119.29.29.29","114.114.114.114"],
+    "nameserver": ["223.5.5.5","119.29.29.29","114.114.114.114"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,gfw,android-app-download,yl,cn!,tld-!cn": ["https://dns.cloudflare.com/dns-query#PROXY","https://dns.google/dns-query#PROXY"],
+      "rule-set:0proxy,gfw,android-app-download,yl,cn!,tld-!cn": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
       //Unlock
-      "rule-set:0unlock,ai,spotify": ["https://dns.cloudflare.com/dns-query#Unlock","https://dns.google/dns-query#Unlock"],
+      "rule-set:0unlock,ai,spotify": ["1.1.1.1#Unlock","8.8.8.8#Unlock"],
     },
-  }
-  config["tun"] = {
-    enable: true,
-    stack: "system",
-    "auto-route": true,
-    "auto-detect-interface": true,
-    "dns-hijack": ["any:53","tcp://any:53"],
-    mtu: 9000,
   }
   config["sniffer"] = {
     enable: true,
