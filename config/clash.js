@@ -51,7 +51,7 @@ function main(config) {
     "nameserver": ["223.5.5.5","119.29.29.29","114.114.114.114"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,gfw,android-app-download,yl,cn!,tld-!cn": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
+      "rule-set:0proxy,gfw,cn!,tld-!cn": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
       //Unlock
       "rule-set:0unlock,ai,spotify": ["1.1.1.1#Unlock","8.8.8.8#Unlock"],
     },
@@ -169,13 +169,6 @@ function main(config) {
     format: "yaml",
     },
 
-    "AD!": {
-    ...ruleProviderCommon,
-    url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct_No_Resolve.yaml",
-    behavior: "classical",
-    format: "yaml",
-    },
-
     download: {
     ...ruleProviderCommon,
     url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download_No_Resolve.yaml",
@@ -232,20 +225,6 @@ function main(config) {
     format: "text",
     },
 
-    "android-app-download": {
-    ...ruleProviderCommon,
-    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-android-app-download.list",
-    behavior: "domain",
-    format: "text",
-    },
-
-    yl: {
-    ...ruleProviderCommon,
-    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-porn.list",
-    behavior: "domain",
-    format: "text",
-    },
-
     "cn!": {
     ...ruleProviderCommon,
     url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.list",
@@ -261,7 +240,8 @@ function main(config) {
     },
   }
   config["rules"] = [
-    "AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),AD",
+    //"AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),AD",
+    "RULE-SET,AD,AD",
 
     "RULE-SET,0download,Download",
     "RULE-SET,download,Download",
@@ -276,8 +256,6 @@ function main(config) {
     "RULE-SET,0direct,CN",
 
     "RULE-SET,gfw,PROXY",
-    "RULE-SET,android-app-download,PROXY",
-    "RULE-SET,yl,PROXY",
     "RULE-SET,cn,CN",
     "RULE-SET,cn!,PROXY",
     "RULE-SET,tld-!cn,PROXY",
