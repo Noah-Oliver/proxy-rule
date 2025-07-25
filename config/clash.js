@@ -47,8 +47,8 @@ function main(config) {
     listen: "0.0.0.0:1053",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["dhcp://system"],
-    "nameserver": ["dhcp://system"],
+    "default-nameserver": ["223.5.5.5", "119.29.29.29"],
+    "nameserver": ["dhcp://system","https://dns.alidns.com/dns-query","https://doh.pub/dns-query"],
     "nameserver-policy": {
       //PROXY
       "rule-set:0proxy,gfw,cn!,tld-!cn": ["https://dns.cloudflare.com/dns-query#PROXY","https://dns.google/dns-query#PROXY"],
