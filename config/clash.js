@@ -56,6 +56,14 @@ function main(config) {
       "rule-set:0unlock,ai,spotify": ["https://dns.cloudflare.com/dns-query#Unlock","https://dns.google/dns-query#Unlock"],
     },
   }
+  config["tun"] = {
+    enable: true,
+    stack: "system",
+    "auto-route": true,
+    "auto-detect-interface": true,
+    "dns-hijack": ["any:53"],
+    mtu: 9000
+  }
   config["sniffer"] = {
     enable: true,
     "force-dns-mapping": true,
