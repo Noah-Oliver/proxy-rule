@@ -51,9 +51,9 @@ function main(config) {
     "nameserver": ["dhcp://system"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,gfw,cn!,tld-!cn": ["https://dns.cloudflare.com/dns-query#PROXY","https://dns.google/dns-query#PROXY"],
+      "rule-set:0proxy,gfw,cn!,tld-!cn": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
       //Unlock
-      "rule-set:0unlock,ai,spotify": ["https://dns.cloudflare.com/dns-query#Unlock","https://dns.google/dns-query#Unlock"],
+      "rule-set:0unlock,ai,spotify": ["1.1.1.1#Unlock","8.8.8.8#Unlock"],
     },
   }
   config["tun"] = {
