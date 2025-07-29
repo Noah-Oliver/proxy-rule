@@ -33,7 +33,7 @@ function main(config) {
   config["disable-keep-alive"] = true
   config["external-controller"] = "127.0.0.1:9090"
   config["unified-delay"] = true
-  config["tcp-concurrent"] = true
+  config["tcp-concurrent"] = false
   config["find-process-mode"] = "strict"
   config["etag-support"]= true
   config["profile"] = {
@@ -64,23 +64,23 @@ function main(config) {
     "dns-hijack": ["any:53"],
     mtu: 9000
   }
-  config["sniffer"] = {
-    enable: true,
-    "force-dns-mapping": true,
-    "parse-pure-ip": true,
-    "override-destination": false,
-    sniff: {
-      HTTP: {
-        ports: [80, '8080-8880'],
-      },
-      TLS: {
-        ports: [443, 8443],
-      },
-      QUIC: {
-        ports: [443, 8443],
-      },
-    },
-  }
+//  config["sniffer"] = {
+//    enable: true,
+//    "force-dns-mapping": true,
+//    "parse-pure-ip": true,
+//    "override-destination": false,
+//    sniff: {
+//      HTTP: {
+//        ports: [80, '8080-8880'],
+//      },
+//      TLS: {
+//        ports: [443, 8443],
+//      },
+//      QUIC: {
+//        ports: [443, 8443],
+//      },
+//    },
+//  }
 
   config["proxies"] = config.proxies.filter(proxy => {
     return !blockKeywords.some(keyword => proxy.name.includes(keyword));
