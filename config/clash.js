@@ -62,7 +62,7 @@ function main(config) {
     "auto-route": true,
     "auto-detect-interface": true,
     "dns-hijack": ["any:53"],
-    mtu: 9000
+    mtu: 1280
   }
 //  config["sniffer"] = {
 //    enable: true,
