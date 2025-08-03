@@ -48,12 +48,12 @@ function main(config) {
     ipv6: true,
     "enhanced-mode": "redir-host",
     "default-nameserver": ["223.5.5.5","119.29.29.29"],
-    "nameserver": ["223.5.5.5","119.29.29.29"],
+    "nameserver": ["https://dns.alidns.com/dns-query","https://doh.pub/dns-query"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,gfw,cn!,tld-!cn": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
+      "rule-set:0proxy,gfw,cn!,tld-!cn": ["https://cloudflare-dns.com/dns-query#PROXY","https://dns.google/dns-query#PROXY"],
       //Unlock
-      "rule-set:0unlock,ai,spotify": ["1.1.1.1#Unlock","8.8.8.8#Unlock"],
+      "rule-set:0unlock,ai,spotify": ["https://cloudflare-dns.com/dns-query#Unlock","https://dns.google/dns-query#Unlock"],
     },
   }
   config["tun"] = {
