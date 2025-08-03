@@ -177,21 +177,7 @@ function main(config) {
     format: "text",
     },
 
-    download: {
-    ...ruleProviderCommon,
-    url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Download/Download_No_Resolve.yaml",
-    behavior: "classical",
-    format: "yaml",
-    },
-
-    "game-platforms-download1": {
-    ...ruleProviderCommon,
-    url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload_No_Resolve.yaml",
-    behavior: "classical",
-    format: "yaml",
-    },
-
-    "game-platforms-download2": {
+    "game-platforms-download": {
     ...ruleProviderCommon,
     url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-game-platforms-download.list",
     behavior: "domain",
@@ -252,9 +238,7 @@ function main(config) {
     "RULE-SET,AD,AD",
 
     "RULE-SET,0download,Download",
-    "RULE-SET,download,Download",
-    "RULE-SET,game-platforms-download1,Download",
-    "RULE-SET,game-platforms-download2,Download",
+    "RULE-SET,game-platforms-download,Download",
 
     "RULE-SET,0unlock,Unlock",
     "RULE-SET,ai,Unlock",
