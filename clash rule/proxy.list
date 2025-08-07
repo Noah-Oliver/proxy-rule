@@ -11,6 +11,3 @@ PROCESS-NAME,jp.co.cygames.ShadowverseWorldsBeyond
 PROCESS-NAME,org.telegram.messenger.web
 PROCESS-NAME,ShadowverseWB.exe
 DOMAIN-SUFFIX,driverscloud.com
-PROCESS-NAME,com.follow.clash
-PROCESS-NAME,mihomo
-PROCESS-NAME,FlClash.exe
