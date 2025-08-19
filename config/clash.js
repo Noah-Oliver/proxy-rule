@@ -47,13 +47,13 @@ function main(config) {
     listen: "0.0.0.0:1053",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["119.29.29.29","223.5.5.5"],
-    "nameserver": ["119.29.29.29","223.5.5.5"],
+    "default-nameserver": ["8.8.8.8","8.8.4.4"],
+    "nameserver": ["8.8.8.8","8.8.4.4"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,gfw,cn!,tld-!cn": ["1.1.1.1#PROXY","8.8.8.8#PROXY"],
+      "rule-set:0proxy,gfw,cn!,tld-!cn": ["8.8.8.8#PROXY","8.8.4.4#PROXY"],
       //Unlock
-      "rule-set:0unlock,ai,spotify": ["1.1.1.1#Unlock","8.8.8.8#Unlock"],
+      "rule-set:0unlock,ai,spotify": ["8.8.8.8#Unlock","8.8.4.4#Unlock"],
     },
   }
   config["tun"] = {
