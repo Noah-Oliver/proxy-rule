@@ -33,7 +33,7 @@ function main(config) {
   config["disable-keep-alive"] = true
   config["external-controller"] = "127.0.0.1:9090"
   config["unified-delay"] = true
-  config["tcp-concurrent"] = false
+  config["tcp-concurrent"] = true
   config["find-process-mode"] = "strict"
   config["etag-support"]= true
   config["profile"] = {
@@ -47,8 +47,8 @@ function main(config) {
     listen: "0.0.0.0:1053",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["8.8.8.8","8.8.4.4"],
-    "nameserver": ["8.8.8.8","8.8.4.4"],
+    "default-nameserver": ["system"],
+    "nameserver": ["system"],
     "nameserver-policy": {
       //PROXY
       "rule-set:0proxy,gfw,cn!,tld-!cn": ["8.8.8.8#PROXY","8.8.4.4#PROXY"],
