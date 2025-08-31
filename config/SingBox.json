@@ -1,0 +1,212 @@
+{
+  "providers": [
+    {
+      "tag": "provider",
+      "type": "remote",
+      "url": "",
+      "exclude": ["剩余","流量","套餐","到期","使用","文档","最新","网址","官网","更新","订阅","地址"],
+      "download_detour": "",
+      "update_interval": "8h"
+    }
+  ],
+  "log": {
+    "disabled": false,
+    "level": "info",
+    "output": "box.log",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "dns-direct",
+        "type": "udp",
+        "server": "8.8.8.8"
+      },
+      {
+        "tag": "dns-PROXY",
+        "type": "udp",
+        "server": "8.8.8.8",
+        "detour": "PROXY"
+      },
+      {
+        "tag": "dns-Unlock",
+        "type": "udp",
+        "server": "8.8.8.8",
+        "detour": "Unlock"
+      }
+    ],
+    "rules": [
+      {
+        "clash_mode": "Direct",
+        "server": "dns-direct"
+      },
+      {
+        "clash_mode": "Global",
+        "server": "dns-direct"
+      },
+      {
+        "rule_set": [
+          "0proxy",
+          "gfw",
+          "cn!",
+          "tld-!cn"
+        ],
+        "server": "dns-PROXY"
+      },
+      {
+        "rule_set": [
+          "0unlock",
+          "ai",
+          "spotify"
+        ],
+        "server": "dns-Unlock"
+      }
+    ],
+    "final": "dns-direct",
+    "strategy": "prefer_ipv4",
+    "disable_cache": true
+  },
+  "inbounds": [
+    {
+      "tag": "tun-in",
+      "type": "tun",
+      "stack": "system",
+      "auto_route": true,
+      "mtu": 1280
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "PROXY",
+      "type": "selector",
+      "outbounds": [
+        "direct",
+        "{all}"
+      ],
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "Unlock",
+      "type": "selector",
+      "outbounds": [
+        "direct",
+        "PROXY",
+        "{all}"
+      ],
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "Download",
+      "type": "selector",
+      "outbounds": [
+        "direct",
+        "PROXY",
+        "{all}"
+      ],
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "CN",
+      "type": "selector",
+      "outbounds": [
+        "direct",
+        "PROXY"
+      ],
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "Unclear",
+      "type": "selector",
+      "outbounds": [
+        "direct",
+        "PROXY"
+      ],
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "AD",
+      "type": "selector",
+      "outbounds": [
+        "block",
+        "direct",
+        "PROXY"
+      ],
+      "interrupt_exist_connections": false
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
+      {
+        "clash_mode": "Direct",
+        "outbound": "direct"
+      },
+      {
+        "clash_mode": "Global",
+        "outbound": "default"
+      },
+      {
+        "rule_set": "AD",
+        "outbound": "AD"
+      },
+      {
+        "rule_set": [
+          "0download",
+          "game-platforms-download"
+        ],
+        "outbound": "Download"
+      },
+      {
+        "rule_set": [
+          "0unlock",
+          "ai",
+          "spotify"
+        ],
+        "outbound": "Unlock"
+      },
+      {
+        "rule_set": "0proxy",
+        "outbound": "PROXY"
+      },
+      {
+        "rule_set": "0direct",
+        "outbound": "CN"
+      },
+      {
+        "rule_set": "gfw",
+        "outbound": "PROXY"
+      },
+      {
+        "rule_set": "cn",
+        "outbound": "CN"
+      },
+      {
+        "rule_set": [
+          "cn!",
+          "tld-!cn"
+        ],
+        "outbound": "PROXY"
+      },
+      {
+        "rule_set": "cnip",
+        "outbound": "CN"
+      }
+    ],
+    "rule_set": [
+      {
+        "tag": "AD",
+        "type": "remote",
+        "format": "source", // or binary
+        "url": "",
+        "update_interval": "8h"
+      }
+    ],
+    "final": "Unclear",
+    "auto_detect_interface": true,
+    "override_android_vpn": false
+  },
+  "experimental": {}
+}
