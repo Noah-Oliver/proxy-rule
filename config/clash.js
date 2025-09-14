@@ -47,13 +47,13 @@ function main(config) {
     listen: "0.0.0.0:1053",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["dhcp://system"],
-    "nameserver": ["dhcp://system"],
+    "default-nameserver": ["119.29.29.29","119.28.28.28"],
+    "nameserver": ["https://doh.pub/dns-query"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,gfw,cn!,tld-!cn": ["8.8.8.8#PROXY","8.8.4.4#PROXY"],
+      "rule-set:0proxy,gfw,cn!,tld-!cn": ["https://dns.google/dns-query#PROXY"],
       //Unlock
-      "rule-set:0unlock,ai,spotify": ["8.8.8.8#Unlock","8.8.4.4#Unlock"],
+      "rule-set:0unlock,ai,spotify": ["https://dns.google/dns-query#Unlock"],
     },
   }
   config["tun"] = {
