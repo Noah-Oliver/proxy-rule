@@ -51,9 +51,9 @@ function main(config) {
     "nameserver": ["system"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,gfw,cn!,tld-!cn": ["1.1.1.1#PROXY"],
+      "rule-set:0proxy,gfw,cn!,tld-!cn": ["https://1.1.1.1/dns-query#PROXY"],
       //Unlock
-      "rule-set:0unlock,ai,spotify": ["1.1.1.1#Unlock"],
+      "rule-set:0unlock,ai,spotify": ["https://1.1.1.1/dns-query#Unlock"],
     },
   }
   config["tun"] = {
@@ -81,6 +81,11 @@ function main(config) {
 //      },
 //    },
 //  }
+  config["ntp"] = {
+    enable: true,
+    server: "pool.ntp.org",
+    interval: 480
+  }
 
   config["proxies"] = config.proxies.filter(proxy => {
     return !blockKeywords.some(keyword => proxy.name.includes(keyword));
