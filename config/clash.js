@@ -47,8 +47,8 @@ function main(config) {
     listen: "0.0.0.0:1053",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["system"],
-    "nameserver": ["system"],
+    "default-nameserver": ["223.5.5.5"],
+    "nameserver": ["https://223.5.5.5/dns-query"],
     "nameserver-policy": {
       //PROXY
       "rule-set:0proxy,gfw,cn!,tld-!cn": ["https://1.1.1.1/dns-query#PROXY"],
