@@ -1,0 +1,27 @@
+{
+    "version": 4,
+    "rules": [
+        {
+            "domain": [
+                "m.manhuagui.com",
+                "sing-box.sagernet.org",
+                "sing-boxp.dustinwin.top",
+                "tenkafuma.com"
+            ],
+            "domain_suffix": [
+                "shadowverse.com",
+                "shadowverse-wb.com",
+                "obsproject.com"
+            ],
+            "process_name": [
+                "ShadowverseWB.exe"
+            ],
+            "package_name": [
+                "com.android.vending",
+                "com.wonwayl.trinitygearsperimeter.qooapp",
+                "jp.co.cygames.ShadowverseWorldsBeyond",
+                "org.telegram.messenger.web"
+            ]
+        }
+    ]
+}
