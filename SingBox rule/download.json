@@ -1,0 +1,53 @@
+{
+    "version": 4,
+    "rules": [
+        {
+            "domain": [
+                "cn.download.nvidia.com"
+            ],
+            "domain_keyword": [
+                "aria2",
+                "thunder",
+                "xlliveud",
+                "xunlei",
+                "yunpan"
+            ],
+            "domain_suffix": [
+                "cdn.ubi.com",
+                "dyn.riotcdn.net",
+                "qbittorrent.org",
+                "steamcontent.com"
+            ],
+            "process_name": [
+                "aria2c",
+                "aria2c.exe",
+                "baidunetdisk.exe",
+                "BitComet",
+                "BitComet.exe",
+                "BitComet_x64.exe",
+                "DownloadService",
+                "DownloadService.exe",
+                "fdm",
+                "fdm.exe",
+                "Folx",
+                "Folx.exe",
+                "NetTransport",
+                "NetTransport.exe",
+                "qbittorrent",
+                "qbittorrent.exe",
+                "Thunder",
+                "Thunder.exe",
+                "Transmission",
+                "Transmission.exe",
+                "uTorrent",
+                "uTorrent.exe",
+                "WebTorrent",
+                "WebTorrent.exe",
+                "WebTorrentHelper",
+                "WebTorrentHelper.exe",
+                "Weiyun",
+                "Weiyun.exe"
+            ]
+        }
+    ]
+}
