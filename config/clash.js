@@ -30,7 +30,9 @@ function main(config) {
   config["mode"] = "rule"
   config["log-level"] = "info"
   config["ipv6"] = true
-  config["disable-keep-alive"] = true
+  config["disable-keep-alive"] = false
+  config["keep-alive-interval"] = 15
+  config["keep-alive-idle"] = 15
   config["external-controller"] = "127.0.0.1:9090"
   config["unified-delay"] = true
   config["tcp-concurrent"] = true
@@ -40,6 +42,52 @@ function main(config) {
     //存储 select 选择记录
     "store-selected": true,
     "store-fake-ip": false,
+  }
+  config["dns"] = {
+    enable: true,
+    "cache-algorithm": "arc",
+    listen: "0.0.0.0:1053",
+    ipv6: false,
+    "enhanced-mode": "redir-host",
+    "default-nameserver": ["dhcp://system"],
+    "nameserver": ["dhcp://system"],
+    "nameserver-policy": {
+      //PROXY
+      "rule-set:0proxy,gfw,cn!,tld-!cn": ["1.1.1.1#PROXY"],
+      //Unlock
+      "rule-set:0unlock,ai,spotify": ["1.1.1.1#Unlock"],
+    },
+  }
+  config["tun"] = {
+    enable: true,
+    stack: "system",
+    "auto-route": true,
+    "auto-detect-interface": true,
+    "dns-hijack": ["any:53"],
+    mtu: 1280
+  }
+  config["sniffer"] = {
+    enable: true,
+    "force-dns-mapping": true,
+    "parse-pure-ip": true,
+    "override-destination": false,
+    sniff: {
+      HTTP: {
+        ports: [80, '8080-8880'],
+        "override-destination": true
+      },
+      TLS: {
+        ports: [443, 8443],
+      },
+      QUIC: {
+        ports: [443, 8443],
+      },
+    },
+  }
+  config["ntp"] = {
+    enable: true,
+    server: "pool.ntp.org",
+    interval: 480
   }
 
   config["proxies"] = config.proxies.filter(proxy => {
