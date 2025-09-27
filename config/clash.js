@@ -42,19 +42,7 @@ function main(config) {
     "store-fake-ip": false,
   }
   config["dns"] = {
-    enable: true,
-    "cache-algorithm": "arc",
-    listen: "0.0.0.0:1053",
-    ipv6: true,
-    "enhanced-mode": "redir-host",
-    "default-nameserver": ["dhcp://system"],
-    "nameserver": ["dhcp://system"],
-    "nameserver-policy": {
-      //PROXY
-      "rule-set:0proxy,gfw,cn!,tld-!cn": ["1.1.1.1#PROXY"],
-      //Unlock
-      "rule-set:0unlock,ai,spotify": ["1.1.1.1#Unlock"],
-    },
+    enable: false
   }
   config["tun"] = {
     enable: true,
@@ -64,23 +52,6 @@ function main(config) {
     "dns-hijack": ["any:53"],
     mtu: 1280
   }
-//  config["sniffer"] = {
-//    enable: true,
-//    "force-dns-mapping": true,
-//    "parse-pure-ip": true,
-//    "override-destination": false,
-//    sniff: {
-//      HTTP: {
-//        ports: [80, '8080-8880'],
-//      },
-//      TLS: {
-//        ports: [443, 8443],
-//      },
-//      QUIC: {
-//        ports: [443, 8443],
-//      },
-//    },
-//  }
   config["ntp"] = {
     enable: true,
     server: "pool.ntp.org",
