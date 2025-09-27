@@ -6,7 +6,7 @@
 const enable = true
 
 //proxies排除节点
-const blockKeywords = ["剩余","流量","套餐","到期","使用","文档","最新","网址","官网","更新","订阅","地址"]
+const blockKeywords = ["剩余", "流量", "套餐", "到期", "使用", "文档", "最新", "网址", "官网", "更新", "订阅", "地址"]
 
 // 规则集通用配置
 const ruleProviderCommon = {
@@ -33,29 +33,13 @@ function main(config) {
   config["disable-keep-alive"] = true
   config["external-controller"] = "127.0.0.1:9090"
   config["unified-delay"] = true
-  config["tcp-concurrent"] = true
+  config["tcp-concurrent"] = false
   config["find-process-mode"] = "strict"
-  config["etag-support"]= true
+  config["etag-support"] = true
   config["profile"] = {
     //存储 select 选择记录
     "store-selected": true,
     "store-fake-ip": false,
-  }
-  config["dns"] = {
-    enable: false
-  }
-  config["tun"] = {
-    enable: true,
-    stack: "system",
-    "auto-route": true,
-    "auto-detect-interface": true,
-    "dns-hijack": ["any:53"],
-    mtu: 1280
-  }
-  config["ntp"] = {
-    enable: true,
-    server: "pool.ntp.org",
-    interval: 480
   }
 
   config["proxies"] = config.proxies.filter(proxy => {
@@ -85,33 +69,33 @@ function main(config) {
     {
       name: "Unlock",
       type: "select",
-      proxies: ["DIRECT","PROXY"],
+      proxies: ["DIRECT", "PROXY"],
       "include-all": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png",
     },
     {
       name: "Download",
       type: "select",
-      proxies: ["DIRECT","PROXY"],
+      proxies: ["DIRECT", "PROXY"],
       "include-all": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png",
     },
     {
       name: "CN",
       type: "select",
-      proxies: ["DIRECT","PROXY"],
+      proxies: ["DIRECT", "PROXY"],
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png",
     },
     {
       name: "Unclear",
       type: "select",
-      proxies: ["DIRECT","PROXY"],
+      proxies: ["DIRECT", "PROXY"],
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Stack.png",
     },
     {
       name: "AD",
       type: "select",
-      proxies: ["REJECT","DIRECT","PROXY"],
+      proxies: ["REJECT", "DIRECT", "PROXY"],
       icon: "https://github.com/NB921/picture/raw/main/AD3.png",
     },
   ]
@@ -119,94 +103,94 @@ function main(config) {
   // 覆盖原配置中的规则
   config["rule-providers"] = {
     "0direct": {
-    ...ruleProviderCommon,
-    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list",
-    behavior: "classical",
-    format: "text",
+      ...ruleProviderCommon,
+      url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list",
+      behavior: "classical",
+      format: "text",
     },
 
     "0download": {
-    ...ruleProviderCommon,
-    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list",
-    behavior: "classical",
-    format: "text",
+      ...ruleProviderCommon,
+      url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list",
+      behavior: "classical",
+      format: "text",
     },
 
     "0proxy": {
-    ...ruleProviderCommon,
-    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list",
-    behavior: "classical",
-    format: "text",
+      ...ruleProviderCommon,
+      url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list",
+      behavior: "classical",
+      format: "text",
     },
 
     "0unlock": {
-    ...ruleProviderCommon,
-    url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list",
-    behavior: "classical",
-    format: "text",
+      ...ruleProviderCommon,
+      url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list",
+      behavior: "classical",
+      format: "text",
     },
 
     AD: {
-    ...ruleProviderCommon,
-    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads%40ads.list",
-    behavior: "domain",
-    format: "text",
+      ...ruleProviderCommon,
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads%40ads.list",
+      behavior: "domain",
+      format: "text",
     },
 
     "game-platforms-download": {
-    ...ruleProviderCommon,
-    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-game-platforms-download.list",
-    behavior: "domain",
-    format: "text",
+      ...ruleProviderCommon,
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-game-platforms-download.list",
+      behavior: "domain",
+      format: "text",
     },
 
     ai: {
-    ...ruleProviderCommon,
-    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ai-!cn.list",
-    behavior: "domain",
-    format: "text",
+      ...ruleProviderCommon,
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ai-!cn.list",
+      behavior: "domain",
+      format: "text",
     },
 
     spotify: {
-    ...ruleProviderCommon,
-    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/spotify.list",
-    behavior: "domain",
-    format: "text",
+      ...ruleProviderCommon,
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/spotify.list",
+      behavior: "domain",
+      format: "text",
     },
 
     cn: {
-    ...ruleProviderCommon,
-    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/cn.list",
-    behavior: "domain",
-    format: "text",
+      ...ruleProviderCommon,
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/cn.list",
+      behavior: "domain",
+      format: "text",
     },
 
     cnip: {
-    ...ruleProviderCommon,
-    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.list",
-    behavior: "ipcidr",
-    format: "text",
+      ...ruleProviderCommon,
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.list",
+      behavior: "ipcidr",
+      format: "text",
     },
 
     gfw: {
-    ...ruleProviderCommon,
-    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.list",
-    behavior: "domain",
-    format: "text",
+      ...ruleProviderCommon,
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.list",
+      behavior: "domain",
+      format: "text",
     },
 
     "cn!": {
-    ...ruleProviderCommon,
-    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.list",
-    behavior: "domain",
-    format: "text",
+      ...ruleProviderCommon,
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.list",
+      behavior: "domain",
+      format: "text",
     },
 
     "tld-!cn": {
-    ...ruleProviderCommon,
-    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/tld-!cn.list",
-    behavior: "domain",
-    format: "text",
+      ...ruleProviderCommon,
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/tld-!cn.list",
+      behavior: "domain",
+      format: "text",
     },
   }
   config["rules"] = [
