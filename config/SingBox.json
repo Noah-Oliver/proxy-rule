@@ -4,20 +4,6 @@
             "tag": "provider",
             "type": "remote",
             "url": "",
-            "exclude": [
-                "剩余",
-                "流量",
-                "套餐",
-                "到期",
-                "使用",
-                "文档",
-                "最新",
-                "网址",
-                "官网",
-                "更新",
-                "订阅",
-                "地址"
-            ],
             "download_detour": "",
             "update_interval": "8h"
         }
@@ -92,7 +78,7 @@
             "tag": "PROXY",
             "type": "selector",
             "outbounds": [
-                "direct",
+                "DIRECT",
                 "{all}"
             ],
             "interrupt_exist_connections": false
@@ -101,7 +87,7 @@
             "tag": "Unlock",
             "type": "selector",
             "outbounds": [
-                "direct",
+                "DIRECT",
                 "PROXY",
                 "{all}"
             ],
@@ -111,7 +97,7 @@
             "tag": "Download",
             "type": "selector",
             "outbounds": [
-                "direct",
+                "DIRECT",
                 "PROXY",
                 "{all}"
             ],
@@ -121,7 +107,7 @@
             "tag": "CN",
             "type": "selector",
             "outbounds": [
-                "direct",
+                "DIRECT",
                 "PROXY"
             ],
             "interrupt_exist_connections": false
@@ -130,20 +116,14 @@
             "tag": "Unclear",
             "type": "selector",
             "outbounds": [
-                "direct",
+                "DIRECT",
                 "PROXY"
             ],
             "interrupt_exist_connections": false
         },
         {
-            "tag": "AD",
-            "type": "selector",
-            "outbounds": [
-                "block",
-                "direct",
-                "PROXY"
-            ],
-            "interrupt_exist_connections": false
+            "tag": "DIRECT",
+            "type": "direct"
         }
     ],
     "route": {
@@ -154,7 +134,7 @@
             },
             {
                 "clash_mode": "Direct",
-                "outbound": "direct"
+                "outbound": "DIRECT"
             },
             {
                 "clash_mode": "Global",
@@ -162,7 +142,7 @@
             },
             {
                 "rule_set": "AD",
-                "outbound": "AD"
+                "action": "reject"
             },
             {
                 "rule_set": [
