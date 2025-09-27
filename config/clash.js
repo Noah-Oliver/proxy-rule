@@ -148,7 +148,7 @@ function main(config) {
 
     AD: {
     ...ruleProviderCommon,
-    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads-all.list",
+    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads%40ads.list",
     behavior: "domain",
     format: "text",
     },
