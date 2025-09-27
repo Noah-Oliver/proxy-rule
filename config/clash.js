@@ -12,8 +12,22 @@ const blockKeywords = ["剩余", "流量", "套餐", "到期", "使用", "文档
 const ruleProviderCommon = {
   type: "http",
   interval: 28800,
-  //proxy: "DIRECT",
+  //proxy: "国内",
 }
+
+//添加节点
+const addproxies = [
+  {
+    name: "直连",
+    type: "direct",
+    udp: true,
+    "ip-version": "ipv4-prefer"
+  },
+  {
+    name: "阻止",
+    type: "reject"
+  }
+]
 
 // 程序入口
 function main(config) {
@@ -47,15 +61,15 @@ function main(config) {
     enable: true,
     "cache-algorithm": "arc",
     listen: "0.0.0.0:1053",
-    ipv6: false,
+    ipv6: true,
     "enhanced-mode": "redir-host",
     "default-nameserver": ["dhcp://system"],
     "nameserver": ["dhcp://system"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,gfw,cn!,tld-!cn": ["1.1.1.1#PROXY"],
+      "rule-set:0proxy,gfw,cn!,tld-!cn": ["1.1.1.1#国外"],
       //Unlock
-      "rule-set:0unlock,ai,spotify": ["1.1.1.1#Unlock"],
+      "rule-set:0unlock,ai,spotify": ["1.1.1.1#解锁"],
     },
   }
   config["tun"] = {
@@ -98,8 +112,11 @@ function main(config) {
     return {
       ...proxy,
       udp: true,
+      "ip-version": "ipv4-prefer"
     }
   })
+
+  config.proxies = addproxies.concat(config.proxies)
 
   //总开关关闭时不处理策略组
   if (!enable) {
@@ -108,42 +125,42 @@ function main(config) {
 
   config["proxy-groups"] = [
     {
-      name: "PROXY",
+      name: "国外",
       type: "select",
-      proxies: ["DIRECT"],
+      proxies: ["直连"],
       "include-all": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png",
     },
     {
-      name: "Unlock",
+      name: "解锁",
       type: "select",
-      proxies: ["DIRECT", "PROXY"],
+      proxies: ["直连", "国外"],
       "include-all": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png",
     },
     {
-      name: "Download",
+      name: "下载",
       type: "select",
-      proxies: ["DIRECT", "PROXY"],
+      proxies: ["直连", "国外"],
       "include-all": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png",
     },
     {
-      name: "CN",
+      name: "国内",
       type: "select",
-      proxies: ["DIRECT", "PROXY"],
+      proxies: ["直连", "国外"],
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png",
     },
     {
-      name: "Unclear",
+      name: "不明",
       type: "select",
-      proxies: ["DIRECT", "PROXY"],
+      proxies: ["直连", "国外"],
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Stack.png",
     },
     {
-      name: "AD",
+      name: "广告",
       type: "select",
-      proxies: ["REJECT", "DIRECT", "PROXY"],
+      proxies: ["阻止", "直连", "国外"],
       icon: "https://github.com/NB921/picture/raw/main/AD3.png",
     },
   ]
@@ -243,25 +260,25 @@ function main(config) {
   }
   config["rules"] = [
     //"AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),AD",
-    "RULE-SET,AD,AD",
+    "RULE-SET,AD,广告",
 
-    "RULE-SET,0download,Download",
-    "RULE-SET,game-platforms-download,Download",
+    "RULE-SET,0download,下载",
+    "RULE-SET,game-platforms-download,下载",
 
-    "RULE-SET,0unlock,Unlock",
-    "RULE-SET,ai,Unlock",
-    "RULE-SET,spotify,Unlock",
+    "RULE-SET,0unlock,解锁",
+    "RULE-SET,ai,解锁",
+    "RULE-SET,spotify,解锁",
 
-    "RULE-SET,0proxy,PROXY",
-    "RULE-SET,0direct,CN",
+    "RULE-SET,0proxy,国外",
+    "RULE-SET,0direct,国内",
 
-    "RULE-SET,gfw,PROXY",
-    "RULE-SET,cn,CN",
-    "RULE-SET,cn!,PROXY",
-    "RULE-SET,tld-!cn,PROXY",
-    "RULE-SET,cnip,CN",
+    "RULE-SET,gfw,国外",
+    "RULE-SET,cn,国内",
+    "RULE-SET,cn!,国外",
+    "RULE-SET,tld-!cn,国外",
+    "RULE-SET,cnip,国内",
 
-    "MATCH,Unclear"
+    "MATCH,不明"
   ]
 
   // 返回修改后的配置
