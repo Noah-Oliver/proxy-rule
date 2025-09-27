@@ -33,7 +33,7 @@ function main(config) {
   config["disable-keep-alive"] = true
   config["external-controller"] = "127.0.0.1:9090"
   config["unified-delay"] = true
-  config["tcp-concurrent"] = false
+  config["tcp-concurrent"] = true
   config["find-process-mode"] = "strict"
   config["etag-support"] = true
   config["profile"] = {
