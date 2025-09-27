@@ -1,212 +1,318 @@
 {
-  "providers": [
-    {
-      "tag": "provider",
-      "type": "remote",
-      "url": "",
-      "exclude": ["剩余","流量","套餐","到期","使用","文档","最新","网址","官网","更新","订阅","地址"],
-      "download_detour": "",
-      "update_interval": "8h"
+    "providers": [
+        {
+            "tag": "provider",
+            "type": "remote",
+            "url": "",
+            "exclude": [
+                "剩余",
+                "流量",
+                "套餐",
+                "到期",
+                "使用",
+                "文档",
+                "最新",
+                "网址",
+                "官网",
+                "更新",
+                "订阅",
+                "地址"
+            ],
+            "download_detour": "",
+            "update_interval": "8h"
+        }
+    ],
+    "log": {
+        "disabled": false,
+        "level": "info",
+        "output": "box.log",
+        "timestamp": true
+    },
+    "dns": {
+        "servers": [
+            {
+                "tag": "dns-direct",
+                "type": "local"
+            },
+            {
+                "tag": "dns-PROXY",
+                "type": "udp",
+                "server": "1.1.1.1",
+                "detour": "PROXY"
+            },
+            {
+                "tag": "dns-Unlock",
+                "type": "udp",
+                "server": "1.1.1.1",
+                "detour": "Unlock"
+            }
+        ],
+        "rules": [
+            {
+                "clash_mode": "Direct",
+                "server": "dns-direct"
+            },
+            {
+                "clash_mode": "Global",
+                "server": "dns-direct"
+            },
+            {
+                "rule_set": [
+                    "0proxy",
+                    "gfw",
+                    "cn!",
+                    "tld-!cn"
+                ],
+                "server": "dns-PROXY"
+            },
+            {
+                "rule_set": [
+                    "0unlock",
+                    "ai",
+                    "spotify"
+                ],
+                "server": "dns-Unlock"
+            }
+        ],
+        "final": "dns-direct",
+        "strategy": "prefer_ipv4",
+        "disable_cache": true
+    },
+    "inbounds": [
+        {
+            "tag": "tun-in",
+            "type": "tun",
+            "stack": "system",
+            "auto_route": true,
+            "mtu": 1280
+        }
+    ],
+    "outbounds": [
+        {
+            "tag": "PROXY",
+            "type": "selector",
+            "outbounds": [
+                "direct",
+                "{all}"
+            ],
+            "interrupt_exist_connections": false
+        },
+        {
+            "tag": "Unlock",
+            "type": "selector",
+            "outbounds": [
+                "direct",
+                "PROXY",
+                "{all}"
+            ],
+            "interrupt_exist_connections": false
+        },
+        {
+            "tag": "Download",
+            "type": "selector",
+            "outbounds": [
+                "direct",
+                "PROXY",
+                "{all}"
+            ],
+            "interrupt_exist_connections": false
+        },
+        {
+            "tag": "CN",
+            "type": "selector",
+            "outbounds": [
+                "direct",
+                "PROXY"
+            ],
+            "interrupt_exist_connections": false
+        },
+        {
+            "tag": "Unclear",
+            "type": "selector",
+            "outbounds": [
+                "direct",
+                "PROXY"
+            ],
+            "interrupt_exist_connections": false
+        },
+        {
+            "tag": "AD",
+            "type": "selector",
+            "outbounds": [
+                "block",
+                "direct",
+                "PROXY"
+            ],
+            "interrupt_exist_connections": false
+        }
+    ],
+    "route": {
+        "rules": [
+            {
+                "protocol": "dns",
+                "action": "hijack-dns"
+            },
+            {
+                "clash_mode": "Direct",
+                "outbound": "direct"
+            },
+            {
+                "clash_mode": "Global",
+                "outbound": "default"
+            },
+            {
+                "rule_set": "AD",
+                "outbound": "AD"
+            },
+            {
+                "rule_set": [
+                    "0download",
+                    "game-platforms-download"
+                ],
+                "outbound": "Download"
+            },
+            {
+                "rule_set": [
+                    "0unlock",
+                    "ai",
+                    "spotify"
+                ],
+                "outbound": "Unlock"
+            },
+            {
+                "rule_set": "0proxy",
+                "outbound": "PROXY"
+            },
+            {
+                "rule_set": "0direct",
+                "outbound": "CN"
+            },
+            {
+                "rule_set": "gfw",
+                "outbound": "PROXY"
+            },
+            {
+                "rule_set": "cn",
+                "outbound": "CN"
+            },
+            {
+                "rule_set": [
+                    "cn!",
+                    "tld-!cn"
+                ],
+                "outbound": "PROXY"
+            },
+            {
+                "rule_set": "cnip",
+                "outbound": "CN"
+            }
+        ],
+        "rule_set": [
+            {
+                "tag": "0direct",
+                "type": "remote",
+                "format": "source",
+                "url": "https://github.com/Noah-Oliver/proxy-rule/raw/main/SingBox%20rule/direct.json",
+                "update_interval": "8h"
+            },
+            {
+                "tag": "0download",
+                "type": "remote",
+                "format": "source",
+                "url": "https://github.com/Noah-Oliver/proxy-rule/raw/main/SingBox%20rule/download.json",
+                "update_interval": "8h"
+            },
+            {
+                "tag": "0proxy",
+                "type": "remote",
+                "format": "source",
+                "url": "https://github.com/Noah-Oliver/proxy-rule/raw/main/SingBox%20rule/proxy.json",
+                "update_interval": "8h"
+            },
+            {
+                "tag": "0unlock",
+                "type": "remote",
+                "format": "source",
+                "url": "https://github.com/Noah-Oliver/proxy-rule/raw/main/SingBox%20rule/unlock.json",
+                "update_interval": "8h"
+            },
+            {
+                "tag": "AD",
+                "type": "remote",
+                "format": "source",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/category-ads%40ads.json",
+                "update_interval": "8h"
+            },
+            {
+                "tag": "game-platforms-download",
+                "type": "remote",
+                "format": "source",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/category-game-platforms-download.json",
+                "update_interval": "8h"
+            },
+            {
+                "tag": "ai",
+                "type": "remote",
+                "format": "source",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/category-ai-!cn.json",
+                "update_interval": "8h"
+            },
+            {
+                "tag": "spotify",
+                "type": "remote",
+                "format": "source",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/spotify.json",
+                "update_interval": "8h"
+            },
+            {
+                "tag": "cn",
+                "type": "remote",
+                "format": "source",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/cn.json",
+                "update_interval": "8h"
+            },
+            {
+                "tag": "cnip",
+                "type": "remote",
+                "format": "source",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geoip/cn.json",
+                "update_interval": "8h"
+            },
+            {
+                "tag": "gfw",
+                "type": "remote",
+                "format": "source",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/gfw.json",
+                "update_interval": "8h"
+            },
+            {
+                "tag": "cn!",
+                "type": "remote",
+                "format": "source",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/geolocation-!cn.json",
+                "update_interval": "8h"
+            },
+            {
+                "tag": "tld-!cn",
+                "type": "remote",
+                "format": "source",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/tld-!cn.json",
+                "update_interval": "8h"
+            }
+        ],
+        "final": "Unclear",
+        "auto_detect_interface": true,
+        "override_android_vpn": false
+    },
+    "experimental": {
+        "cache_file": {
+            "enabled": true,
+            "store_fakeip": false,
+            "store_rdrc": false
+        },
+        "clash_api": {
+            "external_controller": "127.0.0.1:9090",
+            "access_control_allow_private_network": true
+        }
     }
-  ],
-  "log": {
-    "disabled": false,
-    "level": "info",
-    "output": "box.log",
-    "timestamp": true
-  },
-  "dns": {
-    "servers": [
-      {
-        "tag": "dns-direct",
-        "type": "udp",
-        "server": "8.8.8.8"
-      },
-      {
-        "tag": "dns-PROXY",
-        "type": "udp",
-        "server": "8.8.8.8",
-        "detour": "PROXY"
-      },
-      {
-        "tag": "dns-Unlock",
-        "type": "udp",
-        "server": "8.8.8.8",
-        "detour": "Unlock"
-      }
-    ],
-    "rules": [
-      {
-        "clash_mode": "Direct",
-        "server": "dns-direct"
-      },
-      {
-        "clash_mode": "Global",
-        "server": "dns-direct"
-      },
-      {
-        "rule_set": [
-          "0proxy",
-          "gfw",
-          "cn!",
-          "tld-!cn"
-        ],
-        "server": "dns-PROXY"
-      },
-      {
-        "rule_set": [
-          "0unlock",
-          "ai",
-          "spotify"
-        ],
-        "server": "dns-Unlock"
-      }
-    ],
-    "final": "dns-direct",
-    "strategy": "prefer_ipv4",
-    "disable_cache": true
-  },
-  "inbounds": [
-    {
-      "tag": "tun-in",
-      "type": "tun",
-      "stack": "system",
-      "auto_route": true,
-      "mtu": 1280
-    }
-  ],
-  "outbounds": [
-    {
-      "tag": "PROXY",
-      "type": "selector",
-      "outbounds": [
-        "direct",
-        "{all}"
-      ],
-      "interrupt_exist_connections": false
-    },
-    {
-      "tag": "Unlock",
-      "type": "selector",
-      "outbounds": [
-        "direct",
-        "PROXY",
-        "{all}"
-      ],
-      "interrupt_exist_connections": false
-    },
-    {
-      "tag": "Download",
-      "type": "selector",
-      "outbounds": [
-        "direct",
-        "PROXY",
-        "{all}"
-      ],
-      "interrupt_exist_connections": false
-    },
-    {
-      "tag": "CN",
-      "type": "selector",
-      "outbounds": [
-        "direct",
-        "PROXY"
-      ],
-      "interrupt_exist_connections": false
-    },
-    {
-      "tag": "Unclear",
-      "type": "selector",
-      "outbounds": [
-        "direct",
-        "PROXY"
-      ],
-      "interrupt_exist_connections": false
-    },
-    {
-      "tag": "AD",
-      "type": "selector",
-      "outbounds": [
-        "block",
-        "direct",
-        "PROXY"
-      ],
-      "interrupt_exist_connections": false
-    }
-  ],
-  "route": {
-    "rules": [
-      {
-        "protocol": "dns",
-        "action": "hijack-dns"
-      },
-      {
-        "clash_mode": "Direct",
-        "outbound": "direct"
-      },
-      {
-        "clash_mode": "Global",
-        "outbound": "default"
-      },
-      {
-        "rule_set": "AD",
-        "outbound": "AD"
-      },
-      {
-        "rule_set": [
-          "0download",
-          "game-platforms-download"
-        ],
-        "outbound": "Download"
-      },
-      {
-        "rule_set": [
-          "0unlock",
-          "ai",
-          "spotify"
-        ],
-        "outbound": "Unlock"
-      },
-      {
-        "rule_set": "0proxy",
-        "outbound": "PROXY"
-      },
-      {
-        "rule_set": "0direct",
-        "outbound": "CN"
-      },
-      {
-        "rule_set": "gfw",
-        "outbound": "PROXY"
-      },
-      {
-        "rule_set": "cn",
-        "outbound": "CN"
-      },
-      {
-        "rule_set": [
-          "cn!",
-          "tld-!cn"
-        ],
-        "outbound": "PROXY"
-      },
-      {
-        "rule_set": "cnip",
-        "outbound": "CN"
-      }
-    ],
-    "rule_set": [
-      {
-        "tag": "AD",
-        "type": "remote",
-        "format": "source", // or binary
-        "url": "",
-        "update_interval": "8h"
-      }
-    ],
-    "final": "Unclear",
-    "auto_detect_interface": true,
-    "override_android_vpn": false
-  },
-  "experimental": {}
 }
