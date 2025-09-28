@@ -6,7 +6,7 @@
 const enable = true
 
 //proxies排除节点
-const blockKeywords = ["剩余", "流量", "套餐", "到期", "使用", "文档", "最新", "网址", "官网", "更新", "订阅", "地址"]
+const exclude_filter = "剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址"
 
 // 规则集通用配置
 const ruleProviderCommon = {
@@ -44,9 +44,7 @@ function main(config) {
   config["mode"] = "rule"
   config["log-level"] = "info"
   config["ipv6"] = true
-  config["disable-keep-alive"] = false
-  config["keep-alive-interval"] = 15
-  config["keep-alive-idle"] = 15
+  config["disable-keep-alive"] = true
   config["external-controller"] = "127.0.0.1:9090"
   config["unified-delay"] = true
   config["tcp-concurrent"] = true
@@ -104,19 +102,38 @@ function main(config) {
     interval: 480
   }
 
-  config["proxies"] = config.proxies.filter(proxy => {
-    return !blockKeywords.some(keyword => proxy.name.includes(keyword));
-  })
-
-  config["proxies"] = config.proxies.map(proxy => {
-    return {
-      ...proxy,
-      udp: true,
-      "ip-version": "ipv4-prefer"
+  const proxiesprovider = {
+    原本: {
+      type: "inline",
+      override: {
+        udp: true,
+        "ip-version": "ipv4-prefer"
+      },
+      "exclude-filter": exclude_filter, // 可根据需要修改为你想要的值
+      payload: config.proxies
     }
+  }
+
+  // 合并 proxy-providers，先判断是否存在
+  if (config["proxy-providers"]) {
+    config["proxy-providers"] = {
+      ...config["proxy-providers"],
+      ...proxiesprovider
+    }
+  } else {
+    config["proxy-providers"] = { ...proxiesprovider }
+  }
+
+  // 修改 proxy-providers 里的 override 的 udp、ip-version 和 exclude-filter
+  Object.values(config["proxy-providers"]).forEach(provider => {
+    if (provider.override) {
+      provider.override.udp = true
+      provider.override["ip-version"] = "ipv4-prefer"
+    }
+    provider["exclude-filter"] = exclude_filter // 可根据需要修改为你想要的值
   })
 
-  config.proxies = addproxies.concat(config.proxies)
+  config["proxies"] = [...addproxies]
 
   //总开关关闭时不处理策略组
   if (!enable) {
@@ -128,21 +145,21 @@ function main(config) {
       name: "国外",
       type: "select",
       proxies: ["直连"],
-      "include-all": true,
+      "include-all-providers": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png",
     },
     {
       name: "解锁",
       type: "select",
       proxies: ["直连", "国外"],
-      "include-all": true,
+      "include-all-providers": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png",
     },
     {
       name: "下载",
       type: "select",
       proxies: ["直连", "国外"],
-      "include-all": true,
+      "include-all-providers": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png",
     },
     {
