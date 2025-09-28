@@ -105,16 +105,11 @@ function main(config) {
   const proxiesprovider = {
     原本: {
       type: "inline",
-      override: {
-        udp: true,
-        "ip-version": "ipv4-prefer"
-      },
-      "exclude-filter": exclude_filter, // 可根据需要修改为你想要的值
       payload: config.proxies
     }
   }
 
-  // 合并 proxy-providers，先判断是否存在
+  // 合并 proxy-providers
   if (config["proxy-providers"]) {
     config["proxy-providers"] = {
       ...config["proxy-providers"],
@@ -124,13 +119,13 @@ function main(config) {
     config["proxy-providers"] = { ...proxiesprovider }
   }
 
-  // 修改 proxy-providers 里的 override 的 udp、ip-version 和 exclude-filter
+  // 修改 proxy-providers
   Object.values(config["proxy-providers"]).forEach(provider => {
     if (provider.override) {
       provider.override.udp = true
       provider.override["ip-version"] = "ipv4-prefer"
     }
-    provider["exclude-filter"] = exclude_filter // 可根据需要修改为你想要的值
+    provider["exclude-filter"] = exclude_filter
   })
 
   config["proxies"] = [...addproxies]
