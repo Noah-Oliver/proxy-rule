@@ -86,7 +86,6 @@ function main(config) {
     sniff: {
       HTTP: {
         ports: [80, '8080-8880'],
-        "override-destination": true
       },
       TLS: {
         ports: [443, 8443],
@@ -209,9 +208,9 @@ function main(config) {
 
     AD: {
       ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads%40ads.list",
-      behavior: "domain",
-      format: "text",
+      url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical_No_Resolve.yaml",
+      behavior: "classical",
+      format: "yaml",
     },
 
     "game-platforms-download": {
