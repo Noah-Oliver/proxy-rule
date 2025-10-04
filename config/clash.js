@@ -208,9 +208,9 @@ function main(config) {
 
     AD: {
       ...ruleProviderCommon,
-      url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical_No_Resolve.yaml",
-      behavior: "classical",
-      format: "yaml",
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads%40ads.list",
+      behavior: "domain",
+      format: "text",
     },
 
     "game-platforms-download": {
