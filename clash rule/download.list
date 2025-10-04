@@ -1,10 +1,10 @@
 #download
-DOMAIN,cn.download.nvidia.com
 DOMAIN-KEYWORD,aria2
 DOMAIN-KEYWORD,thunder
 DOMAIN-KEYWORD,xlliveud
 DOMAIN-KEYWORD,xunlei
 DOMAIN-KEYWORD,yunpan
+DOMAIN-SUFFIX,download.nvidia.com
 DOMAIN-SUFFIX,cdn.ubi.com
 DOMAIN-SUFFIX,dyn.riotcdn.net
 DOMAIN-SUFFIX,qbittorrent.org
