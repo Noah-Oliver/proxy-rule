@@ -1,8 +1,8 @@
 #proxy
-DOMAIN,bmigmi-global-wuwu.ccavbox.com
-DOMAIN,sing-box.sagernet.org
-DOMAIN,sing-boxp.dustinwin.top
-DOMAIN,tenkafuma.com
+DOMAIN-SUFFIX,ccavbox.com
+DOMAIN-SUFFIX,sagernet.org
+DOMAIN-SUFFIX,dustinwin.top
+DOMAIN-SUFFIX,tenkafuma.com
 DOMAIN-SUFFIX,obsproject.com
 DOMAIN-SUFFIX,hamreus.com
 DOMAIN-SUFFIX,manhuagui.com
