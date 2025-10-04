@@ -1,11 +1,12 @@
 #proxy
-DOMAIN,m.manhuagui.com
-DOMAIN,cf.mhgui.com
+DOMAIN,bmigmi-global-wuwu.ccavbox.com
 DOMAIN,sing-box.sagernet.org
 DOMAIN,sing-boxp.dustinwin.top
 DOMAIN,tenkafuma.com
-DOMAIN,bmigmi-global-wuwu.ccavbox.com
 DOMAIN-SUFFIX,obsproject.com
+DOMAIN-SUFFIX,hamreus.com
+DOMAIN-SUFFIX,manhuagui.com
+DOMAIN-SUFFIX,mhgui.com
 DOMAIN-SUFFIX,shadowverse.com
 DOMAIN-SUFFIX,shadowverse-wb.com
 PROCESS-NAME,com.wonwayl.trinitygearsperimeter.qooapp
@@ -13,9 +14,6 @@ PROCESS-NAME,org.telegram.messenger.web
 PROCESS-NAME,com.android.vending
 PROCESS-NAME,jp.co.cygames.ShadowverseWorldsBeyond
 PROCESS-NAME,ShadowverseWB.exe
-
-
-
 
 
 
