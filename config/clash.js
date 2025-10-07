@@ -61,8 +61,8 @@ function main(config) {
     listen: "0.0.0.0:1053",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["system"],
-    "nameserver": ["system"],
+    "default-nameserver": ["dhcp://system"],
+    "nameserver": ["dhcp://system"],
     "nameserver-policy": {
       //PROXY
       "rule-set:0proxy,gfw,cn!": ["1.1.1.1#国外"],
