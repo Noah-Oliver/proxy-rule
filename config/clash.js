@@ -65,7 +65,7 @@ function main(config) {
     "nameserver": ["dhcp://system"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,gfw,cn!,tld-!cn": ["1.1.1.1#国外"],
+      "rule-set:0proxy,gfw,cn!": ["1.1.1.1#国外"],
       //Unlock
       "rule-set:0unlock,ai,spotify": ["1.1.1.1#解锁"],
     },
@@ -236,7 +236,7 @@ function main(config) {
 
     cn: {
       ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/cn.list",
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.list",
       behavior: "domain",
       format: "text",
     },
@@ -261,13 +261,6 @@ function main(config) {
       behavior: "domain",
       format: "text",
     },
-
-    "tld-!cn": {
-      ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/tld-!cn.list",
-      behavior: "domain",
-      format: "text",
-    },
   }
   config["rules"] = [
     //"AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),AD",
@@ -286,7 +279,6 @@ function main(config) {
     "RULE-SET,gfw,国外",
     "RULE-SET,cn,国内",
     "RULE-SET,cn!,国外",
-    "RULE-SET,tld-!cn,国外",
     "RULE-SET,cnip,国内",
 
     "MATCH,不明"
