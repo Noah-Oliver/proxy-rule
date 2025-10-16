@@ -263,18 +263,17 @@ function main(config) {
     },
   }
   config["rules"] = [
-    //"AND,((NOT,((RULE-SET,AD!))),(RULE-SET,AD)),AD",
-    "RULE-SET,AD,广告",
-
     "RULE-SET,0download,下载",
-    "RULE-SET,game-platforms-download,下载",
-
     "RULE-SET,0unlock,解锁",
-    "RULE-SET,ai,解锁",
-    "RULE-SET,spotify,解锁",
-
     "RULE-SET,0proxy,国外",
     "RULE-SET,0direct,国内",
+
+    "RULE-SET,AD,广告",
+    
+    "RULE-SET,game-platforms-download,下载",
+    
+    "RULE-SET,ai,解锁",
+    "RULE-SET,spotify,解锁",
 
     "RULE-SET,gfw,国外",
     "RULE-SET,cn,国内",
