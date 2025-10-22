@@ -60,7 +60,10 @@ function main(config) {
     "cache-algorithm": "arc",
     listen: "0.0.0.0:1053",
     ipv6: true,
-    "enhanced-mode": "redir-host",
+    "enhanced-mode": "fake-ip",
+    "fake-ip-range": "7.0.0.0/8",
+    "fake-ip-filter-mode": "blacklist",
+    "fake-ip-filter": ["+*"],
     "default-nameserver": ["dhcp://system"],
     "nameserver": ["dhcp://system"],
     "nameserver-policy": {
@@ -77,28 +80,6 @@ function main(config) {
     "auto-detect-interface": true,
     "dns-hijack": ["any:53"],
     mtu: 1280
-  }
-  config["sniffer"] = {
-    enable: true,
-    "force-dns-mapping": true,
-    "parse-pure-ip": true,
-    "override-destination": false,
-    sniff: {
-      HTTP: {
-        ports: [80, '8080-8880'],
-      },
-      TLS: {
-        ports: [443, 8443],
-      },
-      QUIC: {
-        ports: [443, 8443],
-      },
-    },
-  }
-  config["ntp"] = {
-    enable: true,
-    server: "pool.ntp.org",
-    interval: 480
   }
 
   const proxiesprovider = {
