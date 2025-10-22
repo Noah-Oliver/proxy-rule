@@ -60,10 +60,7 @@ function main(config) {
     "cache-algorithm": "arc",
     listen: "0.0.0.0:1053",
     ipv6: true,
-    "enhanced-mode": "fake-ip",
-    "fake-ip-range": "7.0.0.0/8",
-    "fake-ip-filter-mode": "blacklist",
-    "fake-ip-filter": ["+*"],
+    "enhanced-mode": "redir-host",
     "default-nameserver": ["dhcp://system"],
     "nameserver": ["dhcp://system"],
     "nameserver-policy": {
@@ -75,7 +72,7 @@ function main(config) {
   }
   config["tun"] = {
     enable: true,
-    stack: "system",
+    stack: "mixed",
     "auto-route": true,
     "auto-detect-interface": true,
     "dns-hijack": ["any:53"],
