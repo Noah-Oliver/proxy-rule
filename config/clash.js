@@ -61,8 +61,8 @@ function main(config) {
     listen: "0.0.0.0:1053",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["system"],
-    "nameserver": ["system"],
+    "default-nameserver": ["dhcp://system"],
+    "nameserver": ["dhcp://system"],
     "nameserver-policy": {
       //PROXY
       "rule-set:0proxy,gfw,cn!": ["1.1.1.1#国外"],
@@ -263,22 +263,22 @@ function main(config) {
     },
   }
   config["rules"] = [
-    "RULE-SET,0download,下载",
-    "RULE-SET,0unlock,解锁",
-    "RULE-SET,0proxy,国外",
-    "RULE-SET,0direct,国内",
+    "RULE-SET,0download,下载,no-resolve",
+    "RULE-SET,0unlock,解锁,no-resolve",
+    "RULE-SET,0proxy,国外,no-resolve",
+    "RULE-SET,0direct,国内,no-resolve",
 
-    "RULE-SET,AD,广告",
+    "RULE-SET,AD,广告,no-resolve",
     
-    "RULE-SET,game-platforms-download,下载",
+    "RULE-SET,game-platforms-download,下载,no-resolve",
     
-    "RULE-SET,ai,解锁",
-    "RULE-SET,spotify,解锁",
+    "RULE-SET,ai,解锁,no-resolve",
+    "RULE-SET,spotify,解锁,no-resolve",
 
-    "RULE-SET,gfw,国外",
-    "RULE-SET,cn,国内",
-    "RULE-SET,cn!,国外",
-    "RULE-SET,cnip,国内",
+    "RULE-SET,gfw,国外,no-resolve",
+    "RULE-SET,cn,国内,no-resolve",
+    "RULE-SET,cn!,国外,no-resolve",
+    "RULE-SET,cnip,国内,no-resolve",
 
     "MATCH,不明"
   ]
