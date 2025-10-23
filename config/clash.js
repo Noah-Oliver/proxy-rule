@@ -61,22 +61,12 @@ function main(config) {
     listen: "0.0.0.0:1053",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["dhcp://system"],
-    "nameserver": ["dhcp://system"],
     "nameserver-policy": {
       //PROXY
       "rule-set:0proxy,gfw,cn!": ["1.1.1.1#国外"],
       //Unlock
       "rule-set:0unlock,ai,spotify": ["1.1.1.1#解锁"],
     },
-  }
-  config["tun"] = {
-    enable: true,
-    stack: "mixed",
-    "auto-route": true,
-    "auto-detect-interface": true,
-    "dns-hijack": ["any:53"],
-    mtu: 1280
   }
 
   const proxiesprovider = {
