@@ -1,23 +1,22 @@
 #proxy
-DOMAIN-SUFFIX,ccavbox.com
-DOMAIN-SUFFIX,sagernet.org
-DOMAIN-SUFFIX,dustinwin.top
-DOMAIN-SUFFIX,tenkafuma.com
 DOMAIN-SUFFIX,obsproject.com
+DOMAIN-SUFFIX,qoo-app.com
+PROCESS-NAME,com.qooapp.qoohelper
+PROCESS-NAME,org.telegram.messenger.web
+PROCESS-NAME,com.android.vending
+DOMAIN-SUFFIX,ccavbox.com
 DOMAIN-SUFFIX,hamreus.com
 DOMAIN-SUFFIX,manhuagui.com
 DOMAIN-SUFFIX,mhgui.com
 DOMAIN-SUFFIX,shadowverse.com
 DOMAIN-SUFFIX,shadowverse-wb.com
-PROCESS-NAME,com.wonwayl.trinitygearsperimeter.qooapp
-PROCESS-NAME,org.telegram.messenger.web
-PROCESS-NAME,com.android.vending
 PROCESS-NAME,jp.co.cygames.ShadowverseWorldsBeyond
 PROCESS-NAME,ShadowverseWB.exe
+DOMAIN-SUFFIX,sagernet.org
+DOMAIN-SUFFIX,dustinwin.top
+DOMAIN-SUFFIX,tenkafuma.com
 DOMAIN-SUFFIX,riseoferos.com
 DOMAIN-SUFFIX,adjust.com
-
-
 
 
 
