@@ -44,12 +44,7 @@ function main(config) {
   config["mode"] = "rule"
   config["log-level"] = "info"
   config["ipv6"] = true
-  config["disable-keep-alive"] = true
   config["external-controller"] = "127.0.0.1:9090"
-  config["unified-delay"] = true
-  config["tcp-concurrent"] = true
-  config["find-process-mode"] = "strict"
-  config["etag-support"] = true
   config["profile"] = {
     //存储 select 选择记录
     "store-selected": true,
@@ -57,10 +52,10 @@ function main(config) {
   }
   config["dns"] = {
     enable: true,
-    "cache-algorithm": "arc",
-    listen: "0.0.0.0:1053",
     ipv6: true,
     "enhanced-mode": "redir-host",
+    "default-nameserver": ["223.5.5.5"],
+    "nameserver": ["223.5.5.5"],
     "nameserver-policy": {
       //PROXY
       "rule-set:0proxy,gfw,cn!": ["1.1.1.1#国外"],
@@ -176,58 +171,58 @@ function main(config) {
 
     AD: {
       ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads%40ads.list",
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads%40ads.mrs",
       behavior: "domain",
-      format: "text",
+      format: "mrs",
     },
 
     "game-platforms-download": {
       ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-game-platforms-download.list",
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-game-platforms-download.mrs",
       behavior: "domain",
-      format: "text",
+      format: "mrs",
     },
 
     ai: {
       ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ai-!cn.list",
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ai-!cn.mrs",
       behavior: "domain",
-      format: "text",
+      format: "mrs",
     },
 
     spotify: {
       ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/spotify.list",
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/spotify.mrs",
       behavior: "domain",
-      format: "text",
+      format: "mrs",
     },
 
     cn: {
       ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.list",
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.mrs",
       behavior: "domain",
-      format: "text",
+      format: "mrs",
     },
 
     cnip: {
       ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.list",
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.mrs",
       behavior: "ipcidr",
-      format: "text",
+      format: "mrs",
     },
 
     gfw: {
       ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.list",
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.mrs",
       behavior: "domain",
-      format: "text",
+      format: "mrs",
     },
 
     "cn!": {
       ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.list",
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs",
       behavior: "domain",
-      format: "text",
+      format: "mrs",
     },
   }
   config["rules"] = [
