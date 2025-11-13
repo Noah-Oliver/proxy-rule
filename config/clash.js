@@ -58,9 +58,9 @@ function main(config) {
     "nameserver": ["223.5.5.5"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,gfw,cn!": ["1.1.1.1#国外"],
+      "rule-set:0proxy,gfw,cn!": ["8.8.8.8#国外"],
       //Unlock
-      "rule-set:0unlock,ai,spotify": ["1.1.1.1#解锁"],
+      "rule-set:0unlock,ai,spotify": ["8.8.8.8#解锁"],
     },
   }
 
