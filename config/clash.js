@@ -99,6 +99,12 @@ function main(config) {
 
   config["proxy-groups"] = [
     {
+      name: "延迟",
+      type: "select",
+      proxies: ["国外", "解锁", "下载", "国内", "不明", "广告"],
+      icon: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/color/Auto.png",
+    },
+    {
       name: "国外",
       type: "select",
       proxies: ["直连"],
@@ -232,9 +238,9 @@ function main(config) {
     "RULE-SET,0direct,国内,no-resolve",
 
     "RULE-SET,AD,广告,no-resolve",
-    
+
     "RULE-SET,game-platforms-download,下载,no-resolve",
-    
+
     "RULE-SET,ai,解锁,no-resolve",
     "RULE-SET,spotify,解锁,no-resolve",
 
