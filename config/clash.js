@@ -54,11 +54,11 @@ function main(config) {
     enable: true,
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["223.5.5.5"],
-    "nameserver": ["223.5.5.5"],
+    "default-nameserver": ["dhcp://system"],
+    "nameserver": ["dhcp://system"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,gfw,cn!": ["8.8.8.8#国外"],
+      "rule-set:0proxy,cn!": ["8.8.8.8#国外"],
       //Unlock
       "rule-set:0unlock,ai,spotify": ["8.8.8.8#解锁"],
     },
@@ -205,7 +205,7 @@ function main(config) {
 
     cn: {
       ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-cn.mrs",
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/cn.mrs",
       behavior: "domain",
       format: "mrs",
     },
@@ -217,13 +217,6 @@ function main(config) {
       format: "mrs",
     },
 
-    gfw: {
-      ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.mrs",
-      behavior: "domain",
-      format: "mrs",
-    },
-
     "cn!": {
       ...ruleProviderCommon,
       url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs",
@@ -232,22 +225,16 @@ function main(config) {
     },
   }
   config["rules"] = [
-    "RULE-SET,0download,下载,no-resolve",
-    "RULE-SET,0unlock,解锁,no-resolve",
-    "RULE-SET,0proxy,国外,no-resolve",
-    "RULE-SET,0direct,国内,no-resolve",
+    "RULE-SET,0download,下载",
+    "RULE-SET,0unlock,解锁",
+    "RULE-SET,0proxy,国外",
+    "RULE-SET,0direct,国内",
 
-    "RULE-SET,AD,广告,no-resolve",
-
-    "RULE-SET,game-platforms-download,下载,no-resolve",
-
-    "RULE-SET,ai,解锁,no-resolve",
-    "RULE-SET,spotify,解锁,no-resolve",
-
-    "RULE-SET,gfw,国外,no-resolve",
-    "RULE-SET,cn,国内,no-resolve",
-    "RULE-SET,cn!,国外,no-resolve",
-    "RULE-SET,cnip,国内,no-resolve",
+    "RULE-SET,AD,广告",
+    "RULE-SET,game-platforms-download,下载",
+    "OR,((RULE-SET,ai),(RULE-SET,spotify)),解锁",
+    "AND,((RULE-SET,cn!),(NOT,((RULE-SET,cn)))),国外",
+    "OR,((RULE-SET,cn),(RULE-SET,cnip)),国内",
 
     "MATCH,不明"
   ]
