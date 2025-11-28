@@ -45,6 +45,7 @@ function main(config) {
   config["log-level"] = "info"
   config["ipv6"] = true
   config["external-controller"] = "127.0.0.1:9090"
+  config["secret"] = "mihomo-party-clash"
   config["profile"] = {
     //存储 select 选择记录
     "store-selected": true,
