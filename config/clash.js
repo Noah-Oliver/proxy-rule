@@ -100,12 +100,6 @@ function main(config) {
 
   config["proxy-groups"] = [
     {
-      name: "延迟",
-      type: "select",
-      proxies: ["国外", "解锁", "下载", "国内", "不明", "广告"],
-      icon: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/color/Auto.png",
-    },
-    {
       name: "国外",
       type: "select",
       proxies: ["直连"],
@@ -183,27 +177,6 @@ function main(config) {
       format: "mrs",
     },
 
-    "game-platforms-download": {
-      ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-game-platforms-download.mrs",
-      behavior: "domain",
-      format: "mrs",
-    },
-
-    ai: {
-      ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ai-!cn.mrs",
-      behavior: "domain",
-      format: "mrs",
-    },
-
-    spotify: {
-      ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/spotify.mrs",
-      behavior: "domain",
-      format: "mrs",
-    },
-
     cn: {
       ...ruleProviderCommon,
       url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/cn.mrs",
@@ -232,8 +205,6 @@ function main(config) {
     "RULE-SET,0direct,国内",
 
     "RULE-SET,AD,广告",
-    "RULE-SET,game-platforms-download,下载",
-    "OR,((RULE-SET,ai),(RULE-SET,spotify)),解锁",
     "AND,((RULE-SET,cn!),(NOT,((RULE-SET,cn)))),国外",
     "OR,((RULE-SET,cn),(RULE-SET,cnip)),国内",
 
