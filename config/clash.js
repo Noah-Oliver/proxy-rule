@@ -61,7 +61,7 @@ function main(config) {
       //PROXY
       "rule-set:0proxy,cn!": ["8.8.8.8#国外"],
       //Unlock
-      "rule-set:0unlock,ai,spotify": ["8.8.8.8#解锁"],
+      "rule-set:0unlock": ["8.8.8.8#解锁"],
     },
   }
 
