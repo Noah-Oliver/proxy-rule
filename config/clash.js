@@ -102,14 +102,13 @@ function main(config) {
     {
       name: "国外",
       type: "select",
-      proxies: ["直连"],
       "include-all-providers": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png",
     },
     {
       name: "解锁",
       type: "select",
-      proxies: ["直连", "国外"],
+      proxies: ["国外"],
       "include-all-providers": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png",
     },
