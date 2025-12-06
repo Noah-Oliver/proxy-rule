@@ -59,7 +59,7 @@ function main(config) {
     "nameserver": ["223.5.5.5", "119.29.29.29"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,cn!": ["8.8.8.8#国外", "1.1.1.1#国外"],
+      "rule-set:proxy,cn!": ["8.8.8.8#国外", "1.1.1.1#国外"],
     },
   }
 
@@ -126,23 +126,23 @@ function main(config) {
 
   // 覆盖原配置中的规则
   config["rule-providers"] = {
-    "0direct": {
+    "direct": {
       ...ruleProviderCommon,
-      url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list",
+      url: "https://github.com/Noah-Oliver/proxy-rule/blob/main/%E7%B2%BE%E7%AE%80clash%20rule/direct.list?raw=true",
       behavior: "classical",
       format: "text",
     },
 
-    "0download": {
+    "download": {
       ...ruleProviderCommon,
-      url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list",
+      url: "https://github.com/Noah-Oliver/proxy-rule/blob/main/%E7%B2%BE%E7%AE%80clash%20rule/download.list?raw=true",
       behavior: "classical",
       format: "text",
     },
 
-    "0proxy": {
+    "proxy": {
       ...ruleProviderCommon,
-      url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list",
+      url: "https://github.com/Noah-Oliver/proxy-rule/blob/main/%E7%B2%BE%E7%AE%80clash%20rule/proxy.list?raw=true",
       behavior: "classical",
       format: "text",
     },
@@ -162,9 +162,9 @@ function main(config) {
     },
   }
   config["rules"] = [
-    "RULE-SET,0download,下载",
-    "RULE-SET,0proxy,国外",
-    "RULE-SET,0direct,国内",
+    "RULE-SET,download,下载",
+    "RULE-SET,proxy,国外",
+    "RULE-SET,direct,国内",
 
     "RULE-SET,AD,广告",
     "RULE-SET,cn!,国外",
