@@ -55,13 +55,13 @@ function main(config) {
     enable: true,
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["dhcp://system"],
-    "nameserver": ["dhcp://system"],
+    "default-nameserver": ["223.5.5.5", "119.29.29.29"],
+    "nameserver": ["https://doh.pub/dns-query", "https://dns.alidns.com/dns-query"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,cn!": ["8.8.8.8#国外"],
+      "rule-set:0proxy,cn!": ["https://dns.google/dns-query#国外","https://dns.cloudflare.com/dns-query#国外"],
       //Unlock
-      "rule-set:0unlock": ["8.8.8.8#解锁"],
+      "rule-set:0unlock": ["https://dns.google/dns-query#解锁","https://dns.cloudflare.com/dns-query#解锁"],
     },
   }
 
