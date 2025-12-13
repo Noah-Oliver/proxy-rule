@@ -55,11 +55,11 @@ function main(config) {
     enable: true,
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["dhcp://system", "system"],
-    "nameserver": ["dhcp://system", "system"],
+    "default-nameserver": ["223.5.5.5"],
+    "nameserver": ["223.5.5.5"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:proxy,cn!": ["8.8.8.8#国外", "1.1.1.1#国外"],
+      "rule-set:proxy,cn!": ["8.8.8.8#国外"],
     },
   }
 
