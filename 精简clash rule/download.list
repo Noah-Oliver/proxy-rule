@@ -1,12 +1,13 @@
 #download
-DOMAIN-KEYWORD,aria2
 DOMAIN-KEYWORD,thunder
+DOMAIN-SUFFIX,riotcdn.net
+PROCESS-NAME,Thunder
+DOMAIN-KEYWORD,aria2
 DOMAIN-KEYWORD,xlliveud
 DOMAIN-KEYWORD,xunlei
 DOMAIN-KEYWORD,yunpan
 DOMAIN-SUFFIX,download.nvidia.com
 DOMAIN-SUFFIX,cdn.ubi.com
-DOMAIN-SUFFIX,dyn.riotcdn.net
 DOMAIN-SUFFIX,qbittorrent.org
 DOMAIN-SUFFIX,steamcontent.com
 PROCESS-NAME,aria2c
@@ -25,7 +26,6 @@ PROCESS-NAME,NetTransport
 PROCESS-NAME,NetTransport.exe
 PROCESS-NAME,qbittorrent
 PROCESS-NAME,qbittorrent.exe
-PROCESS-NAME,Thunder
 PROCESS-NAME,Thunder.exe
 PROCESS-NAME,Transmission
 PROCESS-NAME,Transmission.exe
@@ -51,7 +51,6 @@ DOMAIN,bacon.secure.dyn.riotcdn.net
 DOMAIN,ritoplus.secure.dyn.riotcdn.net
 DOMAIN,wildrift.dyn.riotcdn.net
 DOMAIN,lol.dyn.riotcdn.net
-DOMAIN,dyn.riotcdn.net
 DOMAIN,valorant.dyn.riotcdn.net
 DOMAIN,global.dyn.riotcdn.net
 DOMAIN,mock-game.dyn.riotcdn.net
