@@ -169,8 +169,8 @@ function main(config) {
   }
   config["rules"] = [
     "RULE-SET,download,下载",
-    "RULE-SET,proxy,国外",
     "RULE-SET,direct,国内",
+    "RULE-SET,proxy,国外",
 
     "RULE-SET,AD,广告",
     "RULE-SET,cn!,国外",
