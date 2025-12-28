@@ -57,11 +57,11 @@ function main(config) {
     enable: true,
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["223.5.5.5#国内","223.6.6.6#国内"],
-    "nameserver": ["223.5.5.5#国内","223.6.6.6#国内"],
+    "default-nameserver": ["119.29.29.29#国内","119.28.28.28#国内"],
+    "nameserver": ["119.29.29.29#国内","119.28.28.28#国内"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:proxy,cn!": ["8.8.8.8#国外","8.8.4.4#国外"],
+      "rule-set:proxy,cn!": ["1.1.1.1#国外","1.0.0.1#国外"],
     },
   }
 
