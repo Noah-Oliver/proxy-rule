@@ -44,7 +44,7 @@ function main(config) {
   config["mode"] = "rule"
   config["log-level"] = "info"
   config["ipv6"] = true
-  config["tcp-concurrent"] = true
+  config["tcp-concurrent"] = false
   config["unified-delay"] = true
   config["external-controller"] = "127.0.0.1:9090"
   config["secret"] = "mihomo-party-clash"
