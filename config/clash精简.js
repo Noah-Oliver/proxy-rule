@@ -20,8 +20,7 @@ const addproxies = [
   {
     name: "直连",
     type: "direct",
-    udp: true,
-    "ip-version": "ipv4-prefer"
+    udp: true
   },
   {
     name: "阻止",
@@ -92,7 +91,6 @@ function main(config) {
   Object.values(config["proxy-providers"]).forEach(provider => {
     if (provider.override) {
       provider.override.udp = true
-      provider.override["ip-version"] = "ipv4-prefer"
     }
     provider["exclude-filter"] = exclude_filter
   })
