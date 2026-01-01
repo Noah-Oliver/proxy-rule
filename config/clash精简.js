@@ -59,7 +59,9 @@ function main(config) {
   }
   config["dns"] = {
     enable: true,
+    "cache-algorithm": "arc",
     ipv6: true,
+    "prefer-h3": false,
     "enhanced-mode": "redir-host",
     "default-nameserver": ["dhcp://system"],
     "nameserver": ["dhcp://system"],
