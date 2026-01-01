@@ -16,18 +16,18 @@ const ruleProviderCommon = {
 }
 
 //添加节点
-// const addproxies = [
-//   {
-//     name: "直连",
-//     type: "direct",
-//     udp: true,
-//     "ip-version": "ipv4-prefer"
-//   },
-//   {
-//     name: "阻止",
-//     type: "reject"
-//   }
-// ]
+const addproxies = [
+  {
+    name: "直连",
+    type: "direct",
+    udp: true,
+    "ip-version": "ipv4-prefer"
+  },
+  {
+    name: "阻止",
+    type: "reject"
+  }
+]
 
 // 程序入口
 function main(config) {
@@ -97,7 +97,7 @@ function main(config) {
     provider["exclude-filter"] = exclude_filter
   })
 
-  // config["proxies"] = [...addproxies]
+  config["proxies"] = [...addproxies]
 
   //总开关关闭时不处理策略组
   if (!enable) {
@@ -114,20 +114,20 @@ function main(config) {
     {
       name: "下载",
       type: "select",
-      proxies: ["DIRECT", "国外"],
+      proxies: ["直连", "国外"],
       "include-all-providers": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png",
     },
     {
       name: "国内",
       type: "select",
-      proxies: ["DIRECT", "国外"],
+      proxies: ["直连", "国外"],
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png",
     },
     {
       name: "广告",
       type: "select",
-      proxies: ["REJECT", "DIRECT", "国外"],
+      proxies: ["阻止", "直连", "国外"],
       icon: "https://github.com/NB921/picture/raw/main/AD3.png",
     },
   ]
