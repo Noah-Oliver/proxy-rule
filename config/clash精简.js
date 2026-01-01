@@ -62,13 +62,32 @@ function main(config) {
     "cache-algorithm": "arc",
     ipv6: true,
     "prefer-h3": false,
-    "enhanced-mode": "redir-host",
-    "default-nameserver": ["119.29.29.29#国内", "223.5.5.5#国内"],
-    "nameserver": ["119.29.29.29#国内", "223.5.5.5#国内"],
+    "enhanced-mode": "normal",
+    "default-nameserver": ["dhcp://system"],
+    "nameserver": ["dhcp://system"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:proxy,cn!": ["8.8.8.8#国外", "1.1.1.1#国外"],
+      "rule-set:proxy,cn!": ["1.1.1.1#国外", "8.8.8.8#国外"],
     },
+  }
+
+  config["sniffer"] = {
+    enable: true,
+    "force-dns-mapping": true,
+    "parse-pure-ip": true,
+    "override-destination": false,
+    sniff: {
+      TLS: {
+        ports: [443, 8443],
+      },
+      HTTP: {
+        ports: [80, "8080-8880"],
+      },
+      QUIC: {
+        ports: [443, 8443],
+      },
+    },
+    "skip-domain": ["Mijia Cloud"],
   }
 
   const proxiesprovider = {
