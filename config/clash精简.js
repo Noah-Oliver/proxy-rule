@@ -62,8 +62,8 @@ function main(config) {
     ipv6: true,
     "prefer-h3": false,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["dhcp://system"],
-    "nameserver": ["dhcp://system"],
+    "default-nameserver": ["223.5.5.5#国内", "119.29.29.29#国内"],
+    "nameserver": ["223.5.5.5#国内", "119.29.29.29#国内"],
     "nameserver-policy": {
       //PROXY
       "rule-set:proxy,cn!": ["1.1.1.1#国外", "8.8.8.8#国外"],
