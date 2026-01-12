@@ -169,9 +169,9 @@ function main(config) {
 
     AD: {
       ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads%40ads.mrs",
-      behavior: "domain",
-      format: "mrs",
+      url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml",
+      behavior: "classical",
+      format: "yaml",
     },
 
     "cn!": {
