@@ -1,4 +1,4 @@
-#proxy_36
+#proxy_40
 DOMAIN-SUFFIX,obsproject.com
 DOMAIN-SUFFIX,pycon.org
 DOMAIN-SUFFIX,pypa.io
@@ -35,3 +35,7 @@ DOMAIN-SUFFIX,ffq.la
 DOMAIN-SUFFIX,IP.SB
 DOMAIN-SUFFIX,ipwho.is
 DOMAIN-SUFFIX,ipapi.is
+DOMAIN-SUFFIX,ident.me
+DOMAIN-SUFFIX,ipapi.co
+DOMAIN-SUFFIX,ip-api.com
+DOMAIN-SUFFIX,ipinfo.io
