@@ -20,8 +20,7 @@ const addproxies = [
   {
     name: "直连",
     type: "direct",
-    udp: true,
-    "ip-version": "ipv4-prefer"
+    udp: true
   },
   {
     name: "阻止",
@@ -44,6 +43,8 @@ function main(config) {
   config["mode"] = "rule"
   config["log-level"] = "info"
   config["ipv6"] = true
+  config["tcp-concurrent"] = false
+  config["unified-delay"] = true
   config["external-controller"] = "127.0.0.1:9090"
   config["secret"] = "mihomo-party-clash"
   config["profile"] = {
@@ -51,17 +52,21 @@ function main(config) {
     "store-selected": true,
     "store-fake-ip": false,
   }
+  config["experimental"] = {
+    "quic-go-disable-gso": true,
+    "quic-go-disable-ecn": true,
+  }
   config["dns"] = {
     enable: true,
+    "cache-algorithm": "arc",
     ipv6: true,
+    "prefer-h3": false,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["dhcp://system", "system"],
-    "nameserver": ["dhcp://system", "system"],
+    "default-nameserver": ["223.5.5.5#国内", "119.29.29.29#国内"],
+    "nameserver": ["223.5.5.5#国内", "119.29.29.29#国内"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:0proxy,cn!": ["8.8.8.8#国外","1.1.1.1#国外"],
-      //Unlock
-      "rule-set:0unlock": ["8.8.8.8#解锁","1.1.1.1#解锁"],
+      "rule-set:unlock,proxy,cn!": ["1.1.1.1#国外", "8.8.8.8#国外"],
     },
   }
 
@@ -126,12 +131,6 @@ function main(config) {
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png",
     },
     {
-      name: "不明",
-      type: "select",
-      proxies: ["直连", "国外"],
-      icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Stack.png",
-    },
-    {
       name: "广告",
       type: "select",
       proxies: ["阻止", "直连", "国外"],
@@ -141,28 +140,28 @@ function main(config) {
 
   // 覆盖原配置中的规则
   config["rule-providers"] = {
-    "0direct": {
+    "direct": {
       ...ruleProviderCommon,
       url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list",
       behavior: "classical",
       format: "text",
     },
 
-    "0download": {
+    "download": {
       ...ruleProviderCommon,
       url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list",
       behavior: "classical",
       format: "text",
     },
 
-    "0proxy": {
+    "proxy": {
       ...ruleProviderCommon,
       url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list",
       behavior: "classical",
       format: "text",
     },
 
-    "0unlock": {
+    "unlock": {
       ...ruleProviderCommon,
       url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list",
       behavior: "classical",
@@ -176,38 +175,23 @@ function main(config) {
       format: "mrs",
     },
 
-    cn: {
-      ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/cn.mrs",
-      behavior: "domain",
-      format: "mrs",
-    },
-
-    cnip: {
-      ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.mrs",
-      behavior: "ipcidr",
-      format: "mrs",
-    },
-
     "cn!": {
       ...ruleProviderCommon,
-      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/geolocation-!cn.mrs",
+      url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.mrs",
       behavior: "domain",
       format: "mrs",
     },
   }
   config["rules"] = [
-    "RULE-SET,0download,下载",
-    "RULE-SET,0unlock,解锁",
-    "RULE-SET,0proxy,国外",
-    "RULE-SET,0direct,国内",
+    "RULE-SET,download,下载",
+    "RULE-SET,unlock,解锁",
+    "RULE-SET,direct,国内",
+    "RULE-SET,proxy,国外",
 
     "RULE-SET,AD,广告",
-    "AND,((RULE-SET,cn!),(NOT,((RULE-SET,cn)))),国外",
-    "OR,((RULE-SET,cn),(RULE-SET,cnip)),国内",
+    "RULE-SET,cn!,国外",
 
-    "MATCH,不明"
+    "MATCH,国内"
   ]
 
   // 返回修改后的配置
