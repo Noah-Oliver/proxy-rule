@@ -1,4 +1,4 @@
-#proxy_33
+#proxy_36
 DOMAIN-SUFFIX,obsproject.com
 DOMAIN-SUFFIX,pycon.org
 DOMAIN-SUFFIX,pypa.io
@@ -32,3 +32,6 @@ DOMAIN-SUFFIX,tenkafuma.com
 DOMAIN-SUFFIX,wa01.com
 DOMAIN-SUFFIX,ffqla.net
 DOMAIN-SUFFIX,ffq.la
+DOMAIN-SUFFIX,IP.SB
+DOMAIN-SUFFIX,ipwho.is
+DOMAIN-SUFFIX,ipapi.is
