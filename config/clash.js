@@ -43,7 +43,7 @@ function main(config) {
   config["mode"] = "rule"
   config["log-level"] = "info"
   config["ipv6"] = true
-  config["tcp-concurrent"] = false
+  config["tcp-concurrent"] = true
   config["unified-delay"] = true
   config["external-controller"] = "127.0.0.1:9090"
   config["secret"] = "mihomo-party-clash"
@@ -60,13 +60,12 @@ function main(config) {
     enable: true,
     "cache-algorithm": "arc",
     ipv6: true,
-    // "prefer-h3": false,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["223.5.5.5#国内", "119.29.29.29#国内"],
-    "nameserver": ["https://dns.alidns.com/dns-query#国内", "https://doh.pub/dns-query#国内"],
+    "default-nameserver": ["8.8.8.8#国内","223.5.5.5#国内", "119.29.29.29#国内"],
+    "nameserver": ["8.8.8.8#国内","223.5.5.5#国内", "119.29.29.29#国内"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:unlock,proxy,cn!": ["https://dns.cloudflare.com/dns-query#国外", "https://dns.google/dns-query#国外"],
+      "rule-set:unlock,proxy,cn!": ["8.8.8.8#国外", "1.1.1.1#国外"],
     },
   }
 
