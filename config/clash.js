@@ -54,19 +54,19 @@ function main(config) {
   }
   config["experimental"] = {
     "quic-go-disable-gso": true,
-    "quic-go-disable-ecn": true,
+    "quic-go-disable-ecn": false,
   }
   config["dns"] = {
     enable: true,
     "cache-algorithm": "arc",
     ipv6: true,
-    "prefer-h3": false,
+    // "prefer-h3": false,
     "enhanced-mode": "redir-host",
     "default-nameserver": ["223.5.5.5#国内", "119.29.29.29#国内"],
-    "nameserver": ["223.5.5.5#国内", "119.29.29.29#国内"],
+    "nameserver": ["https://dns.alidns.com/dns-query#国内", "https://doh.pub/dns-query#国内"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:unlock,proxy,cn!": ["1.1.1.1#国外", "8.8.8.8#国外"],
+      "rule-set:unlock,proxy,cn!": ["https://dns.cloudflare.com/dns-query#国外", "https://dns.google/dns-query#国外"],
     },
   }
 
