@@ -53,7 +53,7 @@ function main(config) {
     "store-fake-ip": false,
   }
   config["experimental"] = {
-    "quic-go-disable-gso": true,
+    "quic-go-disable-gso": false,
     "quic-go-disable-ecn": false,
   }
   config["dns"] = {
@@ -61,11 +61,11 @@ function main(config) {
     "cache-algorithm": "arc",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["8.8.8.8#国内","223.5.5.5#国内", "119.29.29.29#国内"],
-    "nameserver": ["8.8.8.8#国内","223.5.5.5#国内", "119.29.29.29#国内"],
+    "default-nameserver": ["tcp://223.5.5.5#国内", "tcp://119.29.29.29#国内"],
+    "nameserver": ["tcp://223.5.5.5#国内", "tcp://119.29.29.29#国内"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:unlock,proxy,cn!": ["8.8.8.8#国外", "1.1.1.1#国外"],
+      "rule-set:unlock,proxy,cn!": ["tcp://8.8.8.8#国外", "tcp://1.1.1.1#国外"],
     },
   }
 
