@@ -53,8 +53,8 @@ function main(config) {
     "store-fake-ip": false,
   }
   config["experimental"] = {
-    "quic-go-disable-gso": false,
-    "quic-go-disable-ecn": false,
+    "quic-go-disable-gso": true,
+    "quic-go-disable-ecn": true,
   }
   config["dns"] = {
     enable: true,
