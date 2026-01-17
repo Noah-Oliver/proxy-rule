@@ -69,6 +69,14 @@ function main(config) {
     },
   }
 
+  config["tun"] = {
+    enable: true,
+    stack: "system",
+    "dns-hijack": [],
+    "auto-route": true,
+    "auto-detect-interface": true,
+  }
+
   const proxiesprovider = {
     原本: {
       type: "inline",
