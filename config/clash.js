@@ -61,11 +61,11 @@ function main(config) {
     "cache-algorithm": "arc",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["tcp://223.5.5.5#国内", "tcp://119.29.29.29#国内"],
-    "nameserver": ["tcp://223.5.5.5#国内", "tcp://119.29.29.29#国内"],
+    "default-nameserver": ["tls://223.5.5.5#国内", "tls://119.29.29.29#国内"],
+    "nameserver": ["tls://223.5.5.5#国内", "tls://119.29.29.29#国内"],
     "nameserver-policy": {
       //PROXY
-      "rule-set:unlock,proxy,cn!": ["tcp://8.8.8.8#国外", "tcp://1.1.1.1#国外"],
+      "rule-set:unlock,proxy,cn!": ["tls://8.8.8.8#国外", "tls://1.1.1.1#国外"],
     },
   }
 
