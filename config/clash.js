@@ -31,6 +31,7 @@ const addproxies = [
 // 程序入口
 function main(config) {
   const proxyCount = config?.proxies?.length ?? 0;
+  config.proxies = config.proxies.filter(proxy => Object.values(proxy).every(value => value !== null && value !== undefined && value !== ''));
   const proxyProviderCount =
     typeof config?.["proxy-providers"] === "object"
       ? Object.keys(config["proxy-providers"]).length
