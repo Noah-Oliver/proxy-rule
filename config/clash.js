@@ -58,6 +58,12 @@ function main(config) {
     "cache-algorithm": "arc",
     ipv6: true,
     "enhanced-mode": "redir-host",
+    "default-nameserver": ["udp://223.5.5.5#国内", "udp://119.29.29.29#国内"],
+    "nameserver": ["udp://223.5.5.5#国内", "udp://119.29.29.29#国内"],
+    "nameserver-policy": {
+      //PROXY
+      "rule-set:unlock,proxy,cn!": ["udp://8.8.8.8#国外", "udp://1.1.1.1#国外"],
+    },
   }
 
   config["tun"] = {
