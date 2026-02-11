@@ -1,4 +1,4 @@
-#proxy_41
+#proxy_42
 DOMAIN-SUFFIX,obsproject.com
 DOMAIN-SUFFIX,pycon.org
 DOMAIN-SUFFIX,pypa.io
@@ -40,3 +40,4 @@ DOMAIN-SUFFIX,ipapi.co
 DOMAIN-SUFFIX,ip-api.com
 DOMAIN-SUFFIX,ipinfo.io
 DOMAIN-SUFFIX,clashverge.dev
+DOMAIN-SUFFIX,manhuapica.com
