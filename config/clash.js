@@ -55,15 +55,15 @@ function main(config) {
   }
   config["dns"] = {
     enable: true,
-    "cache-algorithm": "arc",
+    "cache-algorithm": "lru",
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "default-nameserver": ["tls://223.5.5.5#国内", "tls://119.29.29.29#国内"],
-    "nameserver": ["tls://223.5.5.5#国内", "tls://119.29.29.29#国内"],
-    "nameserver-policy": {
-      //PROXY
-      "rule-set:unlock,proxy,cn!": ["tls://8.8.8.8#国外", "tls://1.1.1.1#国外"],
-    },
+    // "default-nameserver": ["tls://223.5.5.5#国内", "tls://119.29.29.29#国内"],
+    // "nameserver": ["tls://223.5.5.5#国内", "tls://119.29.29.29#国内"],
+    // "nameserver-policy": {
+    //   //PROXY
+    //   "rule-set:unlock,proxy,cn!": ["tls://8.8.8.8#国外", "tls://1.1.1.1#国外"],
+    // },
   }
 
   config["tun"] = {
