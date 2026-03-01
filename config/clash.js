@@ -57,7 +57,7 @@ function main(config) {
     enable: true,
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "nameserver": ["udp://223.5.5.5"],
+    "nameserver": ["223.5.5.5"],
   }
 
   config["tun"] = {
