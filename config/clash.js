@@ -57,7 +57,7 @@ function main(config) {
     enable: true,
     ipv6: true,
     "enhanced-mode": "redir-host",
-    "nameserver": ["223.5.5.5"],
+    "nameserver": ["119.29.29.29"],
   }
 
   config["tun"] = {
