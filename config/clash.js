@@ -56,8 +56,8 @@ function main(config) {
   config["dns"] = {
     enable: true,
     ipv6: true,
-    "enhanced-mode": "redir-host",
-    "nameserver": ["180.76.76.76"],
+    "enhanced-mode": "normal",
+    // "nameserver": ["180.76.76.76"],
   }
 
   config["tun"] = {
@@ -66,6 +66,24 @@ function main(config) {
     "dns-hijack": [],
     "auto-route": true,
     "auto-detect-interface": true,
+  }
+
+  config["sniffer"] = {
+    enable: true,
+    "force-dns-mapping": true,
+    "parse-pure-ip": true,
+    "override-destination": true,
+    sniff: {
+      HTTP: {
+        ports: [80, '8080-8880'],
+      },
+      TLS: {
+        ports: [443, 8443],
+      },
+      QUIC: {
+        ports: [443, 8443],
+      },
+    },
   }
 
   const proxiesprovider = {
