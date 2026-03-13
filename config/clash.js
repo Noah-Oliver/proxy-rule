@@ -6,7 +6,7 @@
 const enable = true
 
 //proxies排除节点
-const exclude_filter = "剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址"
+const exclude_filter = "剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|地址|公告|版本"
 
 // 规则集通用配置
 const ruleProviderCommon = {
@@ -70,7 +70,7 @@ function main(config) {
 
   config["sniffer"] = {
     enable: true,
-    "force-dns-mapping": true,
+    "force-dns-mapping": false,
     "parse-pure-ip": true,
     "override-destination": true,
     sniff: {
@@ -78,10 +78,10 @@ function main(config) {
         ports: [80, '8080-8880'],
       },
       TLS: {
-        ports: [443, 8443],
+        ports: [443, 8443, 9443, 2053, 2083, 2087, 2096],
       },
       QUIC: {
-        ports: [443, 8443],
+        ports: [443, 8443, 9443, 2053, 2083, 2087, 2096],
       },
     },
   }
@@ -105,9 +105,8 @@ function main(config) {
 
   // 修改 proxy-providers
   Object.values(config["proxy-providers"]).forEach(provider => {
-    if (provider.override) {
-      provider.override.udp = true
-    }
+    provider.override ??= {}
+    provider.override.udp = true
     provider["exclude-filter"] = exclude_filter
   })
 
