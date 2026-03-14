@@ -6,7 +6,7 @@
 const enable = true
 
 //proxies排除节点
-const exclude_filter = "剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|地址|公告|版本"
+const exclude_filter = "剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|地址|公告|版本|维护"
 
 // 规则集通用配置
 const ruleProviderCommon = {
