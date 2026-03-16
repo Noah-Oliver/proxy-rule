@@ -55,6 +55,7 @@ function main(config) {
   }
   config["dns"] = {
     enable: true,
+    "cache-algorithm": "arc",
     ipv6: true,
     "enhanced-mode": "normal",
     // "nameserver": ["180.76.76.76"],
