@@ -58,7 +58,7 @@ function main(config) {
     "cache-algorithm": "arc",
     ipv6: true,
     "enhanced-mode": "normal",
-    // "nameserver": ["180.76.76.76"],
+    "nameserver": ["dhcp://system"],
   }
 
   config["tun"] = {
@@ -71,7 +71,7 @@ function main(config) {
 
   config["sniffer"] = {
     enable: true,
-    "force-dns-mapping": false,
+    "force-dns-mapping": true,
     "parse-pure-ip": true,
     "override-destination": true,
     sniff: {
