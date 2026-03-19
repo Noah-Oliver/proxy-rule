@@ -1,4 +1,4 @@
-#proxy_45
+#proxy_46
 DOMAIN-SUFFIX,obsproject.com
 DOMAIN-SUFFIX,pycon.org
 DOMAIN-SUFFIX,pypa.io
@@ -44,3 +44,4 @@ DOMAIN-SUFFIX,manhuapica.com
 DOMAIN-SUFFIX,gamer520.com
 DOMAIN-SUFFIX,flingtrainer.com
 DOMAIN-SUFFIX,91short.com
+PROCESS-NAME,com.studiobside.starMain
