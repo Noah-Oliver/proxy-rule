@@ -55,6 +55,7 @@ function main(config) {
   }
   config["dns"] = {
     enable: true,
+    listen: "0.0.0.0:1053",
     "cache-algorithm": "arc",
     ipv6: true,
     "enhanced-mode": "normal",
@@ -64,7 +65,10 @@ function main(config) {
   config["tun"] = {
     enable: true,
     stack: "system",
-    "dns-hijack": [],
+    "dns-hijack": [
+      "any:53",
+      "tcp://any:53"
+    ],
     "auto-route": true,
     "auto-detect-interface": true,
   }
