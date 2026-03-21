@@ -155,10 +155,10 @@ function main(config) {
   const regionMap = {
     "🇭🇰香港": /\b(🇭🇰|hk|hong\s?kong)\b|香港/i,
     "🇸🇬新加坡": /\b(🇸🇬|sg|singapore)\b|新加坡/i,
-    "🇹🇼台湾": /\b(🇹🇼|tw|taiwan|taipei)\b|台灣|台湾|台北/i,
-    "🇯🇵日本": /\b(🇯🇵|jp|jpn|japan|osaka)\b|日本|东京|大阪/i,
-    "🇰🇷韩国": /\b(🇰🇷|kr|kor|korea|seoul)\b|韩国|首尔/i,
-    "🇺🇸美国": /\b(🇺🇸|US|usa|america|united\s?states|los\s?angeles|san\s?francisco|seattle|chicago|washington)\b|美國|美国|洛杉矶|旧金山|西雅图|芝加哥|华盛顿/i
+    // "🇹🇼台湾": /\b(🇹🇼|tw|taiwan|taipei)\b|台灣|台湾|台北/i,
+    // "🇯🇵日本": /\b(🇯🇵|jp|jpn|japan|osaka)\b|日本|东京|大阪/i,
+    // "🇰🇷韩国": /\b(🇰🇷|kr|kor|korea|seoul)\b|韩国|首尔/i,
+    // "🇺🇸美国": /\b(🇺🇸|US|usa|america|united\s?states|los\s?angeles|san\s?francisco|seattle|chicago|washington)\b|美國|美国|洛杉矶|旧金山|西雅图|芝加哥|华盛顿/i
   }
 
   // 注入地区组的主组
