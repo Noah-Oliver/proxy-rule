@@ -9,25 +9,37 @@ const ENABLE = true;
 // 代理排除关键词
 const EXCLUDE_FILTER = "剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|地址|公告|版本|维护";
 
-// 地区分组映射
-const REGION_MAP = {
-  "香港": /\b(🇭🇰|hk|hong\s?kong)\b|香港/i,
-  "新加坡": /\b(🇸🇬|sg|singapore)\b|新加坡/i,
-  // "台湾": /\b(🇹🇼|tw|taiwan|taipei)\b|台灣|台湾|台北/i,
-  // "日本": /\b(🇯🇵|jp|jpn|japan|osaka)\b|日本|东京|大阪/i,
-  // "韩国": /\b(🇰🇷|kr|kor|korea|seoul)\b|韩国|首尔/i,
-  // "美国": /\b(🇺🇸|US|usa|america|united\s?states|los\s?angeles|san\s?francisco|seattle|chicago|washington)\b|美國|美国|洛杉矶|旧金山|西雅图|芝加哥|华盛顿/i
-}
-
-// 图标
-const regionIcons = {
-  "香港": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png",
-  "新加坡": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Singapore.png",
-  // "台湾": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Taiwan.png",
-  // "日本": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png",
-  // "美国": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png",
-  "其他": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Global.png"
-}
+// 地区配置
+const REGION_CONFIG = {
+  "香港": {
+    regex: /\b(🇭🇰|hk|hong\s?kong)\b|香港/i,
+    icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png"
+  },
+  "新加坡": {
+    regex: /\b(🇸🇬|sg|singapore)\b|新加坡/i,
+    icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Singapore.png"
+  },
+  // "台湾": {
+  //   regex: /\b(🇹🇼|tw|taiwan|taipei)\b|台灣|台湾|台北/i,
+  //   icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Taiwan.png"
+  // },
+  // "日本": {
+  //   regex: /\b(🇯🇵|jp|jpn|japan|osaka)\b|日本|东京|大阪/i,
+  //   icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png"
+  // },
+  // "韩国": {
+  //   regex: /\b(🇰🇷|kr|kor|korea|seoul)\b|韩国|首尔/i,
+  //   icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Korea.png"
+  // },
+  // "美国": {
+  //   regex: /\b(🇺🇸|US|usa|america|united\s?states|los\s?angeles|san\s?francisco|seattle|chicago|washington)\b|美國|美国|洛杉矶|旧金山|西雅图|芝加哥|华盛顿/i,
+  //   icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png"
+  // },
+  "其他": {
+    regex: /.*/i,
+    icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Global.png"
+  }
+};
 
 // 规则集通用配置
 const RULE_PROVIDER_COMMON = {
@@ -132,15 +144,12 @@ function createProxyGroup(name, type = "select", icon = "", proxies = []) {
 
 // 创建地区分组
 function createRegionGroups(filteredProxies) {
-  const regionBuckets = Object.fromEntries(
-    [...Object.keys(REGION_MAP), "其他"].map(key => [key, []])
-  );
+  const regionBuckets = Object.fromEntries(Object.keys(REGION_CONFIG).map(key => [key, []]));
 
-  // 分类节点
   filteredProxies.forEach(proxy => {
     let matched = false;
-    for (const [region, regex] of Object.entries(REGION_MAP)) {
-      if (regex.test(proxy.name)) {
+    for (const [region, cfg] of Object.entries(REGION_CONFIG)) {
+      if (region !== "其他" && cfg.regex.test(proxy.name)) {
         regionBuckets[region].push(proxy.name);
         matched = true;
         break;
@@ -149,14 +158,14 @@ function createRegionGroups(filteredProxies) {
     if (!matched) regionBuckets["其他"].push(proxy.name);
   });
 
-  // 返回活跃地区
-  return Object.keys(regionBuckets).filter(region => regionBuckets[region].length > 0)
-    .map(region => ({
+  return Object.entries(regionBuckets)
+    .filter(([_, proxies]) => proxies.length > 0)
+    .map(([region, proxies]) => ({
       name: region,
       type: "select",
-      proxies: regionBuckets[region],
+      proxies,
       ...PROXY_HEALTH_CHECK,
-      icon: regionIcons[region] || regionIcons["其他"]
+      icon: REGION_CONFIG[region].icon
     }));
 }
 
