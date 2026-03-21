@@ -15,6 +15,16 @@ const ruleProviderCommon = {
   //proxy: "国内",
 }
 
+// 代理组通用配置
+const proxyhealthcheck = {
+  url: "https://www.gstatic.com/generate_204",
+  interval: 0,
+  lazy: true,
+  timeout: 5000,
+  "max-failed-times": 5,
+  "expected-status": '200-299'
+}
+
 //添加节点
 const addproxies = [
   {
@@ -97,13 +107,9 @@ function main(config) {
   }
 
   // 合并 proxy-providers
-  if (config["proxy-providers"]) {
-    config["proxy-providers"] = {
-      ...config["proxy-providers"],
-      ...proxiesprovider
-    }
-  } else {
-    config["proxy-providers"] = { ...proxiesprovider }
+  config["proxy-providers"] = {
+    ...(config["proxy-providers"] || {}),
+    ...proxiesprovider
   }
 
   // 修改 proxy-providers
@@ -111,6 +117,11 @@ function main(config) {
     provider.override ??= {}
     provider.override.udp = true
     provider["exclude-filter"] = exclude_filter
+
+    provider["health-check"] = {
+      enable: true,
+      ...proxyhealthcheck
+    }
   })
 
   config["proxies"] = [...addproxies]
@@ -126,6 +137,7 @@ function main(config) {
       type: "select",
       "include-all-providers": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png",
+      ...proxyhealthcheck
     },
     {
       name: "解锁",
@@ -133,6 +145,7 @@ function main(config) {
       proxies: ["国外"],
       "include-all-providers": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png",
+      ...proxyhealthcheck
     },
     {
       name: "下载",
@@ -140,18 +153,21 @@ function main(config) {
       proxies: ["直连", "国外"],
       "include-all-providers": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png",
+      ...proxyhealthcheck
     },
     {
       name: "国内",
       type: "select",
       proxies: ["直连", "国外"],
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png",
+      ...proxyhealthcheck
     },
     {
       name: "广告",
       type: "select",
       proxies: ["阻止", "直连", "国外"],
       icon: "https://github.com/NB921/picture/raw/main/AD3.png",
+      ...proxyhealthcheck
     },
   ]
 
