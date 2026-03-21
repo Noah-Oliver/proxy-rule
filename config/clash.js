@@ -8,6 +8,26 @@ const enable = true
 //proxies排除节点
 const exclude_filter = "剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|地址|公告|版本|维护"
 
+// ====== 地区分组======
+const regionMap = {
+  "🇭🇰香港": /\b(🇭🇰|hk|hong\s?kong)\b|香港/i,
+  "🇸🇬新加坡": /\b(🇸🇬|sg|singapore)\b|新加坡/i,
+  // "🇹🇼台湾": /\b(🇹🇼|tw|taiwan|taipei)\b|台灣|台湾|台北/i,
+  // "🇯🇵日本": /\b(🇯🇵|jp|jpn|japan|osaka)\b|日本|东京|大阪/i,
+  // "🇰🇷韩国": /\b(🇰🇷|kr|kor|korea|seoul)\b|韩国|首尔/i,
+  // "🇺🇸美国": /\b(🇺🇸|US|usa|america|united\s?states|los\s?angeles|san\s?francisco|seattle|chicago|washington)\b|美國|美国|洛杉矶|旧金山|西雅图|芝加哥|华盛顿/i
+}
+
+// // 图标
+// const regionIcons = {
+//   "🇭🇰香港": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png",
+//   "🇸🇬新加坡": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Singapore.png",
+//   "🇹🇼台湾": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Taiwan.png",
+//   "🇯🇵日本": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png",
+//   "🇺🇸美国": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png",
+//   "🌏其他": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Global.png"
+// }
+
 // 规则集通用配置
 const ruleProviderCommon = {
   type: "http",
@@ -151,37 +171,17 @@ function main(config) {
     },
   ]
 
-  // ====== 地区分组======
-  const regionMap = {
-    "🇭🇰香港": /\b(🇭🇰|hk|hong\s?kong)\b|香港/i,
-    "🇸🇬新加坡": /\b(🇸🇬|sg|singapore)\b|新加坡/i,
-    // "🇹🇼台湾": /\b(🇹🇼|tw|taiwan|taipei)\b|台灣|台湾|台北/i,
-    // "🇯🇵日本": /\b(🇯🇵|jp|jpn|japan|osaka)\b|日本|东京|大阪/i,
-    // "🇰🇷韩国": /\b(🇰🇷|kr|kor|korea|seoul)\b|韩国|首尔/i,
-    // "🇺🇸美国": /\b(🇺🇸|US|usa|america|united\s?states|los\s?angeles|san\s?francisco|seattle|chicago|washington)\b|美國|美国|洛杉矶|旧金山|西雅图|芝加哥|华盛顿/i
-  }
-
   // 注入地区组的主组
   const targetGroups = ["国外", "解锁", "下载"];
 
-  // // 图标
-  // const regionIcons = {
-  //   "香港": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png",
-  //   "台湾": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Taiwan.png",
-  //   "日本": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png",
-  //   "美国": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png",
-  //   "新加坡": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Singapore.png",
-  //   "其他": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Global.png"
-  // }
-
-  // 2. 创建地区桶（利用 regionMap 的插入顺序）
+  // 创建地区桶
   const regionBuckets = {
     ...Object.fromEntries(
       Object.keys(regionMap).map(k => [k, []])
     ),
     "🌏其他": []
   };
-  // 3. 分类节点
+  // 分类节点
   for (const proxy of filteredSubProxies) {
     const name = proxy.name;
     let matched = false;
@@ -198,7 +198,7 @@ function main(config) {
     }
   }
 
-  // 4. 收集有节点的地区组
+  // 创建地区策略组
   const activeRegions = [];
   for (const region of [...Object.keys(regionMap), "🌏其他"]) {
     if (regionBuckets[region]?.length > 0) {
@@ -206,7 +206,6 @@ function main(config) {
     }
   }
 
-  // 5. 创建地区策略组
   for (const region of activeRegions) {
     const proxies = regionBuckets[region];
 
@@ -219,7 +218,7 @@ function main(config) {
     });
   }
 
-  // 6. 把地区组注入到主组中
+  // 把地区组注入到主组中
   for (const group of config["proxy-groups"]) {
     if (!targetGroups.includes(group.name)) continue;
 
