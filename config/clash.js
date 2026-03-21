@@ -15,7 +15,7 @@ const ruleProviderCommon = {
   //proxy: "国内",
 }
 
-// 代理组通用配置
+// 健康检测通用配置
 const proxyhealthcheck = {
   url: "https://www.gstatic.com/generate_204",
   interval: 0,
