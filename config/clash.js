@@ -121,10 +121,13 @@ function setBasicConfig(config) {
 
 // 创建代理组
 function createProxyGroup(name, type = "select", icon = "", proxies = []) {
-  const group = { name, type, ...PROXY_HEALTH_CHECK };
-  if (proxies.length > 0) group.proxies = proxies;
-  if (icon) group.icon = icon;
-  return group;
+  return {
+    name,
+    type,
+    ...PROXY_HEALTH_CHECK,
+    ...(proxies.length > 0 && { proxies }),
+    ...(icon && { icon })
+  };
 }
 
 // 创建地区分组
