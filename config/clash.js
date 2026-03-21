@@ -70,17 +70,15 @@ const RULE_PROVIDER_URLS = {
 
 // 过滤有效代理
 function filterAndModifyProxies(proxies, excludeRegex) {
-  return proxies.filter(proxy =>
-    proxy.name &&
-    !excludeRegex.test(proxy.name) &&
-    Object.values(proxy).every(value => value != null && value !== '')
-  ).map(proxy => ({ ...proxy, udp: true }));
+  return proxies
+    .filter(proxy => proxy.name && !excludeRegex.test(proxy.name) && Object.values(proxy).every(v => v != null && v !== ''))
+    .map(proxy => ({ ...proxy, udp: true }));
 }
 
 
 // 设置基本配置
 function setBasicConfig(config) {
-  Object.assign(config, {
+  const defaults = {
     "allow-lan": true,
     "mode": "rule",
     "log-level": "info",
@@ -117,41 +115,35 @@ function setBasicConfig(config) {
         QUIC: { ports: [443, 8443] },
       },
     }
-  });
+  };
+  Object.assign(config, defaults);
 }
 
 // 创建代理组
 function createProxyGroup(name, type = "select", icon = "", proxies = []) {
-  return {
-    name,
-    type,
-    ...(proxies.length > 0 && { proxies }),
-    ...(icon && { icon }),
-    ...PROXY_HEALTH_CHECK
-  };
+  const group = { name, type, ...PROXY_HEALTH_CHECK };
+  if (proxies.length > 0) group.proxies = proxies;
+  if (icon) group.icon = icon;
+  return group;
 }
 
 // 创建地区分组
 function createRegionGroups(filteredProxies) {
-  const regionBuckets = {
-    ...Object.fromEntries(Object.keys(REGION_MAP).map(key => [key, []])),
-    "其他": []
-  };
+  const regionBuckets = Object.fromEntries(
+    [...Object.keys(REGION_MAP), "其他"].map(key => [key, []])
+  );
 
   // 分类节点
   filteredProxies.forEach(proxy => {
-    const name = proxy.name;
     let matched = false;
     for (const [region, regex] of Object.entries(REGION_MAP)) {
-      if (regex.test(name)) {
-        regionBuckets[region].push(name);
+      if (regex.test(proxy.name)) {
+        regionBuckets[region].push(proxy.name);
         matched = true;
         break;
       }
     }
-    if (!matched) {
-      regionBuckets["其他"].push(name);
-    }
+    if (!matched) regionBuckets["其他"].push(proxy.name);
   });
 
   // 返回活跃地区
@@ -169,12 +161,10 @@ function createRegionGroups(filteredProxies) {
 function injectRegionsToGroups(proxyGroups, activeRegions, targetGroups) {
   proxyGroups.forEach(group => {
     if (!targetGroups.includes(group.name)) return;
-    group.proxies = group.proxies || [];
-    const newProxies = [
-      ...group.proxies.filter(proxy => !activeRegions.includes(proxy)),
+    group.proxies = [
+      ...(group.proxies || []).filter(p => !activeRegions.includes(p)),
       ...activeRegions
     ];
-    group.proxies = newProxies;
   });
 }
 
@@ -187,17 +177,20 @@ function setRuleProviders(config) {
   );
 }
 
+// 规则列表 - 提取为常量
+const RULES_LIST = [
+  "RULE-SET,download,下载",
+  "RULE-SET,unlock,解锁",
+  "RULE-SET,direct,国内",
+  "RULE-SET,proxy,国外",
+  "RULE-SET,AD,广告",
+  "RULE-SET,cn!,国外",
+  "MATCH,国内"
+];
+
 // 设置规则
 function setRules(config) {
-  config["rules"] = [
-    "RULE-SET,download,下载",
-    "RULE-SET,unlock,解锁",
-    "RULE-SET,direct,国内",
-    "RULE-SET,proxy,国外",
-    "RULE-SET,AD,广告",
-    "RULE-SET,cn!,国外",
-    "MATCH,国内"
-  ];
+  config["rules"] = RULES_LIST;
 }
 
 // 程序入口
