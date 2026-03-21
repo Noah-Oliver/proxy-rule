@@ -40,15 +40,22 @@ const addproxies = [
 
 // 程序入口
 function main(config) {
-  const proxyCount = config?.proxies?.length ?? 0;
-  config.proxies = config.proxies.filter(proxy => Object.values(proxy).every(value => value !== null && value !== undefined && value !== ''));
-  const proxyProviderCount =
-    typeof config?.["proxy-providers"] === "object"
-      ? Object.keys(config["proxy-providers"]).length
-      : 0;
-  if (proxyCount === 0 && proxyProviderCount === 0) {
-    throw new Error("配置文件中未找到任何代理");
-  }
+  if (!config.proxies) return config;
+  const excludeRegex = new RegExp(`(?:${exclude_filter})`, "i");
+
+  // 仅保留有效且不命中排除关键词的订阅节点
+  const filteredSubProxies = config.proxies.filter(p =>
+    p.name &&
+    !excludeRegex.test(p.name) &&
+    Object.values(p).every(v => v !== null && v !== undefined && v !== '')
+  );
+
+  // proxy属性修改
+  filteredSubProxies.forEach(proxy => {
+    proxy.udp = true;
+  });
+
+  config.proxies = [...addproxies, ...filteredSubProxies]
 
   config["allow-lan"] = true
   config["mode"] = "rule"
@@ -99,33 +106,6 @@ function main(config) {
     },
   }
 
-  const proxiesprovider = {
-    原本: {
-      type: "inline",
-      payload: config.proxies
-    }
-  }
-
-  // 合并 proxy-providers
-  config["proxy-providers"] = {
-    ...(config["proxy-providers"] || {}),
-    ...proxiesprovider
-  }
-
-  // 修改 proxy-providers
-  Object.values(config["proxy-providers"]).forEach(provider => {
-    provider.override ??= {}
-    provider.override.udp = true
-    provider["exclude-filter"] = exclude_filter
-
-    provider["health-check"] = {
-      enable: true,
-      ...proxyhealthcheck
-    }
-  })
-
-  config["proxies"] = [...addproxies]
-
   //总开关关闭时不处理策略组
   if (!enable) {
     return config;
@@ -135,7 +115,7 @@ function main(config) {
     {
       name: "国外",
       type: "select",
-      "include-all-providers": true,
+      // "include-all-providers": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png",
       ...proxyhealthcheck
     },
@@ -143,7 +123,7 @@ function main(config) {
       name: "解锁",
       type: "select",
       proxies: ["国外"],
-      "include-all-providers": true,
+      // "include-all-providers": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png",
       ...proxyhealthcheck
     },
@@ -151,7 +131,7 @@ function main(config) {
       name: "下载",
       type: "select",
       proxies: ["直连", "国外"],
-      "include-all-providers": true,
+      // "include-all-providers": true,
       icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png",
       ...proxyhealthcheck
     },
@@ -171,6 +151,89 @@ function main(config) {
     },
   ]
 
+  // ====== 地区分组======
+  const regionMap = {
+    "🇭🇰香港": /\b(🇭🇰|hk|hong\s?kong)\b|香港/i,
+    "🇸🇬新加坡": /\b(🇸🇬|sg|singapore)\b|新加坡/i,
+    "🇹🇼台湾": /\b(🇹🇼|tw|taiwan|taipei)\b|台灣|台湾|台北/i,
+    "🇯🇵日本": /\b(🇯🇵|jp|jpn|japan|osaka)\b|日本|东京|大阪/i,
+    "🇰🇷韩国": /\b(🇰🇷|kr|kor|korea|seoul)\b|韩国|首尔/i,
+    "🇺🇸美国": /\b(🇺🇸|US|usa|america|united\s?states|los\s?angeles|san\s?francisco|seattle|chicago|washington)\b|美國|美国|洛杉矶|旧金山|西雅图|芝加哥|华盛顿/i
+  }
+
+  // 注入地区组的主组
+  const targetGroups = ["国外", "解锁", "下载"];
+
+  // // 图标
+  // const regionIcons = {
+  //   "香港": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png",
+  //   "台湾": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Taiwan.png",
+  //   "日本": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png",
+  //   "美国": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png",
+  //   "新加坡": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Singapore.png",
+  //   "其他": "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Global.png"
+  // }
+
+  // 2. 创建地区桶（利用 regionMap 的插入顺序）
+  const regionBuckets = {
+    ...Object.fromEntries(
+      Object.keys(regionMap).map(k => [k, []])
+    ),
+    "🌏其他": []
+  };
+  // 3. 分类节点
+  for (const proxy of filteredSubProxies) {
+    const name = proxy.name;
+    let matched = false;
+
+    for (const [region, regex] of Object.entries(regionMap)) {
+      if (regex.test(name)) {
+        regionBuckets[region].push(name);
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) {
+      regionBuckets["🌏其他"].push(name);
+    }
+  }
+
+  // 4. 收集有节点的地区组
+  const activeRegions = [];
+  for (const region of [...Object.keys(regionMap), "🌏其他"]) {
+    if (regionBuckets[region]?.length > 0) {
+      activeRegions.push(region);
+    }
+  }
+
+  // 5. 创建地区策略组
+  for (const region of activeRegions) {
+    const proxies = regionBuckets[region];
+
+    config["proxy-groups"].push({
+      name: region,
+      type: "select",
+      proxies,
+      ...proxyhealthcheck,
+      // icon: regionIcons[region] || regionIcons["🌏其他"]
+    });
+  }
+
+  // 6. 把地区组注入到主组中
+  for (const group of config["proxy-groups"]) {
+    if (!targetGroups.includes(group.name)) continue;
+
+    group.proxies = group.proxies || [];
+
+    // 注入 activeRegions
+    // 避免重复
+    const newProxies = [
+      ...group.proxies.filter(n => !activeRegions.includes(n)),
+      ...activeRegions
+    ];
+
+    group.proxies = newProxies;
+  }
   // 覆盖原配置中的规则
   config["rule-providers"] = {
     "direct": {
