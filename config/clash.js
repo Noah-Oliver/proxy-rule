@@ -1,17 +1,16 @@
 
-/**
- * 整个脚本的总开关，在Mihomo Party使用的话，请保持为true
- * true = 启用
- * false = 禁用
- */
+// 整个脚本的总开关，在Mihomo Party使用的话，请保持为true
 const ENABLE = true;
 
 // 代理排除关键词
 const EXCLUDE_FILTER = "剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|地址|公告|版本|维护";
 
+// ==================== 是否启用地区分组 ====================
+const ENABLE_REGION_GROUP = true;
+
 // 地区组健康检查通用配置
 const REGION_HEALTH_CHECK = {
-  type: "url-test",
+  type: "select",
   // select：手动选择
   // url-test：自动选择
   //fallback：自动回退
@@ -243,7 +242,7 @@ function main(config) {
   if (!ENABLE) return config;
 
   // 创建主代理组
-  config["proxy-groups"] = [
+  const mainGroups = [
     createProxyGroup("国外", "select", "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png"),
     { ...createProxyGroup("解锁", "select", "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png"), proxies: ["国外"] },
     { ...createProxyGroup("下载", "select", "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png"), proxies: ["直连", "国外"] },
@@ -251,19 +250,41 @@ function main(config) {
     { ...createProxyGroup("广告", "select", "https://github.com/NB921/picture/raw/main/AD3.png"), proxies: ["阻止", "直连", "国外"] },
   ];
 
-  // 创建地区分组
-  const regionGroups = createRegionGroups(filteredProxies);
-  config["proxy-groups"].push(...regionGroups);
-
-  // 注入地区组到主组
+  // ── 根据开关决定如何填充节点 ───────────────────────────────
+  let regionGroups = [];
+  let activeRegions = [];
   const targetGroups = ["国外", "解锁", "下载"];
-  const activeRegions = regionGroups.map(group => group.name);
-  injectRegionsToGroups(config["proxy-groups"], activeRegions, targetGroups);
 
-  // 设置规则提供者
+  if (ENABLE_REGION_GROUP) {
+    // 创建地区分组
+    regionGroups = createRegionGroups(filteredProxies);
+    activeRegions = regionGroups.map(g => g.name);
+
+    // 把地区组加到 proxy-groups 列表
+    mainGroups.push(...regionGroups);
+
+    // 注入地区组名称 到 指定的主组
+    injectRegionsToGroups(mainGroups, activeRegions,targetGroups);
+  } else {
+    // 不使用地区组 → 直接把所有过滤后的节点塞进「国外」「解锁」「下载」
+    const allProxyNames = filteredProxies.map(p => p.name);
+
+    // 替换或设置 proxies
+    mainGroups.forEach(group => {
+      if (targetGroups.includes(group.name)) {
+        // 清空原有（如果有），填入全部节点
+        group.proxies = ["直连", ...allProxyNames];
+        // 如果你不想要「直连」排在最前面，也可以改成：
+        // group.proxies = [...allProxyNames, "直连"];
+      }
+    });
+  }
+
+  // 最终合并所有 proxy-groups
+  config["proxy-groups"] = mainGroups;
+
+  // 设置规则提供者 & 规则
   setRuleProviders(config);
-
-  // 设置规则
   setRules(config);
 
   return config;
