@@ -5,6 +5,7 @@ const SETTINGS = {
   EXCLUDE_FILTER: /剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|公告|版本|维护/i,
   //可选select, url-test, fallback, load-balance
   REGION_CHECK_TYPE: "select",
+  PROXY_GROUP_INTERVAL: 0  //单位S
 };
 
 // 地区配置
@@ -45,7 +46,6 @@ const REGION_CONFIG = {
 // 代理组健康检查通用配置
 const HEALTH_CHECK_CONFIG = {
   url: "https://www.gstatic.com/generate_204",
-  interval: 0,
   lazy: true,
   timeout: 5000,
   tolerance: 50,
@@ -164,9 +164,10 @@ function main(config) {
 
   // 5. 注入健康检查与合并策略组
   config["proxy-groups"] = finalGroups.map(group => ({
-    ...HEALTH_CHECK_CONFIG,
     ...group,
-    type: group.type || "select"
+    type: group.type || "select",
+    interval: SETTINGS.PROXY_GROUP_INTERVAL,
+    ...HEALTH_CHECK_CONFIG
   }));
 
   // 规则提供者配置
