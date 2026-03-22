@@ -3,7 +3,7 @@ const SETTINGS = {
   ENABLE: true,
   ENABLE_REGION_GROUP: true,
   // 新增：地区排序与启用配置。0开头表示禁用该地区组，数组顺序即为 UI 上的排序顺序
-  REGION_ORDER: ["香港", "新加坡", "0台湾", "0日本", "0韩国", "0美国", "其他", "0所有"],
+  REGION_ORDER: ["香港", "新加坡", "0台湾", "0日本", "0韩国", "0美国", "其他", "0所有1","0所有2"],
   //可选select, url-test, fallback, load-balance
   REGION_CHECK_TYPE: "select",
   PROXY_GROUP_INTERVAL: 0,  //单位S
@@ -201,23 +201,25 @@ function buildRegionGroups(proxies, allNames) {
     if (!isMatched) buckets["其他"].push(p.name);
   });
 
-  // 4. 处理“所有”桶
-  if (buckets["所有"]) buckets["所有"] = allNames;
-
   // 5. 组装结果
   return SETTINGS.REGION_ORDER
-    .map(item => (item.startsWith("0") ? null : item)) // 排除禁用项
+    .map(item => (item.startsWith("0") ? null : item))
     .filter(Boolean)
     .map(name => {
-      const nodes = buckets[name] || [];
-      const cfg = REGION_CONFIG[name];
+      // 核心逻辑：如果是“所有”开头的组，则使用全量节点和“所有”的图标
+      const isAllSeries = name.startsWith("所有");
+      const configKey = isAllSeries ? "所有" : name;
+      
+      const nodes = isAllSeries ? allNames : (buckets[name] || []);
+      const cfg = REGION_CONFIG[configKey];
+
       if (nodes.length === 0 || !cfg) return null;
 
       return {
-        name,
+        name: name,
         proxies: nodes,
         icon: cfg.icon,
-        type: ["其他", "所有"].includes(name) ? "select" : SETTINGS.REGION_CHECK_TYPE
+        type: (name === "其他" || isAllSeries) ? "select" : SETTINGS.REGION_CHECK_TYPE
       };
     })
     .filter(Boolean);
