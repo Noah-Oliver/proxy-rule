@@ -171,56 +171,49 @@ function main(config) {
 
 // 创建地区分组
 function buildRegionGroups(proxies, allNames) {
-  // 1. 解析 REGION_ORDER 状态
-  const activeConfigs = [];
-  const enabledNames = new Set();
+  // 提取启用的地区名并预处理
+  const activeOrder = SETTINGS.REGION_ORDER
+    .filter(name => !name.startsWith("0"))
+    .map(name => ({
+      originName: name,
+      configKey: name.startsWith("所有") ? "所有" : name
+    }));
 
-  SETTINGS.REGION_ORDER.forEach(item => {
-    const isEnabled = !item.startsWith("0");
-    const name = isEnabled ? item : item.substring(1);
-    if (isEnabled) {
-      enabledNames.add(name);
-      activeConfigs.push({ name, ...REGION_CONFIG[name] });
-    }
-  });
+  // 初始化容器
+  const buckets = Object.fromEntries(activeOrder.map(item => [item.originName, []]));
+  const otherNodes = [];
 
-  // 2. 初始化数据桶
-  const buckets = Object.fromEntries(Object.keys(REGION_CONFIG).map(k => [k, []]));
-
-  // 3. 节点分类（单次遍历，提高性能）
+  // 节点分类
   proxies.forEach(p => {
-    let isMatched = false;
-    for (const region of activeConfigs) {
-      if (region.name === "其他" || region.name === "所有") continue;
-      if (region.regex?.test(p.name)) {
-        buckets[region.name].push(p.name);
-        isMatched = true;
+    let matched = false;
+    for (const { originName, configKey } of activeOrder) {
+      if (originName === "其他" || originName.startsWith("所有")) continue;
+      
+      const reg = REGION_CONFIG[configKey]?.regex;
+      if (reg?.test(p.name)) {
+        buckets[originName].push(p.name);
+        matched = true;
         break;
       }
     }
-    if (!isMatched) buckets["其他"].push(p.name);
+    if (!matched) otherNodes.push(p.name);
   });
 
-  // 5. 组装结果
-  return SETTINGS.REGION_ORDER
-    .map(item => (item.startsWith("0") ? null : item))
-    .filter(Boolean)
-    .map(name => {
-      // 核心逻辑：如果是“所有”开头的组，则使用全量节点和“所有”的图标
-      const isAllSeries = name.startsWith("所有");
-      const configKey = isAllSeries ? "所有" : name;
-      
-      const nodes = isAllSeries ? allNames : (buckets[name] || []);
-      const cfg = REGION_CONFIG[configKey];
+  // 组装最终分组
+  return activeOrder.map(({ originName, configKey }) => {
+    const isAll = originName.startsWith("所有");
+    const isOther = originName === "其他";
+    
+    const nodes = isAll ? allNames : (isOther ? otherNodes : buckets[originName]);
+    const cfg = REGION_CONFIG[configKey];
 
-      if (nodes.length === 0 || !cfg) return null;
+    if (!nodes || nodes.length === 0 || !cfg) return null;
 
-      return {
-        name: name,
-        proxies: nodes,
-        icon: cfg.icon,
-        type: (name === "其他" || isAllSeries) ? "select" : SETTINGS.REGION_CHECK_TYPE
-      };
-    })
-    .filter(Boolean);
+    return {
+      name: originName,
+      proxies: nodes,
+      icon: cfg.icon,
+      type: (isOther || isAll) ? "select" : SETTINGS.REGION_CHECK_TYPE
+    };
+  }).filter(Boolean);
 }
