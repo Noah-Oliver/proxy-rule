@@ -2,13 +2,12 @@
 const SETTINGS = {
   ENABLE: true,
   ENABLE_REGION_GROUP: true,
-  // 新增：地区排序与启用配置。0开头表示禁用该地区组（但节点会被归入"其他"）
-  // 数组顺序即为 UI 上的排序顺序
+  // 新增：地区排序与启用配置。0开头表示禁用该地区组，数组顺序即为 UI 上的排序顺序
   REGION_ORDER: ["香港", "新加坡", "0台湾", "0日本", "0韩国", "0美国", "其他", "0所有"],
-  EXCLUDE_FILTER: /剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|公告|版本|维护/i,
   //可选select, url-test, fallback, load-balance
   REGION_CHECK_TYPE: "select",
-  PROXY_GROUP_INTERVAL: 0  //单位S
+  PROXY_GROUP_INTERVAL: 0,  //单位S
+  EXCLUDE_FILTER: /剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|公告|版本|维护/i,
 };
 
 // 地区配置
