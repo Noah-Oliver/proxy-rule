@@ -15,49 +15,42 @@ const REGION_HEALTH_CHECK = {
   // url-test：自动选择
   //fallback：自动回退
   //load-balance：负载均衡
-  url: "https://www.gstatic.com/generate_204",
-  interval: 0,
-  lazy: true,
-  timeout: 5000,
-  tolerance: 50,
-  "max-failed-times": 5,
-  "expected-status": '200-299',
-  strategy: "consistent-hashing"
-  // consistent-hashing：将相同的 目标地址 的请求分配给策略组内的同一个代理节点
-  // round-robin：将会把所有的请求分配给策略组内不同的代理节点
-  // sticky-sessions：将相同的 来源地址 和 目标地址 的请求分配给策略组内的同一个代理节点
 };
 
 // 地区配置
 const REGION_CONFIG = {
   "香港": {
     regex: /\b(🇭🇰|hk|hong\s?kong)\b|香港/i,
-    icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png"
+    icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Hongkong(3).png"
   },
   "新加坡": {
     regex: /\b(🇸🇬|sg|singapore)\b|新加坡/i,
-    icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Singapore.png"
+    icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/singapore.png"
   },
   // "台湾": {
   //   regex: /\b(🇹🇼|tw|taiwan|taipei)\b|台灣|台湾|台北/i,
-  //   icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Taiwan.png"
+  //   icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/taiwan(4).png"
   // },
   // "日本": {
   //   regex: /\b(🇯🇵|jp|jpn|japan|osaka)\b|日本|东京|大阪/i,
-  //   icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png"
+  //   icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Japan(2).png"
   // },
   // "韩国": {
   //   regex: /\b(🇰🇷|kr|kor|korea|seoul)\b|韩国|首尔/i,
-  //   icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Korea.png"
+  //   icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Korea(2).png"
   // },
   // "美国": {
   //   regex: /\b(🇺🇸|US|usa|america|united\s?states|los\s?angeles|san\s?francisco|seattle|chicago|washington)\b|美國|美国|洛杉矶|旧金山|西雅图|芝加哥|华盛顿/i,
-  //   icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png"
+  //   icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/US(2).png"
   // },
   "其他": {
     regex: /.*/i,
-    icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Global.png"
-  }
+    icon: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/color/Available.png"
+  },
+  // "所有": {
+  //   regex: /.*/i,
+  //   icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/05icon/quanqiu(3).png"
+  // }
 };
 
 // 规则集通用配置
@@ -72,8 +65,13 @@ const PROXY_HEALTH_CHECK = {
   interval: 0,
   lazy: true,
   timeout: 5000,
+  tolerance: 50,
   "max-failed-times": 5,
-  "expected-status": '200-299'
+  "expected-status": '200-299',
+  strategy: "consistent-hashing"
+  // consistent-hashing：将相同的 目标地址 的请求分配给策略组内的同一个代理节点
+  // round-robin：将会把所有的请求分配给策略组内不同的代理节点
+  // sticky-sessions：将相同的 来源地址 和 目标地址 的请求分配给策略组内的同一个代理节点
 };
 
 // 添加的固定节点
@@ -181,11 +179,12 @@ function createRegionGroups(filteredProxies) {
     .filter(([_, proxies]) => proxies.length > 0)
     .map(([region, proxies]) => ({
       ...REGION_HEALTH_CHECK, // 继承通用配置
+      ...PROXY_HEALTH_CHECK, // 继承代理组健康检查配置
       name: region,
       proxies,
       icon: REGION_CONFIG[region].icon,
       // 关键修改：如果是“其他”组，强制覆盖 type 为 select
-      type: region === "其他" ? "select" : REGION_HEALTH_CHECK.type 
+      type: region === "其他" ? "select" : REGION_HEALTH_CHECK.type
     }));
 }
 
