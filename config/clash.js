@@ -70,17 +70,6 @@ const ADDITIONAL_PROXIES = [
   }
 ];
 
-// 规则提供者配置
-const RULE_PROVIDER_COMMON = { type: "http", interval: 28800, behavior: "classical" };
-const RULE_PROVIDER_URLS = {
-  direct: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list", format: "text" },
-  download: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list", format: "text" },
-  proxy: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list", format: "text" },
-  unlock: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list", format: "text" },
-  AD: { url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml", format: "yaml" },
-  "cn!": { url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.mrs", behavior: "domain", format: "mrs" }
-};
-
 // 设置基本配置
 function setBasicConfig(config) {
   const defaults = {
@@ -124,31 +113,7 @@ function setBasicConfig(config) {
   Object.assign(config, defaults);
 }
 
-// 设置规则提供者
-function setRuleProviders(config) {
-  config["rule-providers"] = {};
-  for (const [key, cfg] of Object.entries(RULE_PROVIDER_URLS)) {
-    config["rule-providers"][key] = { ...RULE_PROVIDER_COMMON, ...cfg };
-  }
-}
-
-// 规则列表 - 提取为常量
-const RULES_LIST = [
-  "RULE-SET,download,下载",
-  "RULE-SET,unlock,解锁",
-  "RULE-SET,direct,国内",
-  "RULE-SET,proxy,国外",
-  "RULE-SET,AD,广告",
-  "RULE-SET,cn!,国外",
-  "MATCH,国内"
-];
-
-// 设置规则
-function setRules(config) {
-  config["rules"] = RULES_LIST;
-}
-
-// 程序入口
+// ==================== 核心逻辑 ====================
 function main(config) {
   if (!config?.proxies || !SETTINGS.ENABLE) return config;
 
@@ -168,9 +133,9 @@ function main(config) {
   const mainGroups = [
     { name: "国外", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png", proxies: [] },
     { name: "解锁", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png", proxies: ["国外"] },
-    { name: "下载", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png", proxies: ["DIRECT", "国外"] },
-    { name: "国内", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png", proxies: ["DIRECT", "国外"] },
-    { name: "广告", type: "select", icon: "https://nb921.github.io/cdn/IconSet/Color/Advertising.png", proxies: ["REJECT", "DIRECT", "国外"] }
+    { name: "下载", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png", proxies: ["直连", "国外"] },
+    { name: "国内", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png", proxies: ["直连", "国外"] },
+    { name: "广告", type: "select", icon: "https://nb921.github.io/cdn/IconSet/Color/Advertising.png", proxies: ["阻止", "直连", "国外"] }
   ];
 
   const targetGroups = ["国外", "解锁", "下载"];
@@ -180,9 +145,9 @@ function main(config) {
   if (SETTINGS.ENABLE_REGION_GROUP) {
     const regionGroups = buildRegionGroups(filteredProxies, allProxyNames);
     const regionNames = regionGroups.map(g => g.name);
-    
+
     finalGroups = [...mainGroups, ...regionGroups];
-    
+
     // 将地区组注入到核心组
     finalGroups.forEach(group => {
       if (targetGroups.includes(group.name)) {
@@ -204,9 +169,32 @@ function main(config) {
     type: group.type || "select"
   }));
 
+  // 规则提供者配置
+  const RULE_PROVIDER_COMMON = { type: "http", interval: 28800, behavior: "classical" };
+  const RULE_PROVIDER_URLS = {
+    direct: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list", format: "text" },
+    download: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list", format: "text" },
+    proxy: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list", format: "text" },
+    unlock: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list", format: "text" },
+    AD: { url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml", format: "yaml" },
+    "cn!": { url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.mrs", behavior: "domain", format: "mrs" }
+  };
+
   // 设置规则提供者 & 规则
-  setRuleProviders(config);
-  setRules(config);
+  config["rule-providers"] = {};
+  for (const [key, cfg] of Object.entries(RULE_PROVIDER_URLS)) {
+    config["rule-providers"][key] = { ...RULE_PROVIDER_COMMON, ...cfg };
+  }
+
+  config["rules"] = [
+    "RULE-SET,download,下载",
+    "RULE-SET,unlock,解锁",
+    "RULE-SET,direct,国内",
+    "RULE-SET,proxy,国外",
+    "RULE-SET,AD,广告",
+    "RULE-SET,cn!,国外",
+    "MATCH,国内"
+  ];
 
   return config;
 }
