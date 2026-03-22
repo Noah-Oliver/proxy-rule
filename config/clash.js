@@ -180,10 +180,12 @@ function createRegionGroups(filteredProxies) {
   return Object.entries(regionBuckets)
     .filter(([_, proxies]) => proxies.length > 0)
     .map(([region, proxies]) => ({
+      ...REGION_HEALTH_CHECK, // 继承通用配置
       name: region,
       proxies,
-      ...REGION_HEALTH_CHECK,
-      icon: REGION_CONFIG[region].icon
+      icon: REGION_CONFIG[region].icon,
+      // 关键修改：如果是“其他”组，强制覆盖 type 为 select
+      type: region === "其他" ? "select" : REGION_HEALTH_CHECK.type 
     }));
 }
 
