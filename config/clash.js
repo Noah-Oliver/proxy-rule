@@ -9,6 +9,26 @@ const ENABLE = true;
 // 代理排除关键词
 const EXCLUDE_FILTER = "剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|地址|公告|版本|维护";
 
+// 地区组健康检查通用配置
+const REGION_HEALTH_CHECK = {
+  type: "url-test",
+  // select：手动选择
+  // url-test：自动选择
+  //fallback：自动回退
+  //load-balance：负载均衡
+  url: "https://www.gstatic.com/generate_204",
+  interval: 0,
+  lazy: true,
+  timeout: 5000,
+  tolerance: 50,
+  "max-failed-times": 5,
+  "expected-status": '200-299',
+  strategy: "consistent-hashing"
+  // consistent-hashing：将相同的 目标地址 的请求分配给策略组内的同一个代理节点
+  // round-robin：将会把所有的请求分配给策略组内不同的代理节点
+  // sticky-sessions：将相同的 来源地址 和 目标地址 的请求分配给策略组内的同一个代理节点
+};
+
 // 地区配置
 const REGION_CONFIG = {
   "香港": {
@@ -47,7 +67,7 @@ const RULE_PROVIDER_COMMON = {
   interval: 28800,
 };
 
-// 健康检测通用配置
+// 代理组健康检查通用配置
 const PROXY_HEALTH_CHECK = {
   url: "https://www.gstatic.com/generate_204",
   interval: 0,
@@ -162,9 +182,8 @@ function createRegionGroups(filteredProxies) {
     .filter(([_, proxies]) => proxies.length > 0)
     .map(([region, proxies]) => ({
       name: region,
-      type: "select",
       proxies,
-      ...PROXY_HEALTH_CHECK,
+      ...REGION_HEALTH_CHECK,
       icon: REGION_CONFIG[region].icon
     }));
 }
