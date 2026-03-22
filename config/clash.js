@@ -264,18 +264,16 @@ function main(config) {
     mainGroups.push(...regionGroups);
 
     // 注入地区组名称 到 指定的主组
-    injectRegionsToGroups(mainGroups, activeRegions,targetGroups);
+    injectRegionsToGroups(mainGroups, activeRegions, targetGroups);
   } else {
-    // 不使用地区组 → 直接把所有过滤后的节点塞进「国外」「解锁」「下载」
+    // 不使用地区组 → 将所有过滤后的节点追加到原有节点之后
     const allProxyNames = filteredProxies.map(p => p.name);
 
-    // 替换或设置 proxies
     mainGroups.forEach(group => {
       if (targetGroups.includes(group.name)) {
-        // 清空原有（如果有），填入全部节点
-        group.proxies = ["直连", ...allProxyNames];
-        // 如果你不想要「直连」排在最前面，也可以改成：
-        // group.proxies = [...allProxyNames, "直连"];
+        // 使用 Set 是为了防止重复添加（例如 group.proxies 里本来就有某个节点）
+        // 如果确定没有重复，直接 group.proxies = [...group.proxies, ...allProxyNames] 也可以
+        group.proxies = [...new Set([...(group.proxies || []), ...allProxyNames])];
       }
     });
   }
