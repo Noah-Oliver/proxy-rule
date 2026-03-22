@@ -48,7 +48,6 @@ const REGION_CONFIG = {
     icon: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/color/Available.png"
   },
   // "所有": {
-  //   regex: /.*/i,
   //   icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/05icon/quanqiu(3).png"
   // }
 };
@@ -162,30 +161,49 @@ function createProxyGroup(name, type = "select", icon = "", proxies = []) {
 // 创建地区分组
 function createRegionGroups(filteredProxies) {
   const regionBuckets = Object.fromEntries(Object.keys(REGION_CONFIG).map(key => [key, []]));
+  const allProxyNames = filteredProxies.map(p => p.name);
 
   filteredProxies.forEach(proxy => {
     let matched = false;
+    // 遍历配置，但不处理“所有”和“其他”，它们有特殊逻辑
     for (const [region, cfg] of Object.entries(REGION_CONFIG)) {
-      if (region !== "其他" && cfg.regex.test(proxy.name)) {
+      if (region !== "其他" && region !== "所有" && cfg.regex.test(proxy.name)) {
         regionBuckets[region].push(proxy.name);
         matched = true;
         break;
       }
     }
-    if (!matched) regionBuckets["其他"].push(proxy.name);
+    // 如果没匹配到任何具体地区，丢进“其他”
+    if (!matched) {
+      regionBuckets["其他"].push(proxy.name);
+    }
   });
+
+  // 关键：强制给“所有”组赋值全部节点
+  if (regionBuckets.hasOwnProperty("所有")) {
+    regionBuckets["所有"] = allProxyNames;
+  }
 
   return Object.entries(regionBuckets)
     .filter(([_, proxies]) => proxies.length > 0)
-    .map(([region, proxies]) => ({
-      ...REGION_HEALTH_CHECK, // 继承通用配置
-      ...PROXY_HEALTH_CHECK, // 继承代理组健康检查配置
-      name: region,
-      proxies,
-      icon: REGION_CONFIG[region].icon,
-      // 关键修改：如果是“其他”组，强制覆盖 type 为 select
-      type: region === "其他" ? "select" : REGION_HEALTH_CHECK.type
-    }));
+    .map(([region, proxies]) => {
+      // 默认使用全局配置
+      let finalType = REGION_HEALTH_CHECK.type;
+
+      // 关键修改：如果是“其他”或“所有”组，强制覆盖 type 为 select
+      if (region === "其他" || region === "所有") {
+        finalType = "select";
+      }
+
+      return {
+        ...REGION_HEALTH_CHECK,
+        ...PROXY_HEALTH_CHECK,
+        name: region,
+        proxies,
+        icon: REGION_CONFIG[region].icon,
+        type: finalType
+      };
+    });
 }
 
 // 注入地区组到主组
