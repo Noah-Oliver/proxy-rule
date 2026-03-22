@@ -9,13 +9,11 @@ const EXCLUDE_FILTER = "剩余|流量|套餐|到期|使用|文档|最新|网址|
 const ENABLE_REGION_GROUP = true;
 
 // 地区组健康检查通用配置
-const REGION_HEALTH_CHECK = {
-  type: "select",
-  // select：手动选择
-  // url-test：自动选择
-  //fallback：自动回退
-  //load-balance：负载均衡
-};
+const REGION_HEALTH_CHECK = { type: "select" };
+// select：手动选择
+// url-test：自动选择
+//fallback：自动回退
+//load-balance：负载均衡
 
 // 地区配置
 const REGION_CONFIG = {
@@ -52,12 +50,6 @@ const REGION_CONFIG = {
   // }
 };
 
-// 规则集通用配置
-const RULE_PROVIDER_COMMON = {
-  type: "http",
-  interval: 28800,
-};
-
 // 代理组健康检查通用配置
 const PROXY_HEALTH_CHECK = {
   url: "https://www.gstatic.com/generate_204",
@@ -65,7 +57,7 @@ const PROXY_HEALTH_CHECK = {
   lazy: true,
   timeout: 5000,
   tolerance: 50,
-  "max-failed-times": 5,
+  "max-failed-times": 3,
   "expected-status": '200-299',
   strategy: "consistent-hashing"
   // consistent-hashing：将相同的 目标地址 的请求分配给策略组内的同一个代理节点
@@ -86,13 +78,14 @@ const ADDITIONAL_PROXIES = [
   }
 ];
 
-// 规则提供者URL配置
+// 规则提供者配置
+const RULE_PROVIDER_COMMON = { type: "http", interval: 28800, behavior: "classical" };
 const RULE_PROVIDER_URLS = {
-  direct: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list", behavior: "classical", format: "text" },
-  download: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list", behavior: "classical", format: "text" },
-  proxy: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list", behavior: "classical", format: "text" },
-  unlock: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list", behavior: "classical", format: "text" },
-  AD: { url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml", behavior: "classical", format: "yaml" },
+  direct: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list", format: "text" },
+  download: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list", format: "text" },
+  proxy: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list", format: "text" },
+  unlock: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list", format: "text" },
+  AD: { url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml", format: "yaml" },
   "cn!": { url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.mrs", behavior: "domain", format: "mrs" }
 };
 
@@ -145,17 +138,6 @@ function setBasicConfig(config) {
     }
   };
   Object.assign(config, defaults);
-}
-
-// 创建代理组
-function createProxyGroup(name, type = "select", icon = "", proxies = []) {
-  return {
-    name,
-    type,
-    ...PROXY_HEALTH_CHECK,
-    ...(proxies.length > 0 && { proxies }),
-    ...(icon && { icon })
-  };
 }
 
 // 创建地区分组
@@ -219,11 +201,10 @@ function injectRegionsToGroups(proxyGroups, activeRegions, targetGroups) {
 
 // 设置规则提供者
 function setRuleProviders(config) {
-  config["rule-providers"] = Object.fromEntries(
-    Object.entries(RULE_PROVIDER_URLS).map(([key, cfg]) => [
-      key, { ...RULE_PROVIDER_COMMON, ...cfg }
-    ])
-  );
+  config["rule-providers"] = {};
+  for (const [key, cfg] of Object.entries(RULE_PROVIDER_URLS)) {
+    config["rule-providers"][key] = { ...RULE_PROVIDER_COMMON, ...cfg };
+  }
 }
 
 // 规则列表 - 提取为常量
@@ -244,12 +225,13 @@ function setRules(config) {
 
 // 程序入口
 function main(config) {
-  if (!config.proxies) return config;
+  if (!config?.proxies || !ENABLE) return config;
 
   const excludeRegex = new RegExp(`(?:${EXCLUDE_FILTER})`, "i");
 
   // 过滤有效代理
   const filteredProxies = filterAndModifyProxies(config.proxies, excludeRegex);
+  const allProxyNames = filteredProxies.map(p => p.name);
 
   // 添加固定节点
   config.proxies = [...ADDITIONAL_PROXIES, ...filteredProxies];
@@ -257,48 +239,43 @@ function main(config) {
   // 设置基本配置
   setBasicConfig(config);
 
-  // 如果总开关关闭，不处理策略组
-  if (!ENABLE) return config;
-
-  // 创建主代理组
+  // 3. 构建核心策略组
   const mainGroups = [
-    createProxyGroup("国外", "select", "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png"),
-    { ...createProxyGroup("解锁", "select", "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png"), proxies: ["国外"] },
-    { ...createProxyGroup("下载", "select", "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png"), proxies: ["直连", "国外"] },
-    { ...createProxyGroup("国内", "select", "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png"), proxies: ["直连", "国外"] },
-    { ...createProxyGroup("广告", "select", "https://github.com/NB921/picture/raw/main/AD3.png"), proxies: ["阻止", "直连", "国外"] },
+    { name: "国外", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png", proxies: [] },
+    { name: "解锁", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png", proxies: ["国外"] },
+    { name: "下载", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png", proxies: ["DIRECT", "国外"] },
+    { name: "国内", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png", proxies: ["DIRECT", "国外"] },
+    { name: "广告", type: "select", icon: "https://nb921.github.io/cdn/IconSet/Color/Advertising.png", proxies: ["REJECT", "DIRECT", "国外"] }
   ];
 
-  // ── 根据开关决定如何填充节点 ───────────────────────────────
-  let regionGroups = [];
-  let activeRegions = [];
   const targetGroups = ["国外", "解锁", "下载"];
 
+  // 4. 处理地区分组
   if (ENABLE_REGION_GROUP) {
-    // 创建地区分组
-    regionGroups = createRegionGroups(filteredProxies);
-    activeRegions = regionGroups.map(g => g.name);
+    const regionGroups = createRegionGroups(filteredProxies);
+    const regionNames = regionGroups.map(g => g.name);
 
-    // 把地区组加到 proxy-groups 列表
-    mainGroups.push(...regionGroups);
+    // 合并组
+    config["proxy-groups"] = [...mainGroups, ...regionGroups];
 
-    // 注入地区组名称 到 指定的主组
-    injectRegionsToGroups(mainGroups, activeRegions, targetGroups);
-  } else {
-    // 不使用地区组 → 将所有过滤后的节点追加到原有节点之后
-    const allProxyNames = filteredProxies.map(p => p.name);
-
-    mainGroups.forEach(group => {
+    // 注入地区名称到主组
+    config["proxy-groups"].forEach(group => {
       if (targetGroups.includes(group.name)) {
-        // 使用 Set 是为了防止重复添加（例如 group.proxies 里本来就有某个节点）
-        // 如果确定没有重复，直接 group.proxies = [...group.proxies, ...allProxyNames] 也可以
-        group.proxies = [...new Set([...(group.proxies || []), ...allProxyNames])];
+        group.proxies = [...new Set([...group.proxies, ...regionNames])];
+      }
+    });
+  } else {
+    config["proxy-groups"] = mainGroups;
+    config["proxy-groups"].forEach(group => {
+      if (targetGroups.includes(group.name)) {
+        group.proxies = [...new Set([...group.proxies, ...allProxyNames])];
       }
     });
   }
 
-  // 最终合并所有 proxy-groups
-  config["proxy-groups"] = mainGroups;
+  // 5. 注入通用健康检查属性
+  config["proxy-groups"].forEach(g => Object.assign(g, PROXY_HEALTH_CHECK, { type: g.type || "select" }));
+
 
   // 设置规则提供者 & 规则
   setRuleProviders(config);
