@@ -2,6 +2,9 @@
 const SETTINGS = {
   ENABLE: true,
   ENABLE_REGION_GROUP: true,
+  // 新增：地区排序与启用配置。0开头表示禁用该地区组（但节点会被归入"其他"）
+  // 数组顺序即为 UI 上的排序顺序
+  REGION_ORDER: ["香港", "新加坡", "0台湾", "0日本", "0韩国", "0美国", "其他", "0所有"],
   EXCLUDE_FILTER: /剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|公告|版本|维护/i,
   //可选select, url-test, fallback, load-balance
   REGION_CHECK_TYPE: "select",
@@ -18,29 +21,29 @@ const REGION_CONFIG = {
     regex: /\b(🇸🇬|sg|singapore)\b|新加坡/i,
     icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/singapore.png"
   },
-  // "台湾": {
-  //   regex: /\b(🇹🇼|tw|taiwan|taipei)\b|台灣|台湾|台北/i,
-  //   icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/taiwan(4).png"
-  // },
-  // "日本": {
-  //   regex: /\b(🇯🇵|jp|jpn|japan|osaka)\b|日本|东京|大阪/i,
-  //   icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Japan(2).png"
-  // },
-  // "韩国": {
-  //   regex: /\b(🇰🇷|kr|kor|korea|seoul)\b|韩国|首尔/i,
-  //   icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Korea(2).png"
-  // },
-  // "美国": {
-  //   regex: /\b(🇺🇸|US|usa|america|united\s?states|los\s?angeles|san\s?francisco|seattle|chicago|washington)\b|美國|美国|洛杉矶|旧金山|西雅图|芝加哥|华盛顿/i,
-  //   icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/US(2).png"
-  // },
+  "台湾": {
+    regex: /\b(🇹🇼|tw|taiwan|taipei)\b|台灣|台湾|台北/i,
+    icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/taiwan(4).png"
+  },
+  "日本": {
+    regex: /\b(🇯🇵|jp|jpn|japan|osaka)\b|日本|东京|大阪/i,
+    icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Japan(2).png"
+  },
+  "韩国": {
+    regex: /\b(🇰🇷|kr|kor|korea|seoul)\b|韩国|首尔/i,
+    icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Korea(2).png"
+  },
+  "美国": {
+    regex: /\b(🇺🇸|US|usa|america|united\s?states|los\s?angeles|san\s?francisco|seattle|chicago|washington)\b|美國|美国|洛杉矶|旧金山|西雅图|芝加哥|华盛顿/i,
+    icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/US(2).png"
+  },
   "其他": {
     regex: /.*/i,
     icon: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/color/Available.png"
   },
-  // "所有": {
-  //   icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/05icon/quanqiu(3).png"
-  // }
+  "所有": {
+    icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/05icon/quanqiu(3).png"
+  }
 };
 
 // 代理组健康检查通用配置
@@ -201,29 +204,69 @@ function main(config) {
 }
 
 // 创建地区分组
+// 修改后的创建地区分组函数
 function buildRegionGroups(proxies, allNames) {
-  const buckets = Object.fromEntries(Object.keys(REGION_CONFIG).map(k => [k, []]));
+  // 1. 预处理 REGION_ORDER，提取出真正“启用”的组及其原始名称
+  // activeRegionMap 存储 { 原始名称: 是否启用 }
+  const activeRegionMap = {};
+  const orderList = []; // 存储最终显示的顺序（不含前缀0的名称）
 
-  proxies.forEach(p => {
-    let matched = false;
-    for (const [name, cfg] of Object.entries(REGION_CONFIG)) {
-      if (name !== "其他" && name !== "所有" && cfg.regex?.test(p.name)) {
-        buckets[name].push(p.name);
-        matched = true;
-        break;
-      }
+  SETTINGS.REGION_ORDER.forEach(item => {
+    const isEnabled = !item.startsWith("0");
+    const realName = isEnabled ? item : item.substring(1);
+    activeRegionMap[realName] = isEnabled;
+    if (isEnabled) {
+      orderList.push(realName);
     }
-    if (!matched) buckets["其他"].push(p.name);
   });
 
-  if (buckets["所有"]) buckets["所有"] = allNames;
+  // 2. 初始化桶，仅为配置中存在的地区创建桶
+  const buckets = Object.fromEntries(Object.keys(REGION_CONFIG).map(k => [k, []]));
 
-  return Object.entries(buckets)
-    .filter(([_, list]) => list.length > 0)
-    .map(([name, list]) => ({
-      name,
-      proxies: list,
-      icon: REGION_CONFIG[name].icon,
-      type: (name === "其他" || name === "所有") ? "select" : SETTINGS.REGION_CHECK_TYPE
-    }));
+  // 3. 将节点分配到桶中
+  proxies.forEach(p => {
+    let matched = false;
+    // 遍历 REGION_CONFIG 进行正则匹配
+    for (const [name, cfg] of Object.entries(REGION_CONFIG)) {
+      // 排除特殊保留组，且该组在配置中必须是“启用”状态才进行匹配
+      if (name !== "其他" && name !== "所有" && activeRegionMap[name] === true) {
+        if (cfg.regex?.test(p.name)) {
+          buckets[name].push(p.name);
+          matched = true;
+          break;
+        }
+      }
+    }
+    // 如果没有匹配到任何“启用”的地区组，则归入“其他”
+    if (!matched) {
+      buckets["其他"].push(p.name);
+    }
+  });
+
+  // 4. 特殊处理“所有”组
+  if (buckets["所有"]) {
+    buckets["所有"] = allNames;
+  }
+
+  // 5. 根据 REGION_ORDER 的顺序构建最终的分组对象
+  const result = [];
+  
+  // 按照 orderList (即 REGION_ORDER 中未加0的顺序) 迭代
+  orderList.forEach(name => {
+    const list = buckets[name];
+    const cfg = REGION_CONFIG[name];
+
+    // 只有当组内有节点且 REGION_CONFIG 中有对应配置时才创建
+    if (list && list.length > 0 && cfg) {
+      result.push({
+        name: name,
+        proxies: list,
+        icon: cfg.icon,
+        // 如果是“其他”或“所有”，强制使用 select，否则使用配置的 check_type
+        type: (name === "其他" || name === "所有") ? "select" : SETTINGS.REGION_CHECK_TYPE
+      });
+    }
+  });
+
+  return result;
 }
