@@ -3,7 +3,7 @@ const SETTINGS = {
   ENABLE: true,
   ENABLE_REGION_GROUP: true,
   // 新增：地区排序与启用配置。0开头表示禁用该地区组，数组顺序即为 UI 上的排序顺序
-  REGION_ORDER: ["香港", "新加坡", "0台湾", "0日本", "0韩国", "0美国", "其他", "0所有1","0所有2"],
+  REGION_ORDER: ["香港", "新加坡", "0台湾", "0日本", "0韩国", "0美国", "其他", "0所有1", "0所有2"],
   //可选select, url-test, fallback, load-balance
   REGION_CHECK_TYPE: "select",
   PROXY_GROUP_INTERVAL: 0,  //单位S
@@ -61,7 +61,7 @@ function setBasicConfig(config) {
       enable: true,
       "cache-algorithm": "arc",
       ipv6: true,
-      "enhanced-mode": "redir-host"
+      "enhanced-mode": "normal",
     },
     "tun": {
       enable: false,
@@ -71,7 +71,7 @@ function setBasicConfig(config) {
       "auto-detect-interface": true,
     },
     "sniffer": {
-      enable: false,
+      enable: true,
       "force-dns-mapping": true,
       "parse-pure-ip": true,
       "override-destination": true,
@@ -188,7 +188,7 @@ function buildRegionGroups(proxies, allNames) {
     let matched = false;
     for (const { originName, configKey } of activeOrder) {
       if (originName === "其他" || originName.startsWith("所有")) continue;
-      
+
       const reg = REGION_CONFIG[configKey]?.regex;
       if (reg?.test(p.name)) {
         buckets[originName].push(p.name);
@@ -203,7 +203,7 @@ function buildRegionGroups(proxies, allNames) {
   return activeOrder.map(({ originName, configKey }) => {
     const isAll = originName.startsWith("所有");
     const isOther = originName === "其他";
-    
+
     const nodes = isAll ? allNames : (isOther ? otherNodes : buckets[originName]);
     const cfg = REGION_CONFIG[configKey];
 
