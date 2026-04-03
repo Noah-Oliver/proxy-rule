@@ -62,7 +62,8 @@ function setBasicConfig(config) {
       listen: "0.0.0.0:1053",
       "cache-algorithm": "arc",
       ipv6: true,
-      "enhanced-mode": "normal",
+      "enhanced-mode": "redir-host",
+      "default-nameserver": ["119.29.29.29", "223.5.5.5"],
     },
     "tun": {
       enable: false,
@@ -72,7 +73,7 @@ function setBasicConfig(config) {
       "auto-detect-interface": true,
     },
     "sniffer": {
-      enable: true,
+      enable: false,
       "force-dns-mapping": true,
       "parse-pure-ip": true,
       "override-destination": true,
