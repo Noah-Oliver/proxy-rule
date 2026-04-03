@@ -63,7 +63,7 @@ function setBasicConfig(config) {
       "cache-algorithm": "arc",
       ipv6: true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["119.29.29.29", "223.5.5.5"],
+      "default-nameserver": ["dhcp://system"],
     },
     "tun": {
       enable: false,
