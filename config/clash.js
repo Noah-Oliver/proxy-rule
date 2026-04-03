@@ -38,7 +38,7 @@ const HEALTH_CHECK_CONFIG = {
 
 // 添加的固定节点
 const ADDITIONAL_PROXIES = [
-  { name: "直连", type: "direct", udp: true },
+  { name: "直连", type: "direct", "ip-version": "ipv4-prefer", udp: true },
   { name: "阻止", type: "reject" }
 ];
 
@@ -59,6 +59,7 @@ function setBasicConfig(config) {
     },
     "dns": {
       enable: true,
+      listen: "0.0.0.0:1053",
       "cache-algorithm": "arc",
       ipv6: true,
       "enhanced-mode": "normal",
@@ -91,7 +92,7 @@ function main(config) {
 
   const filteredProxies = config.proxies
     .filter(p => p.name && !SETTINGS.EXCLUDE_FILTER.test(p.name) && Object.values(p).every(v => v != null && v !== ''))
-    .map(p => ({ ...p, udp: true }));
+    .map(p => ({ ...p, udp: true, "ip-version": "ipv4-prefer" }));
 
   const allProxyNames = filteredProxies.map(p => p.name);
 
