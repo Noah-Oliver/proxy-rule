@@ -1,6 +1,5 @@
 // ==================== 配置中心 ====================
 const SETTINGS = {
-  ENABLE: true,
   ENABLE_REGION_GROUP: true,
   // 新增：地区排序与启用配置。0开头表示禁用该地区组，数组顺序即为 UI 上的排序顺序
   REGION_ORDER: ["香港", "新加坡", "0台湾", "0日本", "0韩国", "0美国", "其他", "0所有1", "0所有2"],
@@ -49,7 +48,7 @@ function setBasicConfig(config) {
     "mode": "rule",
     "log-level": "info",
     "ipv6": true,
-    "tcp-concurrent": true,
+    "tcp-concurrent": false,
     "unified-delay": true,
     "external-controller": "127.0.0.1:9090",
     "secret": "mihomo-party-clash",
@@ -89,7 +88,7 @@ function setBasicConfig(config) {
 
 // ==================== 核心逻辑 ====================
 function main(config) {
-  if (!config?.proxies || !SETTINGS.ENABLE) return config;
+  if (!config?.proxies) return config;
 
   const filteredProxies = config.proxies
     .filter(p => p.name && !SETTINGS.EXCLUDE_FILTER.test(p.name) && Object.values(p).every(v => v != null && v !== ''))
