@@ -37,7 +37,7 @@ const HEALTH_CHECK_CONFIG = {
 
 // 添加的固定节点
 const ADDITIONAL_PROXIES = [
-  { name: "直连", type: "direct", "ip-version": "ipv4-prefer", udp: true },
+  { name: "直连", type: "direct", udp: true },
   { name: "阻止", type: "reject" }
 ];
 
@@ -48,7 +48,7 @@ function setBasicConfig(config) {
     "mode": "rule",
     "log-level": "info",
     "ipv6": true,
-    "tcp-concurrent": false,
+    "tcp-concurrent": true,
     "unified-delay": true,
     "external-controller": "127.0.0.1:9090",
     "secret": "mihomo-party-clash",
@@ -62,10 +62,10 @@ function setBasicConfig(config) {
       "cache-algorithm": "arc",
       ipv6: true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["dhcp://system"],
+      "default-nameserver": ["119.29.29.29"],
     },
     "tun": {
-      enable: false,
+      enable: true,
       stack: "system",
       "dns-hijack": ["any:53", "tcp://any:53"],
       "auto-route": true,
@@ -92,7 +92,7 @@ function main(config) {
 
   const filteredProxies = config.proxies
     .filter(p => p.name && !SETTINGS.EXCLUDE_FILTER.test(p.name) && Object.values(p).every(v => v != null && v !== ''))
-    .map(p => ({ ...p, udp: true, "ip-version": "ipv4-prefer" }));
+    .map(p => ({ ...p, udp: true }));
 
   const allProxyNames = filteredProxies.map(p => p.name);
 
