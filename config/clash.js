@@ -48,7 +48,7 @@ function setBasicConfig(config) {
     "mode": "rule",
     "log-level": "info",
     "ipv6": true,
-    "tcp-concurrent": true,
+    "tcp-concurrent": false,
     "unified-delay": true,
     "external-controller": "127.0.0.1:9090",
     "secret": "mihomo-party-clash",
