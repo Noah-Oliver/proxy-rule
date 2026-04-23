@@ -65,6 +65,7 @@ function setBasicConfig(config) {
       "enhanced-mode": "redir-host",
       "default-nameserver": ["119.29.29.29"],
       nameserver: ["119.29.29.29"],
+      "proxy-server-nameserver": ["119.29.29.29"],
     },
     "tun": {
       enable: true,
