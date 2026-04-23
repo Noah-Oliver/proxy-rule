@@ -6,7 +6,7 @@ const SETTINGS = {
   //可选select, url-test, fallback, load-balance
   REGION_CHECK_TYPE: "select",
   PROXY_GROUP_INTERVAL: 0,  //单位S
-  EXCLUDE_FILTER: /剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|公告|版本|维护/i,
+  EXCLUDE_FILTER: /剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|公告|版本|维护|防失联|返利|(移动夜间推荐)|正常计费区/i,
 };
 
 // 地区配置
