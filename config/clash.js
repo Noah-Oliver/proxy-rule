@@ -61,26 +61,20 @@ function setBasicConfig(config) {
       listen: "0.0.0.0:1053",
       "cache-algorithm": "arc",
       ipv6: true,
+      "respect-rules": true,
       "enhanced-mode": "redir-host",
       "default-nameserver": ["119.29.29.29"],
+      nameserver: ["119.29.29.29"],
     },
     "tun": {
       enable: true,
       stack: "system",
-      "dns-hijack": ["any:53", "tcp://any:53"],
+      "dns-hijack": ["any:53"],
       "auto-route": true,
       "auto-detect-interface": true,
     },
     "sniffer": {
       enable: false,
-      "force-dns-mapping": true,
-      "parse-pure-ip": true,
-      "override-destination": true,
-      sniff: {
-        HTTP: { ports: [80, '8080-8880'] },
-        TLS: { ports: [443, 8443] },
-        QUIC: { ports: [443, 8443] },
-      },
     }
   };
   Object.assign(config, defaults);
