@@ -103,7 +103,7 @@ function main(config) {
     { name: "解锁", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png", proxies: ["国外"] },
     { name: "下载", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png", proxies: ["直连", "国外"] },
     { name: "国内", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png", proxies: ["直连", "国外"] },
-    { name: "广告", type: "select", icon: "https://nb921.github.io/cdn/IconSet/Color/Advertising.png", proxies: ["阻止", "直连", "国外"] }
+    { name: "广告", type: "select", icon: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/color/adblock.png", proxies: ["阻止", "直连", "国外"] }
   ];
 
   const targetGroups = ["国外", "解锁", "下载"];
