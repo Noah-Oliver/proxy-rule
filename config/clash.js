@@ -9,6 +9,44 @@ const SETTINGS = {
   EXCLUDE_FILTER: /剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址|客服|群|TG|公告|版本|维护|防失联|返利|(移动夜间推荐)|正常计费区/i,
 };
 
+// 设置基本配置
+function setBasicConfig(config) {
+  const defaults = {
+    "allow-lan": true,
+    "mode": "rule",
+    "log-level": "info",
+    "ipv6": true,
+    "tcp-concurrent": true,
+    "unified-delay": true,
+    "external-controller": "127.0.0.1:9090",
+    "secret": "",
+    "profile": {
+      "store-selected": true,
+      "store-fake-ip": false,
+    },
+    "dns": {
+      enable: true,
+      listen: "0.0.0.0:1053",
+      "cache-algorithm": "lru",
+      ipv6: true,
+      "enhanced-mode": "redir-host",
+      "default-nameserver": ["119.29.29.29", "8.8.8.8"],
+      nameserver: ["119.29.29.29", "8.8.8.8"],
+    },
+    "tun": {
+      enable: true,
+      stack: "system",
+      "dns-hijack": ["any:53"],
+      "auto-route": true,
+      "auto-detect-interface": true,
+    },
+    "sniffer": {
+      enable: false,
+    }
+  };
+  Object.assign(config, defaults);
+}
+
 // 地区配置
 const REGION_CONFIG = {
   "香港": { regex: /\b(🇭🇰|hk|hong\s?kong)\b|香港/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Hongkong(3).png" },
@@ -40,46 +78,6 @@ const ADDITIONAL_PROXIES = [
   { name: "直连", type: "direct", udp: true },
   { name: "阻止", type: "reject" }
 ];
-
-// 设置基本配置
-function setBasicConfig(config) {
-  const defaults = {
-    "allow-lan": true,
-    "mode": "rule",
-    "log-level": "info",
-    "ipv6": true,
-    "tcp-concurrent": false,
-    "unified-delay": true,
-    "external-controller": "127.0.0.1:9090",
-    "secret": "mihomo-party-clash",
-    "profile": {
-      "store-selected": true,
-      "store-fake-ip": false,
-    },
-    "dns": {
-      enable: true,
-      listen: "0.0.0.0:1053",
-      "cache-algorithm": "arc",
-      ipv6: true,
-      "respect-rules": true,
-      "enhanced-mode": "redir-host",
-      "default-nameserver": ["119.29.29.29"],
-      nameserver: ["119.29.29.29"],
-      "proxy-server-nameserver": ["119.29.29.29"],
-    },
-    "tun": {
-      enable: true,
-      stack: "system",
-      "dns-hijack": ["any:53"],
-      "auto-route": true,
-      "auto-detect-interface": true,
-    },
-    "sniffer": {
-      enable: false,
-    }
-  };
-  Object.assign(config, defaults);
-}
 
 // ==================== 核心逻辑 ====================
 function main(config) {
