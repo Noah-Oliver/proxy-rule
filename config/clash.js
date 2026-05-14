@@ -99,12 +99,11 @@ function main(config) {
   const mainGroups = [
     { name: "国外", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png", proxies: [] },
     { name: "解锁", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png", proxies: ["国外"] },
-    { name: "下载", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Download.png", proxies: ["直连", "国外"] },
     { name: "国内", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png", proxies: ["直连", "国外"] },
     { name: "广告", type: "select", icon: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/color/adblock.png", proxies: ["阻止", "直连", "国外"] }
   ];
 
-  const targetGroups = ["国外", "解锁", "下载"];
+  const targetGroups = ["国外", "解锁"];
 
   // 4. 处理地区分组
   let finalGroups = [...mainGroups];
@@ -138,7 +137,7 @@ function main(config) {
   const RULE_PROVIDER_COMMON = { type: "http", interval: 28800, behavior: "classical" };
   const RULE_PROVIDER_URLS = {
     direct: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list", format: "text" },
-    download: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/download.list", format: "text" },
+    "AD!": { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/AD!.list", format: "text" },
     proxy: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list", format: "text" },
     unlock: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list", format: "text" },
     AD: { url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml", format: "yaml" },
@@ -151,11 +150,10 @@ function main(config) {
   );
 
   config["rules"] = [
-    "RULE-SET,download,下载",
+    "AND,((RULE-SET,AD),(NOT,((RULE-SET,AD!)))),广告",
     "RULE-SET,unlock,解锁",
     "RULE-SET,direct,国内",
     "RULE-SET,proxy,国外",
-    "RULE-SET,AD,广告",
     "RULE-SET,cn!,国外",
     "MATCH,国内"
   ];
