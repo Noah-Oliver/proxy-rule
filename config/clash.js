@@ -30,8 +30,8 @@ function setBasicConfig(config) {
       "cache-algorithm": "lru",
       ipv6: true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["119.29.29.29"],
-      nameserver: ["dot.pub", "https://doh.pub/dns-query"],
+      "default-nameserver": ["119.29.29.29","223.5.5.5","180.184.1.1"],
+      nameserver: ["119.29.29.29","223.5.5.5","180.184.1.1"],
     },
     "tun": {
       enable: true,
