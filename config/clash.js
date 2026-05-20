@@ -27,11 +27,15 @@ function setBasicConfig(config) {
     "dns": {
       enable: true,
       listen: "0.0.0.0:1053",
-      "cache-algorithm": "lru",
+      "cache-algorithm": "arc",
       ipv6: true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["119.29.29.29","223.5.5.5","180.184.1.1"],
-      nameserver: ["119.29.29.29","223.5.5.5","180.184.1.1"],
+      "default-nameserver": ["119.29.29.29","8.8.8.8#国外&ecs=119.29.29.29&ecs-override=true"],
+      nameserver: ["119.29.29.29","8.8.8.8#国外&ecs=119.29.29.29&ecs-override=true"],
+      "nameserver-policy": {
+        "rule-set:proxy,cn!": "8.8.8.8#国外",
+        "rule-set:unlock": "8.8.8.8#解锁"
+      }
     },
     "tun": {
       enable: true,
