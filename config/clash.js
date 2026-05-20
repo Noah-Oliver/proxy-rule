@@ -30,8 +30,8 @@ function setBasicConfig(config) {
       "cache-algorithm": "arc",
       ipv6: true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["119.29.29.29","8.8.8.8#国外&ecs=119.29.29.29&ecs-override=true"],
-      nameserver: ["119.29.29.29","8.8.8.8#国外&ecs=119.29.29.29&ecs-override=true"],
+      "default-nameserver": ["119.29.29.29","8.8.8.8#国外&ecs=223.5.5.0/24&ecs-override=true"],
+      nameserver: ["119.29.29.29","8.8.8.8#国外&ecs=223.5.5.0/24&ecs-override=true"],
       "nameserver-policy": {
         "rule-set:proxy,cn!": "8.8.8.8#国外",
         "rule-set:unlock": "8.8.8.8#解锁"
