@@ -33,7 +33,8 @@ function setBasicConfig(config) {
       "default-nameserver": ["119.29.29.29","8.8.8.8#国外&ecs=223.5.5.0/24&ecs-override=true"],
       nameserver: ["119.29.29.29","8.8.8.8#国外&ecs=223.5.5.0/24&ecs-override=true"],
       "nameserver-policy": {
-        "rule-set:proxy,cn!": "8.8.8.8#国外",
+        "rule-set:proxy": "8.8.8.8#国外",
+        "rule-set:cnf": "8.8.8.8#国外",
         "rule-set:unlock": "8.8.8.8#解锁"
       }
     },
@@ -141,11 +142,11 @@ function main(config) {
   const RULE_PROVIDER_COMMON = { type: "http", interval: 28800, behavior: "classical" };
   const RULE_PROVIDER_URLS = {
     direct: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list", format: "text" },
-    "AD!": { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/AD!.list", format: "text" },
+    ADf: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/ADf.list", format: "text" },
     proxy: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list", format: "text" },
     unlock: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list", format: "text" },
     AD: { url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml", format: "yaml" },
-    "cn!": { url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.mrs", behavior: "domain", format: "mrs" }
+    cnf: { url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/gfw.mrs", behavior: "domain", format: "mrs" }
   };
 
   // 设置规则提供者 & 规则
@@ -154,11 +155,11 @@ function main(config) {
   );
 
   config["rules"] = [
-    "AND,((RULE-SET,AD),(NOT,((RULE-SET,AD!)))),广告",
+    "AND,((RULE-SET,AD),(NOT,((RULE-SET,ADf)))),广告",
     "RULE-SET,unlock,解锁",
     "RULE-SET,direct,国内",
     "RULE-SET,proxy,国外",
-    "RULE-SET,cn!,国外",
+    "RULE-SET,cnf,国外",
     "MATCH,国内"
   ];
 
