@@ -30,13 +30,8 @@ function setBasicConfig(config) {
       "cache-algorithm": "arc",
       ipv6: true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["119.29.29.29","8.8.8.8#国外&ecs=223.5.5.0/24&ecs-override=true"],
-      nameserver: ["119.29.29.29","8.8.8.8#国外&ecs=223.5.5.0/24&ecs-override=true"],
-      "nameserver-policy": {
-        "rule-set:proxy": "8.8.8.8#国外",
-        "rule-set:cnf": "8.8.8.8#国外",
-        "rule-set:unlock": "8.8.8.8#解锁"
-      }
+      "default-nameserver": ["119.29.29.29"],
+      nameserver: ["119.29.29.29"],
     },
     "tun": {
       enable: true,
@@ -46,7 +41,21 @@ function setBasicConfig(config) {
       "auto-detect-interface": true,
     },
     "sniffer": {
-      enable: false,
+      enable: true,
+      "force-dns-mapping": true,
+      "parse-pure-ip": true,
+      "override-destination": false,
+      sniff: {
+        HTTP: {
+          ports: [80, '8080-8880'],
+        },
+        TLS: {
+          ports: [443, 8443],
+        },
+        QUIC: {
+          ports: [443, 8443],
+        },
+      },
     }
   };
   Object.assign(config, defaults);
