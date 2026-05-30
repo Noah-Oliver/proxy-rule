@@ -30,8 +30,8 @@ function setBasicConfig(config) {
       "cache-algorithm": "lru",
       ipv6: true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["119.29.29.29", "223.5.5.5"],
-      nameserver: ["119.29.29.29", "223.5.5.5"],
+      "default-nameserver": ["223.5.5.5"],
+      nameserver: ["223.5.5.5"],
     },
     "tun": {
       enable: true,
