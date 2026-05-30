@@ -31,7 +31,7 @@ function setBasicConfig(config) {
       ipv6: true,
       "enhanced-mode": "redir-host",
       "default-nameserver": ["119.29.29.29", "223.5.5.5"],
-      nameserver: ["dot.pub","dns.alidns.com"],
+      nameserver: ["119.29.29.29", "223.5.5.5"],
     },
     "tun": {
       enable: true,
