@@ -16,7 +16,7 @@ function setBasicConfig(config) {
     "mode": "rule",
     "log-level": "info",
     "ipv6": true,
-    "tcp-concurrent": false,
+    "tcp-concurrent": true,
     "unified-delay": true,
     "external-controller": "127.0.0.1:9090",
     "secret": "",
@@ -27,7 +27,7 @@ function setBasicConfig(config) {
     "dns": {
       enable: true,
       listen: "0.0.0.0:1053",
-      "cache-algorithm": "lru",
+      "cache-algorithm": "arc",
       ipv6: true,
       "enhanced-mode": "redir-host",
       "default-nameserver": ["1.8.8.8"],
