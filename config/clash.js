@@ -16,7 +16,7 @@ function setBasicConfig(config) {
     "mode": "rule",
     "log-level": "info",
     "ipv6": true,
-    "tcp-concurrent": true,
+    "tcp-concurrent": false,
     "unified-delay": true,
     "external-controller": "127.0.0.1:9090",
     "secret": "",
@@ -27,11 +27,11 @@ function setBasicConfig(config) {
     "dns": {
       enable: true,
       listen: "0.0.0.0:1053",
-      "cache-algorithm": "arc",
+      "cache-algorithm": "lru",
       ipv6: true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["1.8.8.8"],
-      nameserver: ["1.8.8.8"],
+      "default-nameserver": ["8.8.8.8", "223.5.5.5"],
+      nameserver: ["8.8.8.8", "223.5.5.5"],
     },
     "tun": {
       enable: true,
@@ -41,7 +41,7 @@ function setBasicConfig(config) {
       "auto-detect-interface": true,
     },
     "sniffer": {
-      enable: true,
+      enable: false,
       "force-dns-mapping": true,
       "parse-pure-ip": true,
       "override-destination": false,
