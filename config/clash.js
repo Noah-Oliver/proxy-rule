@@ -27,7 +27,7 @@ function setBasicConfig(config) {
     "dns": {
       enable: true,
       listen: "0.0.0.0:1053",
-      "cache-algorithm": "lru",
+      "cache-algorithm": "arc",
       ipv6: true,
       "enhanced-mode": "redir-host",
       "default-nameserver": ["101.226.4.6"],
