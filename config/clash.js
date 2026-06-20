@@ -30,8 +30,8 @@ function setBasicConfig(config) {
       "cache-algorithm": "lru",
       ipv6: true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["dhcp://system"],
-      nameserver: ["dhcp://system"],
+      "default-nameserver": ["101.226.4.6"],
+      nameserver: ["101.226.4.6"],
     },
     "tun": {
       enable: true,
