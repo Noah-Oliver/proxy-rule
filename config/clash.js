@@ -30,8 +30,8 @@ function setBasicConfig(config) {
       "cache-algorithm": "arc",
       ipv6: true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["101.226.4.6"],
-      nameserver: ["101.226.4.6"],
+      "default-nameserver": ["119.29.29.29"],
+      nameserver: ["https://sm2.doh.pub/dns-query"],
     },
     "tun": {
       enable: true,
