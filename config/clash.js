@@ -31,7 +31,7 @@ function setBasicConfig(config) {
       ipv6: true,
       "enhanced-mode": "redir-host",
       "default-nameserver": ["119.29.29.29"],
-      nameserver: ["https://sm2.doh.pub/dns-query"],
+      nameserver: ["119.29.29.29"],
     },
     "tun": {
       enable: true,
