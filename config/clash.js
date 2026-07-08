@@ -30,8 +30,8 @@ function setBasicConfig(config) {
       "cache-algorithm": "arc",
       ipv6: true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["119.29.29.29"],
-      nameserver: ["119.29.29.29"],
+      "default-nameserver": ["223.6.6.6"],
+      nameserver: ["223.6.6.6"],
     },
     "tun": {
       enable: true,
