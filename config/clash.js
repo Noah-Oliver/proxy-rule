@@ -26,7 +26,6 @@ function setBasicConfig(config) {
     },
     "dns": {
       enable: true,
-      listen: "0.0.0.0:1053",
       "cache-algorithm": "arc",
       ipv6: true,
       "enhanced-mode": "redir-host",
@@ -41,21 +40,7 @@ function setBasicConfig(config) {
       "auto-detect-interface": true,
     },
     "sniffer": {
-      enable: true,
-      "force-dns-mapping": true,
-      "parse-pure-ip": true,
-      "override-destination": false,
-      sniff: {
-        HTTP: {
-          ports: [80, '8080-8880'],
-        },
-        TLS: {
-          ports: [443, 8443],
-        },
-        QUIC: {
-          ports: [443, 8443],
-        },
-      },
+      enable: false,
     }
   };
   Object.assign(config, defaults);
