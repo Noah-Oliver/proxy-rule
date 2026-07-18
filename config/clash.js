@@ -16,7 +16,7 @@ function setBasicConfig(config) {
     "mode": "rule",
     "log-level": "info",
     "ipv6": true,
-    "tcp-concurrent": false,
+    "tcp-concurrent": true,
     "unified-delay": true,
     "external-controller": "127.0.0.1:9090",
     "secret": "",
@@ -26,11 +26,11 @@ function setBasicConfig(config) {
     },
     "dns": {
       enable: true,
-      "cache-algorithm": "arc",
+      "cache-algorithm": "lru",
       ipv6: true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["223.6.6.6"],
-      nameserver: ["223.6.6.6"],
+      "default-nameserver": ["tls://223.6.6.6"],
+      nameserver: ["tls://223.6.6.6"],
     },
     "tun": {
       enable: true,
