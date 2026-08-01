@@ -84,8 +84,22 @@ function main(config) {
   if (!config?.proxies) return config;
 
   const filteredProxies = config.proxies
-    .filter(p => p.name && !SETTINGS.EXCLUDE_FILTER.test(p.name) && Object.values(p).every(v => v != null && v !== ''))
-    .map(p => ({ ...p, udp: true, "ip-version": "ipv4-prefer" }));
+    .filter(p =>
+      typeof p.name === "string" &&
+      p.name.length > 0 &&
+      typeof p.server === "string" &&
+      p.server.length > 0 &&
+      typeof p.port === "number" &&
+      Number.isFinite(p.port) &&
+      typeof p.type === "string" &&
+      p.type.length > 0 &&
+      !SETTINGS.EXCLUDE_FILTER.test(p.name)
+    )
+    .map(p => ({
+      ...p,
+      udp: true,
+      "ip-version": "ipv4-prefer"
+    }));
 
   const allProxyNames = filteredProxies.map(p => p.name);
 
