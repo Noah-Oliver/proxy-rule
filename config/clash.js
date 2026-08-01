@@ -28,13 +28,10 @@ function setBasicConfig(config) {
       enable: true,
       "cache-algorithm": "lru",
       ipv6: true,
-      "enhanced-mode": "normal",
+      "use-hosts": true,
+      "use-system-hosts": true,
+      "enhanced-mode": "redir-host",
       "nameserver": ["223.5.5.5"],
-      "fallback": ["8.8.8.8"],
-      "fallback-filter": {
-        "geoip": true,
-        "geoip-code": "CN"
-      }
     },
     "tun": {
       enable: true,
@@ -44,21 +41,7 @@ function setBasicConfig(config) {
       "auto-detect-interface": true,
     },
     "sniffer": {
-      enable: true,
-      "force-dns-mapping": false,
-      "parse-pure-ip": true,
-      "override-destination": false,
-      sniff: {
-        HTTP: {
-          ports: [80, '8080-8880'],
-        },
-        TLS: {
-          ports: [443, 8443],
-        },
-        QUIC: {
-          ports: [443, 8443],
-        },
-      },
+      enable: false,
     }
   };
   Object.assign(config, defaults);
@@ -92,7 +75,7 @@ const HEALTH_CHECK_CONFIG = {
 
 // 添加的固定节点
 const ADDITIONAL_PROXIES = [
-  { name: "直连", type: "direct", udp: true },
+  { name: "直连", type: "direct", udp: true, "ip-version": "ipv4-prefer" },
   { name: "阻止", type: "reject" }
 ];
 
@@ -102,7 +85,7 @@ function main(config) {
 
   const filteredProxies = config.proxies
     .filter(p => p.name && !SETTINGS.EXCLUDE_FILTER.test(p.name) && Object.values(p).every(v => v != null && v !== ''))
-    .map(p => ({ ...p, udp: true }));
+    .map(p => ({ ...p, udp: true, "ip-version": "ipv4-prefer" }));
 
   const allProxyNames = filteredProxies.map(p => p.name);
 
