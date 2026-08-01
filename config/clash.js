@@ -28,7 +28,13 @@ function setBasicConfig(config) {
       enable: true,
       "cache-algorithm": "lru",
       ipv6: true,
-      "enhanced-mode": "redir-host",
+      "enhanced-mode": "normal",
+      "nameserver": ["223.5.5.5"],
+      "fallback": ["8.8.8.8"],
+      "fallback-filter": {
+        "geoip": true,
+        "geoip-code": "CN"
+      }
     },
     "tun": {
       enable: true,
@@ -39,7 +45,7 @@ function setBasicConfig(config) {
     },
     "sniffer": {
       enable: true,
-      "force-dns-mapping": true,
+      "force-dns-mapping": false,
       "parse-pure-ip": true,
       "override-destination": false,
       sniff: {
