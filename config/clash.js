@@ -113,7 +113,7 @@ function main(config) {
   // 3. 构建核心策略组
   const mainGroups = [
     { name: "国外", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png", proxies: [] },
-    { name: "解锁", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png", proxies: ["国外"] },
+    { name: "解锁", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png", proxies: [] },
     { name: "国内", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png", proxies: ["直连", "国外"] },
     { name: "广告", type: "select", icon: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/color/adblock.png", proxies: ["阻止", "直连", "国外"] }
   ];
