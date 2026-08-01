@@ -50,11 +50,11 @@ function setBasicConfig(config) {
 // 地区配置
 const REGION_CONFIG = {
   "香港": { regex: /\b(🇭🇰|hk|hong\s?kong)\b|香港|hk/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Hongkong(3).png" },
-  "新加坡": { regex: /\b(🇸🇬|sg|singapore)\b|新加坡/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/singapore.png" },
-  "台湾": { regex: /\b(🇹🇼|tw|taiwan|taipei)\b|台灣|台湾|台北/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/taiwan(4).png" },
-  "日本": { regex: /\b(🇯🇵|jp|jpn|japan|osaka)\b|日本|东京|大阪/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Japan(2).png" },
-  "韩国": { regex: /\b(🇰🇷|kr|kor|korea|seoul)\b|韩国|首尔/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Korea(2).png" },
-  "美国": { regex: /\b(🇺🇸|US|usa|america|united\s?states|los\s?angeles|san\s?francisco|seattle|chicago|washington)\b|美國|美国|洛杉矶|旧金山|西雅图|芝加哥|华盛顿/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/US(2).png" },
+  "新加坡": { regex: /\b(🇸🇬|sg|singapore)\b|新加坡|sg/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/singapore.png" },
+  "台湾": { regex: /\b(🇹🇼|tw|taiwan|taipei)\b|台灣|台湾|台北|tw/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/taiwan(4).png" },
+  "日本": { regex: /\b(🇯🇵|jp|jpn|japan|osaka)\b|日本|东京|大阪|jp/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Japan(2).png" },
+  "韩国": { regex: /\b(🇰🇷|kr|kor|korea|seoul)\b|韩国|首尔|kr/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Korea(2).png" },
+  "美国": { regex: /\b(🇺🇸|US|usa|america|united\s?states|los\s?angeles|san\s?francisco|seattle|chicago|washington)\b|美國|美国|洛杉矶|旧金山|西雅图|芝加哥|华盛顿|us/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/US(2).png" },
   "其他": { regex: /.*/i, icon: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/color/Available.png" },
   "所有": { icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/05icon/quanqiu(3).png" }
 };
