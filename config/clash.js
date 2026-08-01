@@ -49,7 +49,7 @@ function setBasicConfig(config) {
 
 // 地区配置
 const REGION_CONFIG = {
-  "香港": { regex: /\b(🇭🇰|hk|hong\s?kong)\b|香港/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Hongkong(3).png" },
+  "香港": { regex: /\b(🇭🇰|hk|hong\s?kong)\b|香港|hk/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Hongkong(3).png" },
   "新加坡": { regex: /\b(🇸🇬|sg|singapore)\b|新加坡/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/singapore.png" },
   "台湾": { regex: /\b(🇹🇼|tw|taiwan|taipei)\b|台灣|台湾|台北/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/taiwan(4).png" },
   "日本": { regex: /\b(🇯🇵|jp|jpn|japan|osaka)\b|日本|东京|大阪/i, icon: "https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Japan(2).png" },
@@ -98,7 +98,8 @@ function main(config) {
     .map(p => ({
       ...p,
       udp: true,
-      "ip-version": "ipv4-prefer"
+      "ip-version": "ipv4-prefer",
+      "skip-cert-verify": false,
     }));
 
   const allProxyNames = filteredProxies.map(p => p.name);
