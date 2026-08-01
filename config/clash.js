@@ -16,7 +16,7 @@ function setBasicConfig(config) {
     "mode": "rule",
     "log-level": "info",
     "ipv6": true,
-    "tcp-concurrent": false,
+    "tcp-concurrent": true,
     "unified-delay": true,
     "external-controller": "127.0.0.1:9090",
     "secret": "",
