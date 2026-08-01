@@ -29,8 +29,6 @@ function setBasicConfig(config) {
       "cache-algorithm": "lru",
       ipv6: true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["223.6.6.6"],
-      nameserver: ["223.6.6.6"],
     },
     "tun": {
       enable: true,
@@ -40,7 +38,21 @@ function setBasicConfig(config) {
       "auto-detect-interface": true,
     },
     "sniffer": {
-      enable: false,
+      enable: true,
+      "force-dns-mapping": true,
+      "parse-pure-ip": true,
+      "override-destination": false,
+      sniff: {
+        HTTP: {
+          ports: [80, '8080-8880'],
+        },
+        TLS: {
+          ports: [443, 8443],
+        },
+        QUIC: {
+          ports: [443, 8443],
+        },
+      },
     }
   };
   Object.assign(config, defaults);
