@@ -1,0 +1,134 @@
+x-nextin:
+  version: 1
+  mode: template
+
+#规则集
+r: &r
+ type: http
+ interval: 28800
+
+#主配置
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: true
+tcp-concurrent: true
+unified-delay: true
+external-controller: 127.0.0.1:9090
+secret: ""
+profile:
+  store-selected: true #存储 select 选择记录
+  store-fake-ip: false
+
+dns:
+  enable: true
+  cache-algorithm: lru
+  ipv6: true
+  use-hosts: true
+  use-system-hosts: true
+  enhanced-mode: redir-host
+  nameserver:
+    - 223.5.5.5
+
+tun:
+  enable: true
+  stack: system
+  dns-hijack:
+    - any:53
+  auto-route: true
+  auto-detect-interface: true
+
+sniffer:
+  enable: false
+
+proxies: []
+
+proxy-groups:
+ - name: "国外"
+   type: select
+   proxies:
+    - 香港
+    - 新加坡
+    - 其他
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png
+ - name: "解锁"
+   type: select
+   proxies:
+    - 香港
+    - 新加坡
+    - 其他
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png
+ - name: "国内"
+   type: select
+   proxies:
+    - DIRECT
+    - 国外
+   icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png
+ - name: "广告"
+   type: select
+   proxies:
+    - REJECT
+    - DIRECT
+    - 国外
+   icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/color/adblock.png
+
+ - name: "香港"
+   type: select
+   include-all-proxies: true
+   filter: "/\b(🇭🇰|hk|hong\s?kong)\b|香港|hk/i"
+   icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Hongkong(3).png
+ - name: "新加坡"
+   type: select
+   include-all-proxies: true
+   filter: "/\b(🇸🇬|sg|singapore)\b|新加坡|sg/i"
+   icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/singapore.png
+ - name: "其他"
+   type: select
+   include-all-proxies: true
+   exclude-filter: "/\b(🇭🇰|hk|hong\s?kong|🇸🇬|sg|singapore)\b|香港|新加坡|hk|sg/i"
+   icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/color/Available.png
+
+rules:
+ - AND,((RULE-SET,AD),(NOT,((RULE-SET,ADf)))),广告
+ - RULE-SET,unlock,解锁
+ - RULE-SET,direct,国内
+ - RULE-SET,proxy,国外
+ - RULE-SET,cnf,国外
+ - MATCH,国内
+
+rule-providers:
+ direct:
+  <<: *r
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list"
+  behavior: classical
+  format: text
+
+ ADf:
+  <<: *r
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/ADf.list"
+  behavior: classical
+  format: text
+
+ proxy:
+  <<: *r
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list"
+  behavior: classical
+  format: text
+
+ unlock:
+  <<: *r
+  url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list"
+  behavior: classical
+  format: text
+
+ AD:
+  <<: *r
+  url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads-all.list"
+  behavior: domain
+  format: text
+
+ cnf:
+  <<: *r
+  url: "https://github.com/Loyalsoldier/clash-rules/raw/release/gfw.txt"
+  behavior: domain
+  format: yaml
