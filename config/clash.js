@@ -16,7 +16,7 @@ function setBasicConfig(config) {
     "mode": "rule",
     "log-level": "info",
     "ipv6": true,
-    "tcp-concurrent": true,
+    "tcp-concurrent": false,
     "unified-delay": true,
     "external-controller": "127.0.0.1:9090",
     "secret": "",
@@ -75,7 +75,7 @@ const HEALTH_CHECK_CONFIG = {
 
 // 添加的固定节点
 const ADDITIONAL_PROXIES = [
-  { name: "直连", type: "direct", udp: true, "ip-version": "ipv4-prefer" },
+  { name: "直连", type: "direct", udp: true },
   { name: "阻止", type: "reject" }
 ];
 
@@ -98,7 +98,6 @@ function main(config) {
     .map(p => ({
       ...p,
       udp: true,
-      "ip-version": "ipv4-prefer",
       "skip-cert-verify": false,
     }));
 
