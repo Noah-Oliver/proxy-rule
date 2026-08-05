@@ -22,7 +22,7 @@ function setBasicConfig(config) {
     "secret": "",
     "profile": {
       "store-selected": true,
-      "store-fake-ip": false,
+      "store-fake-ip": true,
     },
     "dns": {
       enable: true,
@@ -30,8 +30,15 @@ function setBasicConfig(config) {
       ipv6: true,
       "use-hosts": true,
       "use-system-hosts": true,
-      "enhanced-mode": "redir-host",
+      "enhanced-mode": "fake-ip",
       "nameserver": ["223.5.5.5"],
+      "fake-ip-range": "6.0.0.0/8",
+      "fake-ip-rangev6": "fdfe:dcba:9876::1/64",
+      "fake-ip-filter-mode": "rule",
+      "fake-ip-filter": [
+        "RULE-SET,fakeipfilter,real-ip",
+        "MATCH,fake-ip"
+      ]
     },
     "tun": {
       enable: true,
@@ -155,7 +162,8 @@ function main(config) {
     proxy: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list", format: "text" },
     unlock: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list", format: "text" },
     AD: { url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads-all.list", behavior: "domain", format: "text" },
-    cnf: { url: "https://github.com/Loyalsoldier/clash-rules/raw/release/gfw.txt", behavior: "domain", format: "yaml" }
+    cnf: { url: "https://github.com/Loyalsoldier/clash-rules/raw/release/gfw.txt", behavior: "domain", format: "yaml" },
+    fakeipfilter:{ url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/fakeipfilter.list", format: "text" }
   };
 
   // 设置规则提供者 & 规则
