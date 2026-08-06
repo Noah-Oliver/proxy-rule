@@ -31,7 +31,8 @@ function setBasicConfig(config) {
       "use-hosts": true,
       "use-system-hosts": true,
       "enhanced-mode": "redir-host",
-      "nameserver": ["223.5.5.5"],
+      "default-nameserver": ["223.6.6.6"],
+      "nameserver": ["223.6.6.6"],
     },
     "tun": {
       enable: true,
