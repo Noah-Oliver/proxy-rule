@@ -18,8 +18,10 @@ dns:
   use-hosts: true
   use-system-hosts: true
   enhanced-mode: redir-host
+  default-nameserver:
+    - 223.6.6.6
   nameserver:
-    - 223.5.5.5
+    - 223.6.6.6
 
 tun:
   enable: true
@@ -63,19 +65,19 @@ proxy-groups:
 
  - name: "香港"
    type: select
-   include-all-proxies: true
+   include-all: true
    exclude-filter: '剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址'
    filter: '/\b(🇭🇰|hk|hong\s?kong)\b|香港|hk/i'
    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Hongkong(3).png
  - name: "新加坡"
    type: select
-   include-all-proxies: true
+   include-all: true
    exclude-filter: '剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址'
    filter: '/\b(🇸🇬|sg|singapore)\b|新加坡|sg/i'
    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/singapore.png
  - name: "其他"
    type: select
-   include-all-proxies: true
+   include-all: true
    exclude-filter: '/\b(🇭🇰|hk|hong\s?kong|🇸🇬|sg|singapore)\b|香港|新加坡|hk|sg|剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址/i'
    icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/color/Available.png
 
