@@ -32,13 +32,6 @@ tun:
 sniffer:
   enable: false
 
-proxies:
-  - name: "直连"
-    type: direct
-    udp: true
-  - name: "阻止"
-    type: reject
-
 proxy-groups:
  - name: "国外"
    type: select
