@@ -83,8 +83,7 @@ proxy-groups:
  - name: "其他"
    type: select
    include-all-proxies: true
-   exclude-filter: '剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址'
-   exclude-filter: '/\b(🇭🇰|hk|hong\s?kong|🇸🇬|sg|singapore)\b|香港|新加坡|hk|sg/i'
+   exclude-filter: '/\b(🇭🇰|hk|hong\s?kong|🇸🇬|sg|singapore)\b|香港|新加坡|hk|sg|剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址/i'
    icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/color/Available.png
 
 rules:
