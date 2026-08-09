@@ -1,13 +1,3 @@
-#规则集
-r: &r
- type: http
- interval: 28800
-
-#节点组
-g: &g
- include-all-proxies: true
- exclude-filter: '剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址'
-
 #主配置
 allow-lan: true
 mode: rule
@@ -80,17 +70,20 @@ proxy-groups:
 
  - name: "香港"
    type: select
-   <<: *g
+   include-all-proxies: true
+   exclude-filter: '剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址'
    filter: '/\b(🇭🇰|hk|hong\s?kong)\b|香港|hk/i'
    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Hongkong(3).png
  - name: "新加坡"
    type: select
-   <<: *g
+   include-all-proxies: true
+   exclude-filter: '剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址'
    filter: '/\b(🇸🇬|sg|singapore)\b|新加坡|sg/i'
    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/singapore.png
  - name: "其他"
    type: select
-   <<: *g
+   include-all-proxies: true
+   exclude-filter: '剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址'
    exclude-filter: '/\b(🇭🇰|hk|hong\s?kong|🇸🇬|sg|singapore)\b|香港|新加坡|hk|sg/i'
    icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/color/Available.png
 
@@ -104,37 +97,43 @@ rules:
 
 rule-providers:
  direct:
-  <<: *r
+  type: http
+  interval: 28800
   url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list"
   behavior: classical
   format: text
 
  ADf:
-  <<: *r
+  type: http
+  interval: 28800
   url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/ADf.list"
   behavior: classical
   format: text
 
  proxy:
-  <<: *r
+  type: http
+  interval: 28800
   url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list"
   behavior: classical
   format: text
 
  unlock:
-  <<: *r
+  type: http
+  interval: 28800
   url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list"
   behavior: classical
   format: text
 
  AD:
-  <<: *r
+  type: http
+  interval: 28800
   url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads-all.list"
   behavior: domain
   format: text
 
  cnf:
-  <<: *r
+  type: http
+  interval: 28800
   url: "https://github.com/Loyalsoldier/clash-rules/raw/release/gfw.txt"
   behavior: domain
   format: yaml
