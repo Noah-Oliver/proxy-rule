@@ -3,6 +3,11 @@ r: &r
  type: http
  interval: 28800
 
+#节点组
+g: &g
+ include-all-proxies: true
+ exclude-filter: '剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址'
+
 #主配置
 allow-lan: true
 mode: rule
@@ -37,13 +42,12 @@ tun:
 sniffer:
   enable: false
 
-proxies: [
+proxies:
   - name: "直连"
     type: direct
     udp: true
   - name: "阻止"
     type: reject
-]
 
 proxy-groups:
  - name: "国外"
@@ -76,18 +80,18 @@ proxy-groups:
 
  - name: "香港"
    type: select
-   include-all-proxies: true
-   filter: "/\b(🇭🇰|hk|hong\s?kong)\b|香港|hk/i"
+   <<: *g
+   filter: '/\b(🇭🇰|hk|hong\s?kong)\b|香港|hk/i'
    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Hongkong(3).png
  - name: "新加坡"
    type: select
-   include-all-proxies: true
-   filter: "/\b(🇸🇬|sg|singapore)\b|新加坡|sg/i"
+   <<: *g
+   filter: '/\b(🇸🇬|sg|singapore)\b|新加坡|sg/i'
    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/singapore.png
  - name: "其他"
    type: select
-   include-all-proxies: true
-   exclude-filter: "/\b(🇭🇰|hk|hong\s?kong|🇸🇬|sg|singapore)\b|香港|新加坡|hk|sg/i"
+    <<: *g
+   exclude-filter: '/\b(🇭🇰|hk|hong\s?kong|🇸🇬|sg|singapore)\b|香港|新加坡|hk|sg/i'
    icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/color/Available.png
 
 rules:
