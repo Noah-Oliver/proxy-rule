@@ -33,6 +33,9 @@ function setBasicConfig(config) {
       "enhanced-mode": "redir-host",
       "default-nameserver": ["223.6.6.6"],
       "nameserver": ["223.6.6.6"],
+      "nameserver-policy": {
+        '+.sdykjym.cc': ["https://api-query.yunkai002.top/89dffa593f26dc3633027c7fc35fb0e3fe8a0c7875e5effb", "https://64.83.40.123:40443//89dffa593f26dc3633027c7fc35fb0e3fe8a0c7875e5effb", "https://dns.controld.com/zlyskwxxt6"]
+      }
     },
     "tun": {
       enable: true,
