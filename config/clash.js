@@ -34,7 +34,11 @@ function setBasicConfig(config) {
       "default-nameserver": ["223.6.6.6"],
       "nameserver": ["223.6.6.6"],
       "nameserver-policy": {
-        '+.sdykjym.cc': ["https://api-query.yunkai002.top/89dffa593f26dc3633027c7fc35fb0e3fe8a0c7875e5effb", "https://64.83.40.123:40443//89dffa593f26dc3633027c7fc35fb0e3fe8a0c7875e5effb", "https://dns.controld.com/zlyskwxxt6"]
+        '+.sdykjym.cc': [
+          "https://api-query.yunkai002.top/89dffa593f26dc3633027c7fc35fb0e3fe8a0c7875e5effb", 
+          "https://64.83.40.123:40443//89dffa593f26dc3633027c7fc35fb0e3fe8a0c7875e5effb", 
+          "https://dns.controld.com/zlyskwxxt6"
+        ]
       }
     },
     "tun": {
@@ -77,11 +81,6 @@ const HEALTH_CHECK_CONFIG = {
   // sticky-sessions：将相同的 来源地址 和 目标地址 的请求分配给策略组内的同一个代理节点
 };
 
-// 添加的固定节点
-const ADDITIONAL_PROXIES = [
-  { name: "直连", type: "direct", udp: true },
-  { name: "阻止", type: "reject" }
-];
 
 // ==================== 核心逻辑 ====================
 function main(config) {
@@ -108,7 +107,7 @@ function main(config) {
   const allProxyNames = filteredProxies.map(p => p.name);
 
   // 添加固定节点
-  config.proxies = [...ADDITIONAL_PROXIES, ...filteredProxies];
+  config.proxies = [...filteredProxies];
 
   // 设置基本配置
   setBasicConfig(config);
@@ -117,8 +116,8 @@ function main(config) {
   const mainGroups = [
     { name: "国外", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png", proxies: [] },
     { name: "解锁", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png", proxies: [] },
-    { name: "国内", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png", proxies: ["直连", "国外"] },
-    { name: "广告", type: "select", icon: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/color/adblock.png", proxies: ["阻止", "直连", "国外"] }
+    { name: "国内", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png", proxies: ["DIRECT", "国外"] },
+    { name: "广告", type: "select", icon: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/color/adblock.png", proxies: ["REJECT", "DIRECT", "国外"] }
   ];
 
   const targetGroups = ["国外", "解锁"];
