@@ -32,8 +32,8 @@ function setBasicConfig(config) {
       "use-hosts": true,
       "use-system-hosts": true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["223.5.5.5#disable-ipv6", "2400:3200::1"],
-      "nameserver": ["223.5.5.5#disable-ipv6", "2400:3200::1"],
+      "default-nameserver": ["dhcp://system"],
+      "nameserver": ["dhcp://system"],
     },
     "tun": {
       enable: true,
