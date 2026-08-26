@@ -11,6 +11,7 @@ const SETTINGS = {
 
 // 设置基本配置
 function setBasicConfig(config) {
+  const existingPolicy = config?.dns?.["nameserver-policy"];
   const defaults = {
     "allow-lan": true,
     "mode": "rule",
@@ -33,13 +34,6 @@ function setBasicConfig(config) {
       "enhanced-mode": "redir-host",
       "default-nameserver": ["223.6.6.6"],
       "nameserver": ["223.6.6.6"],
-      "nameserver-policy": {
-        '+.sdykjym.cc': [
-          "https://api-query.yunkai002.top/89dffa593f26dc3633027c7fc35fb0e3fe8a0c7875e5effb", 
-          "https://64.83.40.123:40443//89dffa593f26dc3633027c7fc35fb0e3fe8a0c7875e5effb", 
-          "https://dns.controld.com/zlyskwxxt6"
-        ]
-      }
     },
     "tun": {
       enable: true,
@@ -53,6 +47,10 @@ function setBasicConfig(config) {
     }
   };
   Object.assign(config, defaults);
+  // 如果原配置中已有 nameserver-policy，保留它
+  if (existingPolicy) {
+    config.dns["nameserver-policy"] = existingPolicy;
+  }
 }
 
 // 地区配置
