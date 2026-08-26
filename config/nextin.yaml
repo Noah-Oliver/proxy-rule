@@ -41,16 +41,15 @@ experimental:
 proxy-providers:
   直连:
     type: inline
-    pyload:
+    proxies:
       - name: "直连"
         type: direct
         udp: true
         ip-version: ipv4-prefer
 
-proxy-providers:
   阻止:
     type: inline
-    pyload:
+    proxies:
       - name: "阻止"
         type: reject
 
