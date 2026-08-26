@@ -17,7 +17,7 @@ function setBasicConfig(config) {
     "mode": "rule",
     "log-level": "info",
     "ipv6": true,
-    "tcp-concurrent": false,
+    "tcp-concurrent": true,
     "unified-delay": true,
     "external-controller": "127.0.0.1:9090",
     "secret": "",
@@ -27,13 +27,13 @@ function setBasicConfig(config) {
     },
     "dns": {
       enable: true,
-      "cache-algorithm": "lru",
+      "cache-algorithm": "arc",
       ipv6: true,
       "use-hosts": true,
       "use-system-hosts": true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["223.6.6.6"],
-      "nameserver": ["223.6.6.6"],
+      "default-nameserver": ["223.5.5.5#disable-ipv6", "2400:3200::1"],
+      "nameserver": ["223.5.5.5#disable-ipv6", "2400:3200::1"],
     },
     "tun": {
       enable: true,
@@ -41,9 +41,13 @@ function setBasicConfig(config) {
       "dns-hijack": ["any:53"],
       "auto-route": true,
       "auto-detect-interface": true,
+      "mtu": 1500,
     },
     "sniffer": {
       enable: false,
+    },
+    "experimental": {
+      "dialer-ip4p-convert:": true,
     }
   };
   Object.assign(config, defaults);
