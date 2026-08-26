@@ -17,7 +17,7 @@ function setBasicConfig(config) {
     "mode": "rule",
     "log-level": "info",
     "ipv6": true,
-    "tcp-concurrent": true,
+    "tcp-concurrent": false,
     "unified-delay": true,
     "external-controller": "127.0.0.1:9090",
     "secret": "",
@@ -27,7 +27,7 @@ function setBasicConfig(config) {
     },
     "dns": {
       enable: true,
-      "cache-algorithm": "arc",
+      "cache-algorithm": "lru",
       ipv6: true,
       "use-hosts": true,
       "use-system-hosts": true,
