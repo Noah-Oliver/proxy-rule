@@ -38,21 +38,6 @@ sniffer:
 experimental:
   dialer-ip4p-convert: true
 
-proxy-providers:
-  直连:
-    type: inline
-    proxies:
-      - name: "直连"
-        type: direct
-        udp: true
-        ip-version: ipv4-prefer
-
-  阻止:
-    type: inline
-    proxies:
-      - name: "阻止"
-        type: reject
-
 
 proxy-groups:
  - name: "国外"
@@ -71,17 +56,15 @@ proxy-groups:
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png
  - name: "国内"
    type: select
-   use:
-    - 直连
    proxies:
+    - DIRECT
     - 国外
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png
  - name: "广告"
    type: select
-   use:
-    - 阻止
-    - 直连
    proxies:
+    - REJECT
+    - DIRECT
     - 国外
    icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/color/adblock.png
 
