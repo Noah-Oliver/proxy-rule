@@ -38,6 +38,23 @@ sniffer:
 experimental:
   dialer-ip4p-convert: true
 
+proxy-providers:
+  直连:
+    type: inline
+    pyload:
+      - name: "直连"
+        type: direct
+        udp: true
+        ip-version: ipv4-prefer
+
+proxy-providers:
+  阻止:
+    type: inline
+    pyload:
+      - name: "阻止"
+        type: reject
+
+
 proxy-groups:
  - name: "国外"
    type: select
@@ -55,33 +72,35 @@ proxy-groups:
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png
  - name: "国内"
    type: select
+   use:
+    - 直连
    proxies:
-    - DIRECT
     - 国外
    icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png
  - name: "广告"
    type: select
+   use:
+    - 阻止
+    - 直连
    proxies:
-    - REJECT
-    - DIRECT
     - 国外
    icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/color/adblock.png
 
  - name: "香港"
    type: select
-   include-all: true
+   include-all-proxies: true
    exclude-filter: '剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址'
    filter: '/\b(🇭🇰|hk|hong\s?kong)\b|香港|hk/i'
    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/Hongkong(3).png
  - name: "新加坡"
    type: select
-   include-all: true
+   include-all-proxies: true
    exclude-filter: '剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址'
    filter: '/\b(🇸🇬|sg|singapore)\b|新加坡|sg/i'
    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/01Country/singapore.png
  - name: "其他"
    type: select
-   include-all: true
+   include-all-proxies: true
    exclude-filter: '/\b(🇭🇰|hk|hong\s?kong|🇸🇬|sg|singapore)\b|香港|新加坡|hk|sg|剩余|流量|套餐|到期|使用|文档|最新|网址|官网|更新|订阅|地址/i'
    icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/color/Available.png
 
