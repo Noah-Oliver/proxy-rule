@@ -32,8 +32,7 @@ function setBasicConfig(config) {
       "use-hosts": true,
       "use-system-hosts": true,
       "enhanced-mode": "redir-host",
-      "default-nameserver": ["dhcp://system"],
-      "nameserver": ["dhcp://system"],
+      "nameserver": ["119.29.29.29", "223.5.5.5", "180.76.76.76", "180.184.1.1"],
     },
     "tun": {
       enable: true,
@@ -109,19 +108,20 @@ function main(config) {
   const allProxyNames = filteredProxies.map(p => p.name);
 
   // 添加固定节点
-  const addproxies = [
-    {
-      name: "直连",
-      type: "direct",
-      udp: true,
-      "ip-version": "ipv4-prefer"
-    },
-    {
-      name: "阻止",
-      type: "reject"
-    }
-  ]
-  config.proxies = [...filteredProxies, ...addproxies];
+  // const addproxies = [
+  //   {
+  //     name: "直连",
+  //     type: "direct",
+  //     udp: true,
+  //     "ip-version": "ipv4-prefer"
+  //   },
+  //   {
+  //     name: "阻止",
+  //     type: "reject"
+  //   }
+  // ]
+  // config.proxies = [...filteredProxies, ...addproxies];
+  config.proxies = [...filteredProxies];
 
   // 设置基本配置
   setBasicConfig(config);
@@ -130,8 +130,8 @@ function main(config) {
   const mainGroups = [
     { name: "国外", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png", proxies: [] },
     { name: "解锁", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Available_1.png", proxies: [] },
-    { name: "国内", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png", proxies: ["直连", "国外"] },
-    { name: "广告", type: "select", icon: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/color/adblock.png", proxies: ["阻止", "直连", "国外"] }
+    { name: "国内", type: "select", icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Proxy.png", proxies: ["DIRECT", "国外"] },
+    { name: "广告", type: "select", icon: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/color/adblock.png", proxies: ["REJECT", "DIRECT", "国外"] }
   ];
 
   const targetGroups = ["国外", "解锁"];
