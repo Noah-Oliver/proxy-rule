@@ -168,11 +168,10 @@ function main(config) {
   const RULE_PROVIDER_COMMON = { type: "http", interval: 28800, behavior: "classical" };
   const RULE_PROVIDER_URLS = {
     direct: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/direct.list", format: "text" },
-    ADf: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/ADf.list", format: "text" },
     proxy: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list", format: "text" },
     unlock: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list", format: "text" },
     AD: { url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/classical/category-ads-all.list", format: "text" },
-    cnf: { url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Global/Global_Classical.yaml", format: "yaml" },
+    cnf: { url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Shadowrocket/Global/Global.list", format: "text" },
   };
 
   // 设置规则提供者 & 规则
@@ -181,7 +180,7 @@ function main(config) {
   );
 
   config["rules"] = [
-    "AND,((RULE-SET,AD),(NOT,((RULE-SET,ADf)))),广告",
+    "RULE-SET,AD,广告",
     "RULE-SET,unlock,解锁",
     "RULE-SET,direct,国内",
     "RULE-SET,proxy,国外",
