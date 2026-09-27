@@ -171,8 +171,8 @@ function main(config) {
     ADf: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/ADf.list", format: "text" },
     proxy: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list", format: "text" },
     unlock: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list", format: "text" },
-    AD: { url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Domain.yaml", behavior: "domain", format: "yaml" },
-    cnf: { url: "https://github.com/Loyalsoldier/clash-rules/raw/release/gfw.txt", behavior: "domain", format: "yaml" },
+    AD: { url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/classical/category-ads-all.list", format: "text" },
+    cnf: { url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Global/Global_Classical.yaml", format: "yaml" },
   };
 
   // 设置规则提供者 & 规则
