@@ -171,7 +171,7 @@ function main(config) {
     proxy: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/proxy.list", format: "text" },
     unlock: { url: "https://github.com/Noah-Oliver/proxy-rule/raw/main/clash%20rule/unlock.list", format: "text" },
     AD: { url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/classical/category-ads-all.list", format: "text" },
-    cnf: { url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Shadowrocket/Global/Global.list", format: "text" },
+    gfw: { url: "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/classical/gfw.list", format: "text" },
   };
 
   // 设置规则提供者 & 规则
@@ -184,7 +184,7 @@ function main(config) {
     "RULE-SET,unlock,解锁",
     "RULE-SET,direct,国内",
     "RULE-SET,proxy,国外",
-    "RULE-SET,cnf,国外",
+    "RULE-SET,gfw,国外",
     "MATCH,国内"
   ];
 
