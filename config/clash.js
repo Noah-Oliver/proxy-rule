@@ -32,11 +32,11 @@ function setBasicConfig(config) {
       "use-hosts": true,
       "use-system-hosts": true,
       "enhanced-mode": "redir-host",
-      "nameserver": ["system"],
+      "nameserver": ["119.29.29.29","223.5.5.5"],
     },
     "tun": {
       enable: true,
-      stack: "system",
+      stack: "mips",
       "dns-hijack": ["any:53"],
       "auto-route": true,
       "auto-detect-interface": true,
